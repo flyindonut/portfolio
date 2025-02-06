@@ -37,7 +37,7 @@ jobs:
       - name: Deploy Backend
         uses: digitalocean/app_action/deploy@v2
         with:
-          app_id: ${{ secrets.DO_BACKEND_APP_ID }}
+          app_name: ${{ vars.DO_BACKEND_APP_NAME }}
           token: ${{ secrets.DO_API_KEY }}
 
   deploy_frontend:
@@ -51,6 +51,6 @@ jobs:
       - name: Deploy Frontend
         uses: digitalocean/app_action/deploy@v2
         with:
-          app_id: ${{ secrets.DO_FRONTEND_APP_ID }}
+          app_name: ${{ vars.DO_FRONTEND_APP_NAME }}
           token: ${{ secrets.DO_API_KEY }}
           
