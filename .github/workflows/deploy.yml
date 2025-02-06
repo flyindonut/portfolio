@@ -1,4 +1,4 @@
-name: Deploy to DigitalOcean App Platform
+name: Deploy to DigitalOcean
 
 on:
   push:
@@ -33,10 +33,9 @@ jobs:
     steps:
       - name: Trigger Backend Deployment
         run: |
-          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments" \
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_BACKEND_APP_ID }}/deployments" \
                -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
-               -H "Content-Type: application/json" \
-               -d '{"services": ["backend-service-name"]}'
+               -H "Content-Type: application/json"
 
   deploy_frontend:
     needs: check_changes
@@ -45,7 +44,6 @@ jobs:
     steps:
       - name: Trigger Frontend Deployment
         run: |
-          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments" \
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_FRONTEND_APP_ID }}/deployments" \
                -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
-               -H "Content-Type: application/json" \
-               -d '{"services": ["frontend-service-name"]}'
+               -H "Content-Type: application/json"
