@@ -25,6 +25,7 @@ type Locale = 'en' | 'fr';
 const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
+const emit = defineEmits(["showModifyProjectModal", "refreshProjects"]);
 
 const authStore = useAuthStore();
 const isAdmin = ref(authStore.hasRole('Admin'));
@@ -67,6 +68,7 @@ const handleDelete = async () => {
   isDeleting.value = true;
   try {
     await deleteProject(project.value.slug);
+    emit("refreshProjects");
     router.push("/projects");
   } catch (error) {
     errorMessage.value = "Failed to delete project.";

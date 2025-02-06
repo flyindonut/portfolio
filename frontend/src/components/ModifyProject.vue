@@ -138,7 +138,7 @@ import type { Technology } from "@/types/Technology";
 import type { Project } from "@/types/Project";
 
 const props = defineProps<{ project: Project }>();
-const emit = defineEmits(['close', 'projectModified']);
+const emit = defineEmits(['close', 'refreshProjects']);
 const router = useRouter();
 
 const projectNameEn = ref(props.project.translations.en.name);
@@ -245,8 +245,8 @@ const modifyProject = async () => {
   };
 
   const response = await updateProject(props.project.slug, updatedProject);
+  emit('refreshProjects');
   emit('close');
-  emit('projectModified');
   router.push(`/projects/${response.slug}`);
 };
 

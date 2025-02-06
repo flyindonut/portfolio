@@ -137,7 +137,7 @@ import type { Framework } from "@/types/Framework";
 import type { Technology } from "@/types/Technology";
 
 const router = useRouter();
-const emit = defineEmits(['close', 'projectCreated']);
+const emit = defineEmits(['close', 'refreshProjects']);
 
 const projectNameEn = ref<string>("");
 const projectDescriptionEn = ref<string>("");
@@ -237,8 +237,8 @@ const createProject = async () => {
     link: link.value
   };
   const response = await createProjectApi(newProject);
+  emit('refreshProjects');
   emit('close');
-  emit('projectCreated');
   router.push(`/projects/${response.slug}`);
 };
 

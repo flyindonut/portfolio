@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-screen">
-    
+
     <!-- Sidebar -->
     <ProjectsSidebar 
       v-motion
@@ -8,19 +8,32 @@
       :enter="{ x: 0 }"
       :duration="500"
       @showCreateProjectModal="showCreateProjectModal = true"
-      @refetchProjects="fetchAllProjects"
+      @refreshProjects="handleRefreshProjects"
     />
 
     <!-- Page Content -->
     <div class="flex-1 overflow-y-auto">
-      <router-view :key="$route.fullPath" @showModifyProjectModal="handleShowModifyProjectModal" />
+      <router-view 
+        :key="$route.fullPath" 
+        @showModifyProjectModal="handleShowModifyProjectModal" 
+        @refreshProjects="handleRefreshProjects"
+      />
     </div>
 
     <!-- Create Project Modal Form -->
-    <CreateProject v-if="showCreateProjectModal" @close="handleCreateProjectModalClose" @projectCreated="handleProjectCreated" />
+    <CreateProject
+      v-if="showCreateProjectModal" 
+      @close="handleCreateProjectModalClose" 
+      @refreshProjects="handleRefreshProjects"
+    />
 
     <!-- Modify Project Modal -->
-    <ModifyProject v-if="showModifyProjectModal && selectedProject" :project="selectedProject" @close="handleModifyProjectModalClose" @projectModified="handleProjectModified" />
+    <ModifyProject
+      v-if="showModifyProjectModal && selectedProject" :project="selectedProject" 
+      @close="handleModifyProjectModalClose" 
+      @refreshProjects="handleRefreshProjects"
+    />
+
   </div>
 </template>
   
@@ -48,30 +61,14 @@ const handleModifyProjectModalClose = () => {
   showModifyProjectModal.value = false;
 };
 
-const handleProjectCreated = () => {
-  showCreateProjectModal.value = false;
-  fetchAllProjects();
-};
-
-const handleProjectModified = () => {
-  showModifyProjectModal.value = false;
-  fetchAllProjects();
-};
-
 const handleShowModifyProjectModal = (project: Project) => {
   router.push("/projects");
   selectedProject.value = project;
   showModifyProjectModal.value = true;
 };
 
-const fetchAllProjects = async () => {
-  try {
-    const response = await fetchProjects();
-    projects.value = response;
-  } catch (error) {
-    errorMessage.value = "Failed to fetch projects.";
-  }
+const handleRefreshProjects = () => {
+  const event = new Event("refreshProjects");
+  window.dispatchEvent(event);
 };
-
-onMounted(fetchAllProjects);
 </script>

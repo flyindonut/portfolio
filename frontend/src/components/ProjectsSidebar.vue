@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { fetchProjects } from "@/api/projectApi";
 import type { Project } from "@/types/Project";
@@ -69,7 +69,15 @@ const fetchAllProjects = async () => {
   }
 };
 
-onMounted(fetchAllProjects);
+onMounted(() => {
+  fetchAllProjects();
+
+  window.addEventListener("refreshProjects", fetchAllProjects);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("refreshProjects", fetchAllProjects);
+});
 
 const trimName = (name: string): string => {
   return name.length > 20 ? name.slice(0, 20) + '...' : name;
@@ -77,8 +85,6 @@ const trimName = (name: string): string => {
 
 const authStore = useAuthStore();
 const isAdmin = computed(() => authStore.hasRole("Admin"));
-
-watch(() => projects.value, fetchAllProjects);
 </script>
 
 <style scoped>
