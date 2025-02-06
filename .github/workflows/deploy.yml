@@ -1,0 +1,49 @@
+name: Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.changes.outputs.backend }}
+      frontend: ${{ steps.changes.outputs.frontend }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check for changes in backend or frontend
+        id: changes
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+            frontend:
+              - 'frontend/**'
+
+  deploy_backend:
+    needs: check_changes
+    if: needs.check_changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Backend Deployment
+        run: |
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_BACKEND_APP_ID }}/deployments" \
+               -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
+               -H "Content-Type: application/json"
+
+  deploy_frontend:
+    needs: check_changes
+    if: needs.check_changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Frontend Deployment
+        run: |
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_FRONTEND_APP_ID }}/deployments" \
+               -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
+               -H "Content-Type: application/json"
