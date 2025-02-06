@@ -27,29 +27,23 @@ jobs:
               - 'frontend/**'
 
   deploy_backend:
-    runs-on: ubuntu-latest
     needs: check_changes
-    if: needs.check_changes.outputs.backend == 'true' || needs.check_changes.outputs.backend == true
+    if: needs.check_changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
     steps:
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DO_API_KEY }}
-
-      - name: Deploy Backend DigitalOcean
+      - name: Backend Deployment
         run: |
-          doctl apps create-deployment --app ${{ secrets.DO_BACKEND_APP_ID }}
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_BACKEND_APP_ID }}/deployments" \
+               -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
+               -H "Content-Type: application/json"
 
   deploy_frontend:
-    runs-on: ubuntu-latest
     needs: check_changes
-    if: needs.check_changes.outputs.frontend == 'true' || needs.check_changes.outputs.frontend == true
+    if: needs.check_changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
     steps:
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DO_API_KEY }}
-
-      - name: Deploy Frontend DigitalOcean
+      - name: Frontend Deployment
         run: |
-          doctl apps create-deployment --app ${{ secrets.DO_FRONTEND_APP_ID }}
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_FRONTEND_APP_ID }}/deployments" \
+               -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
+               -H "Content-Type: application/json"
