@@ -15,7 +15,7 @@ const messages = {
     login: "Login",
     logout: "Logout",
     homePage: {
-      intro: "Welcome to my portfolio! I'm an adaptable developer specializing in fullstack development, security, and cloud computing. I build scalable applications with modern technologies like Vue.js, TypeScript, and Spring Boot.",
+      intro: "Welcome to my portfolio! I'm an adaptable developer specializing in fullstack development, security, and cloud computing. I build scalable applications with modern technologies like Vue.js, TypeScript, Express.js, Java and Spring Boot.",
       skillsTitle: "What I Do",
       techTitle: "Technologies I Use",
       exploreProjects: "Explore My Projects",
