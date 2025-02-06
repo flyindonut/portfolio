@@ -14,7 +14,7 @@ jobs:
       frontend: ${{ steps.changes.outputs.frontend }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Check for changes in backend or frontend
         id: changes
@@ -31,19 +31,26 @@ jobs:
     if: needs.check_changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Backend Deployment
-        run: |
-          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_BACKEND_APP_ID }}/deployments" \
-               -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
-               -H "Content-Type: application/json"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy Backend
+        uses: digitalocean/app_action/deploy@v2
+        with:
+          app_id: ${{ secrets.DO_BACKEND_APP_ID }}
+          token: ${{ secrets.DO_API_KEY }}
 
   deploy_frontend:
     needs: check_changes
     if: needs.check_changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Frontend Deployment
-        run: |
-          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_FRONTEND_APP_ID }}/deployments" \
-               -H "Authorization: Bearer ${{ secrets.DO_API_KEY }}" \
-               -H "Content-Type: application/json"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy Frontend
+        uses: digitalocean/app_action/deploy@v2
+        with:
+          app_id: ${{ secrets.DO_FRONTEND_APP_ID }}
+          token: ${{ secrets.DO_API_KEY }}
+          
