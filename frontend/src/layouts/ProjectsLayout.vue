@@ -1,5 +1,6 @@
 <template>
   <div class="flex h-screen">
+    
     <!-- Sidebar -->
     <ProjectsSidebar 
       v-motion
