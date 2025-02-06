@@ -60,7 +60,7 @@ const messages = {
     login: "Connexion",
     logout: "Déconnexion",
     homePage: {
-      intro: "Bienvenue sur mon portfolio! Je suis un développeur qui s'adapte facilement et je suis spécialisé en développement fullstack, sécurité et cloud computing. Je construis des applications évolutives avec des technologies modernes comme Vue.js, TypeScript et Spring Boot.",
+      intro: "Bienvenue sur mon portfolio! Je suis un développeur qui s'adapte facilement et je suis spécialisé en développement fullstack, sécurité et cloud computing. Je construis des applications évolutives avec des technologies modernes comme Vue.js, TypeScript, Express.js, Java et Spring Boot.",
       skillsTitle: "Ce que je fais",
       techTitle: "Technologies que j’utilise",
       exploreProjects: "Découvrir mes projets",
