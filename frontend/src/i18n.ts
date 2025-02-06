@@ -30,7 +30,7 @@ const messages = {
     },
     contactPage: {
       heading: "Contact Me",
-      description: "Have a question or want to work together? Fill out the form below or send me an email at deemohuang@gmail.com.",
+      description: "Have a question or want to work together? Fill out the form below or send me an email at {'deemohuang@gmail.com.'}",
       nameLabel: "Name",
       emailLabel: "Email",
       messageLabel: "Message",
@@ -75,7 +75,7 @@ const messages = {
     },
     contactPage: {
       heading: "Me Contacter",
-      description: "Vous avez une question ou souhaitez collaborer? Remplissez le formulaire ci-dessous ou envoyez-moi un email à deemohuang@gmail.com.",
+      description: "Vous avez une question ou souhaitez collaborer? Remplissez le formulaire ci-dessous ou envoyez-moi un email à {'deemohuang@gmail.com.'}",
       nameLabel: "Nom",
       emailLabel: "Email",
       messageLabel: "Message",
@@ -99,6 +99,7 @@ const i18n = createI18n({
   locale: "en",
   fallbackLocale: "en",
   messages,
+  allowComposition: true,
 });
 
 export default i18n;
