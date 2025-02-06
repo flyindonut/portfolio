@@ -156,6 +156,7 @@ const handleIconUpload = (event: Event) => {
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-2">Icon (SVG Only)</label>
           <div class="relative flex items-center space-x-3">
+            
             <!-- Hidden File Input -->
             <input type="file" accept=".svg" @change="handleIconUpload" ref="fileInput" class="hidden" />
             
