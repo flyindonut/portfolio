@@ -23,18 +23,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref} from "vue";
 import { ChevronRight, Plus } from "lucide-vue-next";
-import { useAuthStore } from "@/stores/auth";
 
 const techStackItems = ref([
   { name: "Languages", slug: "languages" },
   { name: "Frameworks", slug: "frameworks" },
   { name: "Technologies", slug: "technologies" }
 ]);
-
-const authStore = useAuthStore();
-const isAdmin = computed(() => authStore.hasRole("Admin"));
 </script>
 
 <style scoped>
