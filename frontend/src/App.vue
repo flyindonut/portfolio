@@ -34,7 +34,7 @@ const isAuthStatusDefined = computed(() => !isLoading.value);
 </template>
 
 <style scoped>
-/* Animated Grid Pattern */
+/* Simplified Grid Pattern */
 .bg-grid-pattern {
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
@@ -42,20 +42,9 @@ const isAuthStatusDefined = computed(() => !isLoading.value);
   background-size: 50px 50px;
   opacity: 0.20;
   filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.05));
-  animation: gridFade 3s infinite alternate ease-in-out;
 }
 
-/* Grid Opacity Animation */
-@keyframes gridFade {
-  0% {
-    opacity: 0.25;
-  }
-  100% {
-    opacity: 0.40;
-  }
-}
-
-/* Darker Aurora Gradient */
+/* Simplified Aurora Gradient */
 .animated-aurora {
   position: absolute;
   width: 100%;
@@ -65,18 +54,6 @@ const isAuthStatusDefined = computed(() => !isLoading.value);
     radial-gradient(circle at 30% 40%, rgba(0, 100, 255, 0.1), transparent 60%),
     radial-gradient(circle at 70% 80%, rgba(180, 0, 255, 0.1), transparent 60%),
     radial-gradient(circle at 50% 50%, rgba(0, 200, 150, 0.08), transparent 60%);
-  animation: auroraMove 12s infinite alternate ease-in-out;
   pointer-events: none;
-}
-
-@keyframes auroraMove {
-  0% {
-    clip-path: circle(75% at 50% 50%);
-    filter: blur(35px);
-  }
-  100% {
-    clip-path: circle(85% at 50% 50%);
-    filter: blur(50px);
-  }
 }
 </style>

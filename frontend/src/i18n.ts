@@ -60,7 +60,8 @@ const messages = {
       title: "Comments",
       verifiedComments: "Verified Comments",
       guestComments: "Guest Comments",
-      manageComments: "Manage Comments"
+      manageComments: "Manage Comments",
+      loginToComment: "Login to leave a verified comment."
     },
     iconsSidebar: {
       title: "Icons",
@@ -92,8 +93,8 @@ const messages = {
       createError: "Failed to create comment.",
       deleteError: "Failed to delete comment.",
       modifyError: "Failed to modify comment.",
-      successMessage: "Comment created successfully!",
-      modifySuccess: "Comment modified successfully!"
+      successMessage: "Your comment has been created, it will be posted once approved by Debo.",
+      modifySuccess: "Your comment has been updated, it will be posted once approved by Debo."
     },
     guestCommentsPage: {
       title: "Guest Comments",
@@ -169,7 +170,8 @@ const messages = {
       title: "Commentaires",
       verifiedComments: "Commentaires vérifiés",
       guestComments: "Commentaires des invités",
-      manageComments: "Gérer les commentaires"
+      manageComments: "Gérer les commentaires",
+      loginToComment: "Connectez-vous pour laisser un commentaire vérifié."
     },
     iconsSidebar: {
       title: "Icônes",
@@ -201,8 +203,8 @@ const messages = {
       createError: "Échec de la création du commentaire.",
       deleteError: "Échec de la suppression du commentaire.",
       modifyError: "Échec de la modification du commentaire.",
-      successMessage: "Commentaire créé avec succès!",
-      modifySuccess: "Commentaire modifié avec succès!"
+      successMessage: "Votre commentaire a été créé, il sera publié une fois approuvé par Debo.",
+      modifySuccess: "Votre commentaire a été modifié, il sera publié une fois approuvé par Debo."
     },
     guestCommentsPage: {
       title: "Commentaires des invités",

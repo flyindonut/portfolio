@@ -47,6 +47,11 @@
         <ChevronRight class="text-gray-400 ml-auto w-6 h-6" />
       </router-link>
     </div>
+
+    <!-- Login to leave a verified comment -->
+    <p v-if="!isAuthenticated" class="mt-6 text-sm text-gray-400 text-center">
+      {{ t('commentsSidebar.loginToComment') }}
+    </p>
   </aside>
 </template>
   
@@ -55,8 +60,11 @@ import { ChevronRight } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
 import { computed } from "vue";
 import { useI18n } from 'vue-i18n';
+import { useAuth0 } from '@auth0/auth0-vue';
 
 const { t } = useI18n();
+
+const { isAuthenticated } = useAuth0();
 const authStore = useAuthStore();
 const isAdmin = computed(() => authStore.hasRole("Admin"));
 

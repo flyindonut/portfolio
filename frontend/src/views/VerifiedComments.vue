@@ -86,8 +86,13 @@ const filteredComments = computed(() => {
   return verifiedComments.value;
 });
 
-const getFontSizeClass = (text: string) => {
-  return text.length > 20 ? 'text-4xl' : 'text-5xl';
+const getFontSizeClass = () => {
+  if (isAuthenticated.value === false) {
+    return 'text-5xl';
+  } else {
+    return 'text-4xl';
+  }
+
 };
 
 onMounted(() => {
@@ -110,7 +115,7 @@ onMounted(() => {
       <Breadcrumb />
 
       <div class="mb-6 flex justify-between items-center">
-        <h1 :class="getFontSizeClass(t('verifiedCommentsPage.title'))" class="font-bold">{{ t('verifiedCommentsPage.title') }}</h1>
+        <h1 :class="getFontSizeClass()" class="font-bold">{{ t('verifiedCommentsPage.title') }}</h1>
         <div v-if="isAuthenticated" class="flex space-x-4">
           <div class="relative">
             <select v-model="filterUserComments" class="bg-[#343a40] text-white p-2 rounded-md appearance-none pr-10">

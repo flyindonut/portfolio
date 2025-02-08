@@ -197,6 +197,7 @@ const removeTechnology = (technology: string) => {
     v-motion
     :initial="{ opacity: 0, y: 30 }"
     :enter="{ opacity: 1, y: 0 }"
+    :delay="250"
     :duration="500"
     class="p-10 md:p-20 mx-auto max-w-5xl text-white"
   >
