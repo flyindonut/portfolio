@@ -93,8 +93,8 @@ const messages = {
       createError: "Failed to create comment.",
       deleteError: "Failed to delete comment.",
       modifyError: "Failed to modify comment.",
-      successMessage: "Your comment has been created, it will be posted once approved by Debo.",
-      modifySuccess: "Your comment has been updated, it will be posted once approved by Debo."
+      successMessage: "Your comment has been created, it will be posted once reviewed by Debo.",
+      modifySuccess: "Your comment has been updated, it will be posted once reviewed by Debo."
     },
     guestCommentsPage: {
       title: "Guest Comments",
@@ -169,7 +169,7 @@ const messages = {
     commentsSidebar: {
       title: "Commentaires",
       verifiedComments: "Commentaires vérifiés",
-      guestComments: "Commentaires des invités",
+      guestComments: "Commentaires des visiteurs",
       manageComments: "Gérer les commentaires",
       loginToComment: "Connectez-vous pour laisser un commentaire vérifié."
     },
@@ -207,8 +207,8 @@ const messages = {
       modifySuccess: "Votre commentaire a été modifié, il sera publié une fois approuvé par Debo."
     },
     guestCommentsPage: {
-      title: "Commentaires des invités",
-      noComments: "Aucun commentaire d'invité disponible.",
+      title: "Commentaires des visiteurs",
+      noComments: "Aucun commentaire de visiteur disponible.",
       addComment: "Ajouter un nouveau commentaire",
       firstName: "Prénom",
       lastName: "Nom",
@@ -216,7 +216,7 @@ const messages = {
       cancel: "Annuler",
       post: "Publier",
       close: "Fermer",
-      errorMessage: "Échec de la récupération des commentaires des invités.",
+      errorMessage: "Échec de la récupération des commentaires des visiteurs.",
       createError: "Échec de la création du commentaire.",
       successMessage: "Votre commentaire a été créé, il sera publié une fois approuvé par Debo."
     }
