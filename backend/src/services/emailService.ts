@@ -1,12 +1,23 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import pino from 'pino';
 
 dotenv.config();
+
+const logger = pino({
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true
+    }
+  }
+});
+
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE === "true", // `true` for 465, `false` for 587
+  secure: process.env.SMTP_SECURE === "true",
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASS,
@@ -15,18 +26,19 @@ const transporter = nodemailer.createTransport({
 
 export const sendEmail = async (to: string, subject: string, text: string, html?: string) => {
   try {
+    logger.info(`Sending Email to: ${to}`);
     const info = await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.GMAIL_USER}>`, // Sender email
+      from: `"Portfolio Contact" <${process.env.GMAIL_USER}>`,
       to,
       subject,
       text,
       html,
     });
 
-    console.log("✅ Email sent:", info.messageId);
+    logger.info(`Email sent successfully: ${info.messageId}`);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error("❌ Error sending email:", error);
-    throw new Error("Failed to send email.");
+    logger.error({ error }, 'Error sending email');
+    throw error;
   }
 };

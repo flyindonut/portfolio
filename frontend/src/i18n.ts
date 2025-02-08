@@ -8,25 +8,32 @@ const messages = {
     projects: "Projects",
     comments: "Comments",
     contact: "Contact",
-    manageTechStack: "Manage Tech Stack",
+    manageIcons: "Manage Icons",
     other: "Other",
     language: "English",
     loading: "Loading...",
     login: "Login",
     logout: "Logout",
     homePage: {
-      intro: "Welcome to my portfolio! I'm an adaptable developer specializing in fullstack development, security, and cloud computing. I build scalable applications with modern technologies like Vue.js, TypeScript, Express.js, Java and Spring Boot.",
       skillsTitle: "What I Do",
       techTitle: "Technologies I Use",
       exploreProjects: "Explore My Projects",
-      skills: {
-        fullstack: "Fullstack Development",
-        database: "Database Design",
-        backend: "Backend Development",
-        security: "Security & Authentication",
-        devops: "DevOps & CI/CD",
-        cloud: "Cloud Deployment"
-      }
+      hobbiesTitle: "Hobbies",
+      updateAbout: "Update About",
+      firstName: "First Name",
+      lastName: "Last Name",
+      title: "Title",
+      description: "Description",
+      services: "Services",
+      languages: "Languages",
+      frameworks: "Frameworks",
+      technologies: "Technologies",
+      hobbies: "Hobbies",
+      close: "Close",
+      next: "Next",
+      previous: "Previous",
+      add: "Add",
+      save: "Save"
     },
     contactPage: {
       heading: "Contact Me",
@@ -45,6 +52,63 @@ const messages = {
         messageRequired: "Message is required.",
       },
     },
+    commentsPage: {
+      title: "Comments",
+      description: "Please select which comments to see"
+    },
+    commentsSidebar: {
+      title: "Comments",
+      verifiedComments: "Verified Comments",
+      guestComments: "Guest Comments",
+      manageComments: "Manage Comments"
+    },
+    iconsSidebar: {
+      title: "Icons",
+      languages: "Languages",
+      frameworks: "Frameworks",
+      technologies: "Technologies",
+      services: "Services"
+    },
+    iconsPage: {
+      title: "Icons",
+      description: "Please select an item to manage"
+    },
+    verifiedCommentsPage: {
+      title: "Verified Comments",
+      allComments: "All Comments",
+      myComments: "My Comments",
+      noComments: "No comments available.",
+      addComment: "Add Comment",
+      content: "Content",
+      cancel: "Cancel",
+      post: "Post",
+      close: "Close",
+      confirmDeletion: "Confirm Deletion",
+      confirmDeletionMessage: "Are you sure you want to delete this comment?",
+      delete: "Delete",
+      modifyComment: "Modify Comment",
+      save: "Save",
+      errorMessage: "Failed to fetch comments.",
+      createError: "Failed to create comment.",
+      deleteError: "Failed to delete comment.",
+      modifyError: "Failed to modify comment.",
+      successMessage: "Comment created successfully!",
+      modifySuccess: "Comment modified successfully!"
+    },
+    guestCommentsPage: {
+      title: "Guest Comments",
+      noComments: "No guest comments available.",
+      addComment: "Add New Comment",
+      firstName: "First Name",
+      lastName: "Last Name",
+      content: "Content",
+      cancel: "Cancel",
+      post: "Post",
+      close: "Close",
+      errorMessage: "Failed to fetch guest comments.",
+      createError: "Failed to create comment.",
+      successMessage: "Your comment has been created, it will be posted once approved by Debo."
+    }
   },
   fr: {
     name: "Debo Huang",
@@ -53,25 +117,32 @@ const messages = {
     projects: "Projets",
     comments: "Commentaires",
     contact: "Contact",
-    manageTechStack: "Gérer la Tech Stack",
+    manageIcons: "Gérer les icônes",
     other: "Autre",
     language: "Français",
     loading: "Chargement...",
     login: "Connexion",
     logout: "Déconnexion",
     homePage: {
-      intro: "Bienvenue sur mon portfolio! Je suis un développeur qui s'adapte facilement et je suis spécialisé en développement fullstack, sécurité et cloud computing. Je construis des applications évolutives avec des technologies modernes comme Vue.js, TypeScript, Express.js, Java et Spring Boot.",
       skillsTitle: "Ce que je fais",
       techTitle: "Technologies que j’utilise",
       exploreProjects: "Découvrir mes projets",
-      skills: {
-        fullstack: "Développement Fullstack",
-        database: "Conception de Bases de Données",
-        backend: "Développement Backend",
-        security: "Sécurité & Authentification",
-        devops: "DevOps & CI/CD",
-        cloud: "Déploiement Cloud"
-      }
+      hobbiesTitle: "Loisirs",
+      updateAbout: "Mettre à jour À propos",
+      firstName: "Prénom",
+      lastName: "Nom",
+      title: "Titre",
+      description: "Description",
+      services: "Services",
+      languages: "Langues",
+      frameworks: "Frameworks",
+      technologies: "Technologies",
+      hobbies: "Loisirs",
+      close: "Fermer",
+      next: "Suivant",
+      previous: "Précédent",
+      add: "Ajouter",
+      save: "Enregistrer"
     },
     contactPage: {
       heading: "Me Contacter",
@@ -90,6 +161,63 @@ const messages = {
         messageRequired: "Le message est requis.",
       },
     },
+    commentsPage: {
+      title: "Commentaires",
+      description: "Veuillez sélectionner les commentaires à voir"
+    },
+    commentsSidebar: {
+      title: "Commentaires",
+      verifiedComments: "Commentaires vérifiés",
+      guestComments: "Commentaires des invités",
+      manageComments: "Gérer les commentaires"
+    },
+    iconsSidebar: {
+      title: "Icônes",
+      languages: "Langues",
+      frameworks: "Frameworks",
+      technologies: "Technologies",
+      services: "Services"
+    },
+    iconsPage: {
+      title: "Icônes",
+      description: "Veuillez sélectionner un élément à gérer"
+    },
+    verifiedCommentsPage: {
+      title: "Commentaires vérifiés",
+      allComments: "Tous les commentaires",
+      myComments: "Mes commentaires",
+      noComments: "Aucun commentaire disponible.",
+      addComment: "Ajouter un commentaire",
+      content: "Contenu",
+      cancel: "Annuler",
+      post: "Publier",
+      close: "Fermer",
+      confirmDeletion: "Confirmer la suppression",
+      confirmDeletionMessage: "Êtes-vous sûr de vouloir supprimer ce commentaire?",
+      delete: "Supprimer",
+      modifyComment: "Modifier le commentaire",
+      save: "Enregistrer",
+      errorMessage: "Échec de la récupération des commentaires.",
+      createError: "Échec de la création du commentaire.",
+      deleteError: "Échec de la suppression du commentaire.",
+      modifyError: "Échec de la modification du commentaire.",
+      successMessage: "Commentaire créé avec succès!",
+      modifySuccess: "Commentaire modifié avec succès!"
+    },
+    guestCommentsPage: {
+      title: "Commentaires des invités",
+      noComments: "Aucun commentaire d'invité disponible.",
+      addComment: "Ajouter un nouveau commentaire",
+      firstName: "Prénom",
+      lastName: "Nom",
+      content: "Contenu",
+      cancel: "Annuler",
+      post: "Publier",
+      close: "Fermer",
+      errorMessage: "Échec de la récupération des commentaires des invités.",
+      createError: "Échec de la création du commentaire.",
+      successMessage: "Votre commentaire a été créé, il sera publié une fois approuvé par Debo."
+    }
   },
 };
 
@@ -100,6 +228,24 @@ const i18n = createI18n({
   fallbackLocale: "en",
   messages,
   allowComposition: true,
+  datetimeFormats: {
+    en: {
+      short: {
+        year: 'numeric', month: 'short', day: 'numeric'
+      },
+      long: {
+        year: 'numeric', month: 'long', day: 'numeric'
+      }
+    },
+    fr: {
+      short: {
+        year: 'numeric', month: 'short', day: 'numeric'
+      },
+      long: {
+        year: 'numeric', month: 'long', day: 'numeric'
+      }
+    }
+  }
 });
 
 export default i18n;

@@ -11,10 +11,15 @@ import InternalServerError from '@/views/errors/InternalServerError.vue'
 import Unauthorized from '@/views/errors/Unauthorized.vue'
 import Forbidden from '@/views/errors/Forbidden.vue'
 import Technologies from '@/views/Technologies.vue'
-import TechStackLayout from '@/layouts/TechStackLayout.vue'
+import IconsLayout from '@/layouts/IconsLayout.vue'
 import Languages from '@/views/Languages.vue'
 import Frameworks from '@/views/Frameworks.vue'
-import TechStack from '@/views/TechStack.vue'
+import Icons from '@/views/Icons.vue'
+import CommentsLayout from '@/layouts/CommentsLayout.vue'
+import VerifiedComments from '@/views/VerifiedComments.vue'
+import GuestComments from '@/views/GuestComments.vue'
+import ManageComments from '@/views/ManageComments.vue'
+import Services from '@/views/Services.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,23 +47,46 @@ const router = createRouter({
     },
     {
       path: '/comments',
-      name: 'comments',
-      component: Comments,
+      component: CommentsLayout,
+      children: [
+        {
+          path: '',
+          name: 'comments',
+          component: Comments,
+        },
+        {
+          path: 'verified',
+          name: 'verified',
+          component: VerifiedComments,
+        },
+        {
+          path: 'guest',
+          name: 'guest',
+          component: GuestComments,
+        },
+        {
+          path: 'manage',
+          name: 'manage',
+          component: ManageComments,
+          beforeEnter: authGuard,
+        }
+      ],
     },
     {
       path: '/contact',
       name: 'contact',
       component: Contact,
     },
+    // Only For Me
     {
-      path: '/techstack',
-      component: TechStackLayout,
+      path: '/icons',
+      component: IconsLayout,
       beforeEnter: authGuard,
       children: [
         {
           path: '',
-          name: 'techstack',
-          component: TechStack,
+          name: 'Icons',
+          component: Icons,
         },
         {
           path: 'languages',
@@ -74,6 +102,11 @@ const router = createRouter({
           path: 'technologies',
           name: 'technologies',
           component: Technologies,
+        },
+        {
+          path: 'services',
+          name: 'services',
+          component: Services,
         },
       ],
     },

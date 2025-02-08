@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen">
     <!-- Sidebar  -->
-    <TechStackSidebar
+    <IconsSidebar
       v-motion
       :initial="{ x: -288 }"
       :enter="{ x: 0 }"
@@ -16,5 +16,5 @@
 </template>
   
 <script setup lang="ts">
-import TechStackSidebar from "@/components/TechStackSidebar.vue";
+import IconsSidebar from "@/components/IconsSidebar.vue";
 </script>

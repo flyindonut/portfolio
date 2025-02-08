@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { computed } from "vue";
+import { useAuth0 } from "@auth0/auth0-vue";
 import Sidebar from "./components/Sidebar.vue";
+
+const { isAuthenticated, isLoading } = useAuth0();
+
+const isAuthStatusDefined = computed(() => !isLoading.value);
 </script>
 
 <template>
@@ -13,8 +19,13 @@ import Sidebar from "./components/Sidebar.vue";
     <!-- Sidebar -->
     <Sidebar class="relative z-10" />
 
+    <!-- Loading Indicator -->
+    <div v-if="!isAuthStatusDefined" class="flex-1 flex flex-col items-center justify-center">
+      <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
+    </div>
+
     <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto relative z-10 bg-transparent">
+    <main v-else class="flex-1 overflow-y-auto relative z-10 bg-transparent">
       <div class="relative">
         <router-view />
       </div>
@@ -23,12 +34,6 @@ import Sidebar from "./components/Sidebar.vue";
 </template>
 
 <style scoped>
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
 /* Animated Grid Pattern */
 .bg-grid-pattern {
   background-image: 

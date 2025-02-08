@@ -1,19 +1,19 @@
 <template>
   <aside class="w-72 h-screen bg-[#161a1d] p-4 flex flex-col border-r border-gray-600">
-    <h2 class="text-white text-lg font-bold mb-4">Tech Stack</h2>
+    <h2 class="text-white text-lg font-bold mb-4">{{ t('iconsSidebar.title') }}</h2>
 
-    <!-- TechStack List -->
+    <!-- Icons List -->
     <div class="flex flex-col space-y-4">
       <router-link
-        v-for="item in techStackItems"
+        v-for="item in iconsItems"
         :key="item.slug"
-        :to="`/techstack/${item.slug}`"
+        :to="`/icons/${item.slug}`"
         class="flex items-center px-5 py-3 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
         active-class="bg-[#495057] border-l-4 border-white pl-4"
       >
         <div class="flex flex-col justify-center w-full">
-          <h3 class="text-white font-medium truncate">
-            {{ item.name }}
+          <h3 :class="getFontSizeClass(t(`iconsSidebar.${item.slug}`))" class="text-white font-medium truncate">
+            {{ t(`iconsSidebar.${item.slug}`) }}
           </h3>
         </div>
         <ChevronRight class="text-gray-400 ml-auto w-6 h-6" />
@@ -23,14 +23,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref} from "vue";
-import { ChevronRight, Plus } from "lucide-vue-next";
+import { ref } from "vue";
+import { ChevronRight } from "lucide-vue-next";
+import { useI18n } from 'vue-i18n';
 
-const techStackItems = ref([
+const { t } = useI18n();
+
+const iconsItems = ref([
   { name: "Languages", slug: "languages" },
   { name: "Frameworks", slug: "frameworks" },
-  { name: "Technologies", slug: "technologies" }
+  { name: "Technologies", slug: "technologies" },
+  { name: "Services", slug: "services" }
 ]);
+
+const getFontSizeClass = (text: string) => {
+  return text.length > 20 ? 'text-sm' : 'text-base';
+};
 </script>
 
 <style scoped>

@@ -30,6 +30,7 @@ const emit = defineEmits(["showModifyProjectModal", "refreshProjects"]);
 const authStore = useAuthStore();
 const isAdmin = ref(authStore.hasRole('Admin'));
 
+const isLoading = ref(true);
 const project = ref<Project | null>(null);
 const errorMessage = ref<string | null>(null);
 const isDeleting = ref(false);
@@ -60,6 +61,8 @@ const fetchProject = async (slug: string) => {
     }
   } catch (error) {
     errorMessage.value = "Failed to fetch project.";
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -117,112 +120,119 @@ const openImageModal = (image: string) => {
       v-motion
       :initial="{ opacity: 0, y: 30 }"
       :enter="{ opacity: 1, y: 0 }"
+      :delay="500"
       :duration="500"
       class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white"
     >
-      <!-- Breadcrumb Navigation -->
-      <Breadcrumb />
+      <div v-if="isLoading" class="flex justify-center items-center h-screen">
+        <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
+      </div>
 
-      <div v-if="errorMessage" class="text-red-500 bg-red-800 p-3 rounded-md">{{ errorMessage }}</div>
-      <div v-else-if="project" class="space-y-6">
-        <div class="flex justify-between items-center">
-          <h1 class="text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
-          <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project)" class="text-white hover:text-gray-300 transition">
-            <Edit class="w-6 h-6" />
-          </button>
-        </div>
-        <div class="separator mt-4"></div>
-        <p class="text-gray-400 mt-2">{{ project.translations[locale as Locale].description }}</p>
+      <div v-else>
+        <!-- Breadcrumb Navigation -->
+        <Breadcrumb />
 
-        <!-- Image Carousel Section -->
-        <div v-if="project.images.length" class="mt-10">
-          <h3 class="text-2xl font-bold mb-4">Images</h3>
-          
-          <swiper
-            :modules="[Navigation, Pagination, Autoplay]"
-            :slides-per-view="1"
-            :loop="true"
-            :autoplay="{ delay: 3000, disableOnInteraction: false }"
-            :pagination="{ clickable: true }"
-            :navigation="true"
-            class="w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg"
-          >
-            <swiper-slide v-for="(image, index) in project.images" :key="index">
-              <img
-                :src="image"
-                :alt="project.translations[locale as Locale].name"
-                class="w-full h-[400px] object-cover rounded-lg"
-                @click="openImageModal(image)"
-              />
-            </swiper-slide>
-          </swiper>
-        </div>
+        <div v-if="errorMessage" class="text-red-500 bg-red-800 p-3 rounded-md">{{ errorMessage }}</div>
+        <div v-else-if="project" class="space-y-6">
+          <div class="flex justify-between items-center">
+            <h1 class="text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
+            <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project)" class="text-white hover:text-gray-300 transition">
+              <Edit class="w-6 h-6" />
+            </button>
+          </div>
+          <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full"></div>
+          <p class="text-gray-400 mt-2">{{ project.translations[locale as Locale].description }}</p>
 
-        <!-- Languages -->
-        <div v-if="project.languages.length" class="mt-10">
-          <h3 class="text-2xl font-bold">Languages</h3>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-            <div
-              v-for="language in project.languages"
-              :key="language"
-              class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+          <!-- Image Carousel Section -->
+          <div v-if="project.images.length" class="mt-10">
+            <h3 class="text-2xl font-bold mb-4">Images</h3>
+            
+            <swiper
+              :modules="[Navigation, Pagination, Autoplay]"
+              :slides-per-view="1"
+              :loop="true"
+              :autoplay="{ delay: 3000, disableOnInteraction: false }"
+              :pagination="{ clickable: true }"
+              :navigation="true"
+              class="w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg"
             >
-              <div v-html="languages.find(l => l.slug === language)?.icon" class="w-12 h-12"></div>
-              <span class="mt-2 text-white text-sm">{{ languages.find(l => l.slug === language)?.name }}</span>
+              <swiper-slide v-for="(image, index) in project.images" :key="index">
+                <img
+                  :src="image"
+                  :alt="project.translations[locale as Locale].name"
+                  class="w-full h-[400px] object-cover rounded-lg"
+                  @click="openImageModal(image)"
+                />
+              </swiper-slide>
+            </swiper>
+          </div>
+
+          <!-- Languages -->
+          <div v-if="project.languages.length" class="mt-10">
+            <h3 class="text-2xl font-bold">Languages</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+              <div
+                v-for="language in project.languages"
+                :key="language"
+                class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+              >
+                <div v-html="languages.find(l => l.slug === language)?.icon" class="w-12 h-12"></div>
+                <span class="mt-2 text-white text-sm">{{ languages.find(l => l.slug === language)?.name }}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Frameworks -->
-        <div v-if="project.frameworks.length" class="mt-10">
-          <h3 class="text-2xl font-bold">Frameworks</h3>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-            <div
-              v-for="framework in project.frameworks"
-              :key="framework"
-              class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
-            >
-              <div v-html="frameworks.find(f => f.slug === framework)?.icon" class="w-12 h-12"></div>
-              <span class="mt-2 text-white text-sm">{{ frameworks.find(f => f.slug === framework)?.name }}</span>
+          <!-- Frameworks -->
+          <div v-if="project.frameworks.length" class="mt-10">
+            <h3 class="text-2xl font-bold">Frameworks</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+              <div
+                v-for="framework in project.frameworks"
+                :key="framework"
+                class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+              >
+                <div v-html="frameworks.find(f => f.slug === framework)?.icon" class="w-12 h-12"></div>
+                <span class="mt-2 text-white text-sm">{{ frameworks.find(f => f.slug === framework)?.name }}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Technologies -->
-        <div v-if="project.technologies.length" class="mt-10">
-          <h3 class="text-2xl font-bold">Technologies</h3>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-            <div
-              v-for="technology in project.technologies"
-              :key="technology"
-              class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
-            >
-              <div v-html="technologies.find(t => t.slug === technology)?.icon" class="w-12 h-12"></div>
-              <span class="mt-2 text-white text-sm">{{ technologies.find(t => t.slug === technology)?.name }}</span>
+          <!-- Technologies -->
+          <div v-if="project.technologies.length" class="mt-10">
+            <h3 class="text-2xl font-bold">Technologies</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+              <div
+                v-for="technology in project.technologies"
+                :key="technology"
+                class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+              >
+                <div v-html="technologies.find(t => t.slug === technology)?.icon" class="w-12 h-12"></div>
+                <span class="mt-2 text-white text-sm">{{ technologies.find(t => t.slug === technology)?.name }}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Project Timeline -->
-        <div class="mt-10">
-          <h3 class="text-2xl font-bold">Project Timeline</h3>
-          <p class="text-gray-300 mt-2">{{ project.startDate }} - {{ project.endDate }}</p>
-        </div>
+          <!-- Project Timeline -->
+          <div class="mt-10">
+            <h3 class="text-2xl font-bold">Project Timeline</h3>
+            <p class="text-gray-300 mt-2">{{ project.startDate }} - {{ project.endDate }}</p>
+          </div>
 
-        <!-- Project Link -->
-        <div class="my-10">
-          <h3 class="text-2xl font-bold">Project Link</h3>
-          <a :href="project.link" target="_blank" class="text-blue-500 hover:underline">{{ project.link }}</a>
-        </div>
+          <!-- Project Link -->
+          <div class="my-10">
+            <h3 class="text-2xl font-bold">Project Link</h3>
+            <a :href="project.link" target="_blank" class="text-blue-500 hover:underline">{{ project.link }}</a>
+          </div>
 
-        <!-- Delete Project Button -->
-        <div v-if="isAdmin" class="mb-10 flex justify-end">
-          <button 
-            @click="showDeleteModal = true" 
-            class="text-red-500 hover:text-red-700 transition"
-          >
-            <Trash2 class="w-6 h-6" />
-          </button>
+          <!-- Delete Project Button -->
+          <div v-if="isAdmin" class="mb-10 flex justify-end">
+            <button 
+              @click="showDeleteModal = true" 
+              class="text-red-500 hover:text-red-700 transition"
+            >
+              <Trash2 class="w-6 h-6" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -258,13 +268,6 @@ const openImageModal = (image: string) => {
 
 * {
   font-family: 'Nunito', sans-serif;
-}
-
-/* Separator Styling */
-.separator {
-  height: 3px;
-  background: linear-gradient(to right, #b7c3d7, #ffffff);
-  border-radius: 9999px;
 }
 
 /* Customize the Swiper pagination dots */

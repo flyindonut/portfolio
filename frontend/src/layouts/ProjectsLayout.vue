@@ -38,19 +38,16 @@
 </template>
   
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref} from "vue";
 import { useRouter } from "vue-router";
 import ProjectsSidebar from "@/components/ProjectsSidebar.vue";
 import CreateProject from "@/components/CreateProject.vue";
 import ModifyProject from "@/components/ModifyProject.vue";
-import { fetchProjects } from "@/api/projectApi";
 import type { Project } from "@/types/Project";
 
 const showCreateProjectModal = ref(false);
 const showModifyProjectModal = ref(false);
 const selectedProject = ref<Project | null>(null);
-const projects = ref<Project[]>([]);
-const errorMessage = ref<string>("");
 const router = useRouter();
 
 const handleCreateProjectModalClose = () => {

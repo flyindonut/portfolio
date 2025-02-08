@@ -7,9 +7,9 @@ export interface IProject extends Document {
       name: string;
       description: string;
     };
-    fr?: {
-      name?: string;
-      description?: string;
+    fr: {
+      name: string;
+      description: string;
     };
   };
   technologies: string[];

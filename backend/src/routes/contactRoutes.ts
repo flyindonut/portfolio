@@ -4,6 +4,6 @@ import ContactController from "../controllers/contactController";
 
 const router = express.Router();
 
-router.post("/", asyncHandler(ContactController.submitContactForm));
+router.post("/", asyncHandler(ContactController.submitContactForm)); // Public
 
 export default router;

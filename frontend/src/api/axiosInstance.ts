@@ -13,6 +13,9 @@ const protectedEndpoints: Record<string, string[]> = {
   "/languages": ["POST", "PUT", "DELETE"],
   "/frameworks": ["POST", "PUT", "DELETE"],
   "/technologies": ["POST", "PUT", "DELETE"],
+  "/comments": ["POST", "PATCH", "DELETE"],
+  "/about": ["PUT"],
+  "/services": ["POST", "PUT", "DELETE"],
 };
 
 export const setAuthToken = (getToken: () => Promise<string | null>) => {

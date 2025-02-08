@@ -91,7 +91,7 @@ const isAdmin = computed(() => authStore.hasRole("Admin"));
         :initial="{ opacity: 0, y: 0 }"
         :enter="{ opacity: 1, y: 0 }"
         :duration="500" 
-        class="border-gray-600 mt-6 mb-6" 
+        class="border-gray-600 my-6" 
       />
 
       <!-- Admin Navigation Links -->
@@ -104,11 +104,11 @@ const isAdmin = computed(() => authStore.hasRole("Admin"));
       class="flex flex-col space-y-3"
       >
         <router-link 
-          to="/techstack" 
+          to="/icons" 
           class="flex items-center px-4 py-2 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
           active-class="bg-[#495057] border-l-4 border-white pl-3"
         >
-          <Layers class="w-5 h-5 mr-2" /> {{ t("manageTechStack") }}
+          <Layers class="w-5 h-5 mr-2" /> {{ t("manageIcons") }}
         </router-link>
       </nav>
     </div>
