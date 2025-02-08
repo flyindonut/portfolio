@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
-import { Home, FolderKanban, FileText, Mail, Github, Linkedin, FileDown, Layers } from "lucide-vue-next";
+import { Home, FolderKanban, FileText, Mail, Github, Linkedin, FileDown, Layers, Menu, X } from "lucide-vue-next";
 import { useAuth0 } from "@auth0/auth0-vue";
 import { useAuthStore } from "@/stores/auth";
+import { useMotion } from "@vueuse/motion";
 
 const { t, locale } = useI18n();
 const { loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0();
@@ -45,39 +46,43 @@ const isAdmin = computed(() => authStore.hasRole("Admin"));
 </script>
 
 <template>
-  <aside class="w-72 h-screen bg-[#161a1d] p-4 flex flex-col border-r border-gray-600">
+  <aside>
     <!-- Profile Info -->
     <div>
-      <h1 class="text-lg font-bold text-white">{{ t("name") }}</h1>
-      <p class="text-gray-400 text-sm">{{ t("title") }}</p>
+      <h1 class="hidden text-lg font-bold text-white md:flex">{{ t("name") }}</h1>
+      <p class="hidden text-gray-400 text-sm md:flex">{{ t("title") }}</p>
     </div>
 
     <!-- Public Navigation Links -->
-    <nav class="flex flex-col mt-6 space-y-3">
+    <nav class="flex flex-col mt-20 space-y-3 lg:mt-6">
       <router-link 
-        to="/" 
-        class="flex items-center px-4 py-2 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
+        to="/"
+        @click="$emit('closeMobileMenu')"
+        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
         active-class="bg-[#495057] border-l-4 border-white pl-3"
       >
         <Home class="w-5 h-5 mr-2" /> {{ t("home") }}
       </router-link>
       <router-link 
         to="/projects" 
-        class="flex items-center px-4 py-2 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
+        @click="$emit('closeMobileMenu')"
+        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
         active-class="bg-[#495057] border-l-4 border-white pl-3"
       >
         <FolderKanban class="w-5 h-5 mr-2" /> {{ t("projects") }}
       </router-link>
-      <router-link 
+      <router-link
         to="/comments" 
-        class="flex items-center px-4 py-2 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
+        @click="$emit('closeMobileMenu')"
+        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
         active-class="bg-[#495057] border-l-4 border-white pl-3"
       >
         <FileText class="w-5 h-5 mr-2" /> {{ t("comments") }}
       </router-link>
-      <router-link 
-        to="/contact" 
-        class="flex items-center px-4 py-2 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
+      <router-link
+        to="/contact"
+        @click="$emit('closeMobileMenu')"
+        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
         active-class="bg-[#495057] border-l-4 border-white pl-3"
       >
         <Mail class="w-5 h-5 mr-2" /> {{ t("contact") }}

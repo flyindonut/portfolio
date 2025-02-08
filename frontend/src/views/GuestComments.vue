@@ -60,7 +60,7 @@ onMounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white"
+      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white mt-14 md:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->
@@ -68,7 +68,7 @@ onMounted(() => {
 
       <!-- Title -->
       <div class="mb-6 flex justify-between items-center">
-        <h1 class="text-5xl font-bold">{{ t('guestCommentsPage.title') }}</h1>
+        <h1 class="text-3xl md:text-5-xl font-bold">{{ t('guestCommentsPage.title') }}</h1>
         <button @click="showModal = true" class="text-white hover:text-gray-300 transition">
           <Plus class="w-6 h-6" />
         </button>

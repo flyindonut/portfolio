@@ -27,8 +27,10 @@ const breadcrumbs = computed(() => {
   const breadcrumbList: { label: string; path: string | null }[] = [{ label: "Home", path: "/" }];
 
   paths.forEach((segment, index) => {
-    let label = segment.replace(/-/g, " ");
-    label = label.charAt(0).toUpperCase() + label.slice(1);
+    let label = segment
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
     const path = `/${paths.slice(0, index + 1).join("/")}`;
     
     breadcrumbList.push({ label, path: index < paths.length - 1 ? path : null });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { fetchProjectBySlug, deleteProject } from "@/api/projectApi";
@@ -22,10 +22,10 @@ import { X } from "lucide-vue-next";
 
 type Locale = 'en' | 'fr';
 
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const emit = defineEmits(["showModifyProjectModal", "refreshProjects"]);
+const emit = defineEmits(["showModifyProjectModal", "refreshProjects", "closeProjectsMenu"]);
 
 const authStore = useAuthStore();
 const isAdmin = ref(authStore.hasRole('Admin'));
@@ -100,6 +100,7 @@ watch(
 );
 
 onMounted(() => {
+  emit("closeProjectsMenu")
   setTimeout(() => {
     isAnimating.value = false;
   }, 500);
@@ -112,17 +113,27 @@ const openImageModal = (image: string) => {
   selectedImage.value = image;
   showImageModal.value = true;
 };
+
+const windowSize = ref(window.innerWidth);
+
+watch(windowSize, (newSize) => {
+  swiperNavigationSize.value = newSize >= 768 ? '50px' : '20px';
+});
+
+const swiperNavigationSize = computed(() => {
+  return window.innerWidth >= 768 ? '50px' : '20px';
+});
 </script>
 
 <template>
-  <div class="flex h-screen overflow-y-scroll">
+  <div class="h-screen overflow-y-scroll">
     <div
       v-motion
       :initial="{ opacity: 0, y: 30 }"
       :enter="{ opacity: 1, y: 0 }"
       :delay="500"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white"
+      class="p-10 md:p-20 mt-14 mx-auto max-w-4xl text-white"
     >
       <div v-if="isLoading" class="flex justify-center items-center h-screen">
         <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
@@ -135,7 +146,7 @@ const openImageModal = (image: string) => {
         <div v-if="errorMessage" class="text-red-500 bg-red-800 p-3 rounded-md">{{ errorMessage }}</div>
         <div v-else-if="project" class="space-y-6">
           <div class="flex justify-between items-center">
-            <h1 class="text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
+            <h1 class="text-4xl md:text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
             <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project)" class="text-white hover:text-gray-300 transition">
               <Edit class="w-6 h-6" />
             </button>
@@ -148,6 +159,7 @@ const openImageModal = (image: string) => {
             <h3 class="text-2xl font-bold mb-4">Images</h3>
             
             <swiper
+              :style="{'--swiper-navigation-size': swiperNavigationSize}"
               :modules="[Navigation, Pagination, Autoplay]"
               :slides-per-view="1"
               :loop="true"
@@ -160,7 +172,7 @@ const openImageModal = (image: string) => {
                 <img
                   :src="image"
                   :alt="project.translations[locale as Locale].name"
-                  class="w-full h-[400px] object-cover rounded-lg"
+                  class="w-full h-[200px] lg:h-[400px] object-cover rounded-lg"
                   @click="openImageModal(image)"
                 />
               </swiper-slide>
@@ -169,7 +181,7 @@ const openImageModal = (image: string) => {
 
           <!-- Languages -->
           <div v-if="project.languages.length" class="mt-10">
-            <h3 class="text-2xl font-bold">Languages</h3>
+            <h3 class="text-2xl font-bold">{{ t('projectPage.languages') }}</h3>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
               <div
                 v-for="language in project.languages"

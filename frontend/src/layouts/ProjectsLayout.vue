@@ -7,8 +7,12 @@
       :initial="{ x: -288 }"
       :enter="{ x: 0 }"
       :duration="500"
+      :class="{ 'hidden': !isProjectsMenuOpen, 'flex': isProjectsMenuOpen }"
+      class="h-screen w-full bg-[#161a1d] p-4 flex-col border-r border-gray-600 overflow-y-auto md:w-72 md:flex"
       @showCreateProjectModal="showCreateProjectModal = true"
       @refreshProjects="handleRefreshProjects"
+      @closeProjectsMenu="toggleProjectsMenu"
+      @showProjectsMenu="isProjectsMenuOpen = true"
     />
 
     <!-- Page Content -->
@@ -17,6 +21,7 @@
         :key="$route.fullPath" 
         @showModifyProjectModal="handleShowModifyProjectModal" 
         @refreshProjects="handleRefreshProjects"
+        @closeProjectsMenu="isProjectsMenuOpen = false"
       />
     </div>
 
@@ -38,7 +43,7 @@
 </template>
   
 <script setup lang="ts">
-import { ref} from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import ProjectsSidebar from "@/components/ProjectsSidebar.vue";
 import CreateProject from "@/components/CreateProject.vue";
@@ -67,5 +72,11 @@ const handleShowModifyProjectModal = (project: Project) => {
 const handleRefreshProjects = () => {
   const event = new Event("refreshProjects");
   window.dispatchEvent(event);
+};
+
+const isProjectsMenuOpen = ref(false);
+
+const toggleProjectsMenu = () => {
+  isProjectsMenuOpen.value = !isProjectsMenuOpen.value;
 };
 </script>

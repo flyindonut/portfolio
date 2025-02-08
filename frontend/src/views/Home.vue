@@ -210,7 +210,7 @@ const removeTechnology = (technology: string) => {
       <div class="mb-10" v-if="about">
         <div class="flex justify-between items-center">
           <div>
-            <h1 class="text-5xl font-bold">{{ t(about.firstName) }} {{ t(about.lastName) }}</h1>
+            <h1 class="text-4xl sm:text-5xl font-bold">{{ t(about.firstName) }} {{ t(about.lastName) }}</h1>
             <h2 class="text-xl text-gray-400">{{ about.translations[locale as Locale].title }}</h2>
           </div>
           <button v-if="isAuthStatusDefined && isAdmin" @click="showModal = true" class="text-white hover:text-gray-300 transition">
@@ -226,7 +226,7 @@ const removeTechnology = (technology: string) => {
       <!-- Skills Section -->
       <div class="mt-10" v-if="services.length">
         <h3 class="text-2xl font-bold">{{ t("homePage.skillsTitle") }}</h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
           <div 
             v-for="service in services.filter(service => about?.services.includes(service.translations.en.name))"
             :key="service.slug" 
@@ -241,7 +241,7 @@ const removeTechnology = (technology: string) => {
       <!-- Technologies Section -->
       <div class="mt-12" v-if="about && about.technologies.length">
         <h3 class="text-2xl font-bold">{{ t("homePage.techTitle") }}</h3>
-        <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-6">
           <div 
             v-for="language in languages.filter(language => about?.technologies.includes(language.name))" 
             :key="language.slug" 

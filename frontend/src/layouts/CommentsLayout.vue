@@ -6,6 +6,10 @@
       :initial="{ x: -288 }"
       :enter="{ x: 0 }"
       :duration="500"
+      :class="{ 'hidden': !isCommentsMenuOpen, 'flex': isCommentsMenuOpen }"
+      class="w-full h-screen bg-[#161a1d] p-4 flex flex-col border-r border-gray-600 md:w-72"
+      @closeCommentsMenu="toggleCommentsMenu"
+      @showCommentsMenu="isCommentsMenuOpen = true"
     />
 
     <!-- Page Content -->
@@ -17,4 +21,11 @@
   
 <script setup lang="ts">
 import CommentsSidebar from "@/components/CommentsSidebar.vue";
+import { ref } from "vue";
+
+const isCommentsMenuOpen = ref(false);
+
+const toggleCommentsMenu = () => {
+  isCommentsMenuOpen.value = !isCommentsMenuOpen.value;
+};
 </script>

@@ -1,7 +1,7 @@
 <template>
-  <aside class="w-72 h-screen bg-[#161a1d] p-4 flex flex-col border-r border-gray-600 overflow-y-auto">
+  <aside>
     <div class="flex justify-between items-center">
-      <h2 class="text-white text-lg font-bold mb-4">{{ t("projects") }}</h2>
+      <h2 class="text-white text-2xl mt-6 md:text-lg md:mt-0 font-bold mb-4">{{ t("projects") }}</h2>
       <!-- Create Project Button -->
       <button v-if="isAdmin" @click="$emit('showCreateProjectModal')" class="text-white hover:text-gray-300 transition mb-4">
         <Plus class="w-6 h-6" />
@@ -12,11 +12,12 @@
     <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
 
     <!-- Project List -->
-    <div v-else class="flex flex-col space-y-4">
+    <nav v-else class="flex flex-col space-y-4 mt-6 lg:mt-0">
       <router-link
         v-for="project in projects"
         :key="project.slug"
         :to="`/projects/${project.slug}`"
+        @click="$emit('closeProjectsMenu')"
         class="flex items-center px-5 py-3 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
         active-class="bg-[#495057] border-l-4 border-white pl-4"
       >
@@ -30,7 +31,7 @@
         </div>
         <ChevronRight class="text-gray-400 ml-auto w-6 h-6" />
       </router-link>
-    </div>
+    </nav>
   </aside>
 </template>
 
@@ -41,6 +42,7 @@ import { fetchProjects } from "@/api/projectApi";
 import type { Project } from "@/types/Project";
 import { ChevronRight, Plus } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
+import { useRoute } from "vue-router";
 
 const { t, locale } = useI18n();
 
@@ -69,7 +71,10 @@ const fetchAllProjects = async () => {
   }
 };
 
+
+const emit = defineEmits(["showProjectsMenu", "closeProjectsMenu", "showCreateProjectModal"])
 onMounted(() => {
+  emit("showProjectsMenu");
   fetchAllProjects();
 
   window.addEventListener("refreshProjects", fetchAllProjects);
@@ -85,6 +90,18 @@ const trimName = (name: string): string => {
 
 const authStore = useAuthStore();
 const isAdmin = computed(() => authStore.hasRole("Admin"));
+
+const route = useRoute();
+
+watch(
+  () => route.path,
+  (newPath) => {
+    if (newPath === "/projects") {
+      emit('showProjectsMenu')
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>

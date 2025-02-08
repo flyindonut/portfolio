@@ -25,7 +25,6 @@ const messages = {
       title: "Title",
       description: "Description",
       services: "Services",
-      languages: "Languages",
       frameworks: "Frameworks",
       technologies: "Technologies",
       hobbies: "Hobbies",
@@ -34,6 +33,9 @@ const messages = {
       previous: "Previous",
       add: "Add",
       save: "Save"
+    },
+    projectPage: {
+      languages: "Languages",
     },
     contactPage: {
       heading: "Contact Me",
@@ -135,7 +137,6 @@ const messages = {
       title: "Titre",
       description: "Description",
       services: "Services",
-      languages: "Langues",
       frameworks: "Frameworks",
       technologies: "Technologies",
       hobbies: "Loisirs",
@@ -144,6 +145,9 @@ const messages = {
       previous: "Précédent",
       add: "Ajouter",
       save: "Enregistrer"
+    },
+    projectPage: {
+      languages: "Langages",
     },
     contactPage: {
       heading: "Me Contacter",
@@ -175,7 +179,7 @@ const messages = {
     },
     iconsSidebar: {
       title: "Icônes",
-      languages: "Langues",
+      languages: "Langages",
       frameworks: "Frameworks",
       technologies: "Technologies",
       services: "Services"
