@@ -1,0 +1,45 @@
+name: Build Frontend and Backend
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    name: Build Frontend and Backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies (Frontend)
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Install dependencies (Backend)
+        run: |
+          cd backend
+          npm install
+
+      - name: Build Backend
+        run: |
+          cd backend
+          npm run build
