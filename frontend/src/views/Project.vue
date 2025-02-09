@@ -116,12 +116,12 @@ const openImageModal = (image: string) => {
 
 const windowSize = ref(window.innerWidth);
 
-watch(windowSize, (newSize) => {
-  swiperNavigationSize.value = newSize >= 768 ? '50px' : '20px';
+const swiperNavigationSize = computed(() => {
+  return windowSize.value >= 768 ? '50px' : '20px';
 });
 
-const swiperNavigationSize = computed(() => {
-  return window.innerWidth >= 768 ? '50px' : '20px';
+window.addEventListener('resize', () => {
+  windowSize.value = window.innerWidth;
 });
 </script>
 
@@ -133,7 +133,7 @@ const swiperNavigationSize = computed(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="500"
       :duration="500"
-      class="p-10 md:p-20 mt-14 mx-auto max-w-4xl text-white"
+      class="p-10 md:p-20 mt-14 md:mt-0 mx-auto max-w-4xl text-white"
     >
       <div v-if="isLoading" class="flex justify-center items-center h-screen">
         <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>

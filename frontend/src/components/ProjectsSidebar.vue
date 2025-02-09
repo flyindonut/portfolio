@@ -74,7 +74,6 @@ const fetchAllProjects = async () => {
 
 const emit = defineEmits(["showProjectsMenu", "closeProjectsMenu", "showCreateProjectModal"])
 onMounted(() => {
-  emit("showProjectsMenu");
   fetchAllProjects();
 
   window.addEventListener("refreshProjects", fetchAllProjects);

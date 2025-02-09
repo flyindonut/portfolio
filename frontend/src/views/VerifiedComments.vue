@@ -99,7 +99,7 @@ onMounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white mt-14"
+      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white mt-14 md:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->

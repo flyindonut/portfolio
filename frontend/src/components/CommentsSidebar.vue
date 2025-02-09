@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import { ChevronRight } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
-import { computed, watch } from "vue";
+import { computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from 'vue-i18n';
 import { useAuth0 } from '@auth0/auth0-vue';
