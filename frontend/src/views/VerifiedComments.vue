@@ -22,6 +22,7 @@ const commentToModify = ref<Comment | null>(null);
 const commentToDelete = ref<Comment | null>(null);
 const successMessage = ref<string | null>(null);
 const filterUserComments = ref<string>("ALL");
+const emit = defineEmits(["showGoBack"]);
 
 const fetchAllVerifiedComments = async () => {
   try {
@@ -87,6 +88,7 @@ const filteredComments = computed(() => {
 });
 
 onMounted(() => {
+  emit("showGoBack");
   fetchAllVerifiedComments();
 });
 </script>
@@ -103,7 +105,9 @@ onMounted(() => {
     >
 
       <!-- Breadcrumb Navigation -->
-      <Breadcrumb />
+      <Breadcrumb
+        @showGoBack="$emit('showGoBack')"
+      />
 
       <div class="mb-6 flex justify-between items-center">
         <h1 class="font-bold text-3xl md:text-5xl">{{ t('verifiedCommentsPage.title') }}</h1>

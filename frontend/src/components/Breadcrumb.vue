@@ -5,6 +5,7 @@
         <router-link 
           v-if="crumb.path" 
           :to="crumb.path" 
+          @click="$emit('showGoBack')"
           class="hover:text-white transition duration-200"
         >
           {{ crumb.label }}

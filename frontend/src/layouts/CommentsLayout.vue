@@ -16,6 +16,7 @@
     <div class="flex-1 overflow-y-auto">
       <router-view 
         :key="$route.fullPath" 
+        @showGoBack="$emit('showGoBack')"
       />
     </div>
   </div>

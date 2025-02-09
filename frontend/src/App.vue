@@ -1,17 +1,41 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useAuth0 } from "@auth0/auth0-vue";
 import Sidebar from "./components/Sidebar.vue";
-import { Menu, X } from "lucide-vue-next";
+import { ChevronLeft, Menu, X } from "lucide-vue-next";
+import { useRouter, useRoute } from "vue-router";
 
 const { isLoading } = useAuth0();
 
 const isAuthStatusDefined = computed(() => !isLoading.value);
 
 const isMobileMenuOpen = ref(false);
+const route = useRoute();
 
 const toggleMobileMenu = () => {
+  if (isGoBackVisible.value) {
+    isGoBackVisible.value = false;
+  }
+  if (isMobileMenuOpen.value) {
+    if ((route.path.startsWith('/projects/') && route.path !== '/projects') || 
+        (route.path.startsWith('/comments/') && route.path !== '/comments')) {
+      isGoBackVisible.value = true;
+    }
+  }
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
+};
+
+const isGoBackVisible = ref(false);
+
+const toggleGoBack = () => {
+  isGoBackVisible.value = !isGoBackVisible.value;
+};
+
+const router = useRouter();
+
+const goBack = () => {
+  router.go(-1);
+  isGoBackVisible.value = false;
 };
 </script>
 
@@ -32,12 +56,23 @@ const toggleMobileMenu = () => {
         <component :is="isMobileMenuOpen ? X : Menu" class="w-6 h-6 text-white"/>
       </div>
     </div>
+
+    <!-- Mobile Go Back -->
+    <div 
+      @click="goBack"
+      :class="{ 'hidden': !isGoBackVisible, 'flex': isGoBackVisible }"
+      class="border-gray-600 bg-[#343a40]/5 absolute top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden"
+    >
+      <div tabindex="0">
+        <ChevronLeft class="w-6 h-6 text-white"/>
+      </div>
+    </div>
     
     <!-- Sidebar -->
     <Sidebar
       @closeMobileMenu="isMobileMenuOpen = false"
       :class="{ 'hidden': !isMobileMenuOpen, 'flex': isMobileMenuOpen }"
-      class="relative z-10 w-full h-screen bg-[#161a1d] p-4 flex-col border-r border-gray-600 md:flex lg:w-60 xl:w-72 xl:flex xl:w-72" 
+      class="relative z-10 w-full min-h-screen bg-[#161a1d] p-4 flex-col border-r border-gray-600 md:flex lg:w-60 xl:w-72 xl:flex xl:w-72" 
     />
 
     <!-- Loading Indicator -->
@@ -48,7 +83,9 @@ const toggleMobileMenu = () => {
     <!-- Main Content -->
     <main v-else class="flex-1 overflow-y-auto relative z-10 bg-transparent">
       <div class="relative">
-        <router-view />
+        <router-view
+          @showGoBack="toggleGoBack"
+        />
       </div>
     </main>
   </div>

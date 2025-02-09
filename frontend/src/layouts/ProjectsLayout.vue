@@ -22,6 +22,7 @@
         @showModifyProjectModal="handleShowModifyProjectModal" 
         @refreshProjects="handleRefreshProjects"
         @closeProjectsMenu="isProjectsMenuOpen = false"
+        @showGoBack="$emit('showGoBack')"
       />
     </div>
 

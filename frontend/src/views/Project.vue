@@ -25,7 +25,7 @@ type Locale = 'en' | 'fr';
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const emit = defineEmits(["showModifyProjectModal", "refreshProjects", "closeProjectsMenu"]);
+const emit = defineEmits(["showModifyProjectModal", "refreshProjects", "closeProjectsMenu", "showGoBack"]);
 
 const authStore = useAuthStore();
 const isAdmin = ref(authStore.hasRole('Admin'));
@@ -100,6 +100,7 @@ watch(
 );
 
 onMounted(() => {
+  emit("showGoBack")
   emit("closeProjectsMenu")
   setTimeout(() => {
     isAnimating.value = false;
@@ -141,7 +142,9 @@ window.addEventListener('resize', () => {
 
       <div v-else>
         <!-- Breadcrumb Navigation -->
-        <Breadcrumb />
+        <Breadcrumb
+          @showGoBack="$emit('showGoBack')"
+        />
 
         <div v-if="errorMessage" class="text-red-500 bg-red-800 p-3 rounded-md">{{ errorMessage }}</div>
         <div v-else-if="project" class="space-y-6">

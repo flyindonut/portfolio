@@ -15,7 +15,7 @@ const newCommentContent = ref<string>("");
 const firstName = ref<string>("");
 const lastName = ref<string>("");
 const successMessage = ref<string | null>(null);
-
+const emit = defineEmits(["showGoBack"]);
 const fetchAllGuestComments = async () => {
   try {
     const response = await fetchGuestComments();
@@ -48,6 +48,7 @@ const handleCreateComment = async () => {
 };
 
 onMounted(() => {
+  emit("showGoBack");
   fetchAllGuestComments();
 });
 </script>
@@ -64,7 +65,9 @@ onMounted(() => {
     >
 
       <!-- Breadcrumb Navigation -->
-      <Breadcrumb />
+      <Breadcrumb
+        @showGoBack="$emit('showGoBack')"
+      />
 
       <!-- Title -->
       <div class="mb-6 flex justify-between items-center">
