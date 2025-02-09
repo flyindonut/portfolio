@@ -109,7 +109,7 @@ onMounted(() => {
 
   <!-- Add Comment Modal -->
   <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-auto">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-4">
       <h2 class="text-xl font-bold mb-4">{{ t('guestCommentsPage.addComment') }}</h2>
       <form v-if="!successMessage" @submit.prevent="handleCreateComment" class="space-y-4">
         

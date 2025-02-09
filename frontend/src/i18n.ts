@@ -35,6 +35,8 @@ const messages = {
       save: "Save"
     },
     projectPage: {
+      title: "Projects",
+      description: "Please select a project to view",
       languages: "Languages",
     },
     contactPage: {
@@ -147,6 +149,8 @@ const messages = {
       save: "Enregistrer"
     },
     projectPage: {
+      title: "Projets",
+      description: "Veuillez sélectionner un projet à voir",
       languages: "Langages",
     },
     contactPage: {

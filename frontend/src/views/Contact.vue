@@ -63,13 +63,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="flex items-center justify-center min-h-dvh p-6" :class="{ 'overflow-hidden': isAnimating }">
+  <section class="flex items-center justify-center h-dvh" :class="{ 'overflow-hidden': isAnimating }">
     <div
       v-motion
       :initial="{ opacity: 0, y: 30 }"
       :enter="{ opacity: 1, y: 0 }"
       :duration="500"
-      class="p-6 w-full max-w-lg bg-[#161a1d] rounded-xl shadow-2xl border border-gray-700 text-white mt-16 md:mt-0"
+      class="p-6 w-full mx-4 md:max-w-lg bg-[#161a1d] rounded-xl shadow-2xl border border-gray-700 text-white mt-16 md:mt-0"
     >
       <h1 class="text-3xl font-bold mb-4 flex items-center gap-2">
         <Mail class="w-6 h-6" />

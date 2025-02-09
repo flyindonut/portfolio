@@ -109,9 +109,9 @@ onMounted(() => {
         @showGoBack="$emit('showGoBack')"
       />
 
-      <div class="mb-6 flex justify-between items-center">
+      <div class="mb-6 flex flex-col sm:flex-row justify-between items-center">
         <h1 class="font-bold text-3xl md:text-5xl">{{ t('verifiedCommentsPage.title') }}</h1>
-        <div v-if="isAuthenticated" class="flex space-x-4">
+        <div v-if="isAuthenticated" class="flex space-x-4 mt-4 md:mt-0">
           <div class="relative">
             <select v-model="filterUserComments" class="bg-[#343a40] text-white p-2 rounded-md appearance-none pr-10">
               <option value="ALL">{{ t('verifiedCommentsPage.allComments') }}</option>
@@ -172,7 +172,7 @@ onMounted(() => {
 
   <!-- Add Comment Modal -->
   <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-auto">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-4">
       <h2 class="text-xl font-bold mb-4">{{ t('verifiedCommentsPage.addComment') }}</h2>
       <form v-if="!successMessage" @submit.prevent="handleCreateComment" class="space-y-4">
         

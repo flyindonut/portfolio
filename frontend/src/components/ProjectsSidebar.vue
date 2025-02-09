@@ -32,6 +32,9 @@
         <ChevronRight class="text-gray-400 ml-auto w-6 h-6" />
       </router-link>
     </nav>
+    <p class="mt-6 text-sm text-gray-400 text-center lg:hidden">
+      {{ t('projectPage.description') }}
+    </p>
   </aside>
 </template>
 
