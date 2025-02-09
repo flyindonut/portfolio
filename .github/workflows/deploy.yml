@@ -1,6 +1,10 @@
 name: Deploy to DigitalOcean
 
 on:
+  workflow_run:
+    workflows: ["Build Frontend and Backend"]
+    types:
+      - completed
   push:
     branches:
       - main
