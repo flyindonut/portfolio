@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-72 h-screen bg-[#161a1d] p-4 flex flex-col border-r border-gray-600">
+  <aside class="w-72 h-dvh bg-[#161a1d] p-4 flex flex-col border-r border-gray-600">
     <h2 class="text-white text-lg font-bold mb-4">{{ t('iconsSidebar.title') }}</h2>
 
     <!-- Icons List -->

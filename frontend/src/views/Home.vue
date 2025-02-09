@@ -201,7 +201,7 @@ const removeTechnology = (technology: string) => {
     :duration="500"
     class="p-10 md:p-20 mx-auto max-w-5xl text-white"
   >
-    <div v-if="isLoading" class="flex justify-center items-center h-screen">
+    <div v-if="isLoading" class="flex justify-center items-center h-dvh">
       <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
     </div>
 

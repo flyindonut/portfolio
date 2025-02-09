@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen">
+  <div class="flex h-dvh">
     <!-- Sidebar  -->
     <CommentsSidebar
       v-motion
@@ -7,7 +7,7 @@
       :enter="{ x: 0 }"
       :duration="500"
       :class="{ 'hidden': !isCommentsMenuOpen, 'flex': isCommentsMenuOpen }"
-      class="w-full h-screen bg-[#161a1d] p-4 flex flex-col border-r border-gray-600 md:w-72 md:flex"
+      class="w-full h-dvh bg-[#161a1d] p-4 flex flex-col border-r border-gray-600 md:w-72 md:flex"
       @closeCommentsMenu="toggleCommentsMenu"
       @showCommentsMenu="isCommentsMenuOpen = true"
     />

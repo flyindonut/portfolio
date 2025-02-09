@@ -54,7 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex h-screen overflow-y-scroll">
+  <div class="flex h-dvh overflow-y-scroll">
     <div
       v-motion
       :initial="{ opacity: 0, y: 30 }"

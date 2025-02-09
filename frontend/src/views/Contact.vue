@@ -63,7 +63,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="flex items-center justify-center min-h-screen p-6" :class="{ 'overflow-hidden': isAnimating }">
+  <section class="flex items-center justify-center min-h-dvh p-6" :class="{ 'overflow-hidden': isAnimating }">
     <div
       v-motion
       :initial="{ opacity: 0, y: 30 }"

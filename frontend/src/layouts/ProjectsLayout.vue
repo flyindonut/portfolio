@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen">
+  <div class="flex h-dvh">
 
     <!-- Sidebar -->
     <ProjectsSidebar 
@@ -8,7 +8,7 @@
       :enter="{ x: 0 }"
       :duration="500"
       :class="{ 'hidden': !isProjectsMenuOpen, 'flex': isProjectsMenuOpen }"
-      class="h-screen w-full bg-[#161a1d] p-4 flex-col border-r border-gray-600 overflow-y-auto md:w-72 md:flex"
+      class="h-dvh w-full bg-[#161a1d] p-4 flex-col border-r border-gray-600 overflow-y-auto md:w-72 md:flex"
       @showCreateProjectModal="showCreateProjectModal = true"
       @refreshProjects="handleRefreshProjects"
       @closeProjectsMenu="toggleProjectsMenu"

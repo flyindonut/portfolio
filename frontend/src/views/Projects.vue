@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden h-screen lg:flex">
+  <div class="hidden h-dvh lg:flex">
     <div
       v-motion
       :initial="{ opacity: 0, y: 0 }"

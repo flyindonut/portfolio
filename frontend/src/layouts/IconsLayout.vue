@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen">
+  <div class="flex h-dvh">
     <!-- Sidebar  -->
     <IconsSidebar
       v-motion

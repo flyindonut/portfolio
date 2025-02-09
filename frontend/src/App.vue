@@ -40,7 +40,7 @@ const goBack = () => {
 </script>
 
 <template>
-  <div class="flex h-screen text-light relative">
+  <div class="flex h-dvh text-light relative">
     <!-- Background Effects -->
     <div class="fixed inset-0 z-0 bg-gradient-to-br from-[#121417] via-[#191b1f] to-[#22252a]">
       <div class="absolute inset-0 bg-grid-pattern"></div>
@@ -72,7 +72,7 @@ const goBack = () => {
     <Sidebar
       @closeMobileMenu="isMobileMenuOpen = false"
       :class="{ 'hidden': !isMobileMenuOpen, 'flex': isMobileMenuOpen }"
-      class="relative z-10 w-full min-h-screen bg-[#161a1d] p-4 flex-col border-r border-gray-600 md:flex lg:w-60 xl:w-72 xl:flex xl:w-72" 
+      class="relative z-10 w-full h-dvh bg-[#161a1d] p-4 flex-col border-r border-gray-600 md:flex lg:w-60 xl:w-72 xl:flex xl:w-72" 
     />
 
     <!-- Loading Indicator -->

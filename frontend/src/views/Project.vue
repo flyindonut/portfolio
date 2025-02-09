@@ -127,7 +127,7 @@ window.addEventListener('resize', () => {
 </script>
 
 <template>
-  <div class="h-screen overflow-y-scroll">
+  <div class="h-dvh overflow-y-scroll">
     <div
       v-motion
       :initial="{ opacity: 0, y: 30 }"
@@ -136,7 +136,7 @@ window.addEventListener('resize', () => {
       :duration="500"
       class="p-10 md:p-20 mt-14 md:mt-0 mx-auto max-w-4xl text-white"
     >
-      <div v-if="isLoading" class="flex justify-center items-center h-screen">
+      <div v-if="isLoading" class="flex justify-center items-center h-dvh">
         <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
       </div>
 
