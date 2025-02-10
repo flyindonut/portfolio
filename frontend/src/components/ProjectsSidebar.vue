@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-white text-2xl mt-6 md:text-lg md:mt-0 font-bold mb-4">{{ t("projects") }}</h2>
       <!-- Create Project Button -->
-      <button v-if="isAdmin" @click="$emit('showCreateProjectModal')" class="text-white hover:text-gray-300 transition mb-4">
+      <button v-if="isAdmin" @click="$emit('showCreateProjectModal')" class="text-white hover:text-gray-300 transition mb-4 mt-6 mr-12 md:mt-0 md:mr-0">
         <Plus class="w-6 h-6" />
       </button>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-4xl mx-auto">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-4xl m-4 overflow-y-auto max-h-[80vh]">
       <h2 class="text-xl font-bold mb-4">Create Project</h2>
       <form @submit.prevent="createProject" class="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         

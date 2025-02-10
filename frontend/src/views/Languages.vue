@@ -91,14 +91,14 @@ const handleIconUpload = (event: Event) => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white"
+      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white mt-14 md:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->
       <Breadcrumb />
 
       <div class="mb-6 flex justify-between items-center">
-        <h1 class="text-5xl font-bold">Languages</h1>
+        <h1 class="text-4xl md:text-5xl font-bold">Languages</h1>
         <button @click="showModal = true" class="text-white hover:text-gray-300 transition">
           <Plus class="w-6 h-6" />
         </button>
@@ -142,7 +142,7 @@ const handleIconUpload = (event: Event) => {
 
   <!-- Add Language Modal -->
   <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-auto">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-4">
       <h2 class="text-xl font-bold mb-4">Add New Language</h2>
       <form @submit.prevent="handleCreateLanguage" class="space-y-4">
         
@@ -187,7 +187,7 @@ const handleIconUpload = (event: Event) => {
 
 <!-- Delete Confirmation Modal -->
   <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-4">
       <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
       <p>Are you sure you want to delete this language?</p>
       <div class="flex justify-end space-x-3 mt-4">

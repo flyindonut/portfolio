@@ -109,8 +109,9 @@ const isAdmin = computed(() => authStore.hasRole("Admin"));
       class="flex flex-col space-y-3"
       >
         <router-link 
-          to="/icons" 
-          class="flex items-center px-4 py-2 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
+          to="/icons"
+          @click="$emit('closeMobileMenu')"
+          class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
           active-class="bg-[#495057] border-l-4 border-white pl-3"
         >
           <Layers class="w-5 h-5 mr-2" /> {{ t("manageIcons") }}

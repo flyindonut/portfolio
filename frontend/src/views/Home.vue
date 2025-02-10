@@ -213,7 +213,7 @@ const removeTechnology = (technology: string) => {
             <h1 class="text-4xl sm:text-5xl font-bold">{{ t(about.firstName) }} {{ t(about.lastName) }}</h1>
             <h2 class="text-xl text-gray-400">{{ about.translations[locale as Locale].title }}</h2>
           </div>
-          <button v-if="isAuthStatusDefined && isAdmin" @click="showModal = true" class="text-white hover:text-gray-300 transition">
+          <button v-if="isAuthStatusDefined && isAdmin" @click="showModal = true" class="mr-8 md:mr-0 text-white hover:text-gray-300 transition">
             <Edit class="w-6 h-6" />
           </button>
         </div>
@@ -289,8 +289,8 @@ const removeTechnology = (technology: string) => {
   </section>
 
   <!-- Update About Modal -->
-  <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50 overflow-y-auto">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-2xl mx-auto">
+  <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-2xl m-4 overflow-y-auto max-h-[80vh]">
       <h2 class="text-xl font-bold mb-4">Update About</h2>
       <form @submit.prevent="handleUpdateAbout" class="space-y-4">
         <div v-if="currentStep === 1" class="space-y-4">

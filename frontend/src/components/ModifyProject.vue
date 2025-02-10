@@ -1,6 +1,6 @@
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-4xl mx-auto">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-4xl m-4 overflow-y-auto max-h-[80vh]">
       <h2 class="text-xl font-bold mb-4">Modify Project</h2>
       <form @submit.prevent="modifyProject" class="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         
@@ -98,16 +98,18 @@
         <div class="col-span-1 md:col-span-2">
           <label class="block text-sm font-medium text-gray-300">Images</label>
           <div class="flex items-center space-x-2">
-            <input v-model="imageUrl" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" placeholder="Image URL" />
+            <input v-model="imageUrl" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500 break-all" placeholder="Image URL" />
             <button type="button" @click="addImage" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
           </div>
           <div class="mt-2 flex flex-wrap gap-2">
-            <span v-for="image in projectImages" :key="image" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
-              {{ image }}
+            <span v-for="image in projectImages" :key="image" 
+              class="bg-gray-700 text-white py-1 px-3 rounded-md md:rounded-full flex items-end space-x-2 break-words text-sm md:text-base">
+              <span class="break-words whitespace-normal max-w-[60vw] md:max-w-full">{{ image }}</span>
               <button @click="removeImage(image)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
             </span>
           </div>
         </div>
+
 
         <!-- Link Input -->
         <div class="col-span-1 md:col-span-2">

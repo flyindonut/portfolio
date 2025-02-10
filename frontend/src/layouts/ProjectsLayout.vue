@@ -4,9 +4,9 @@
     <!-- Sidebar -->
     <ProjectsSidebar 
       v-motion
-      :initial="{ x: -288 }"
-      :enter="{ x: 0 }"
-      :duration="500"
+      :initial="sidebarInitial"
+      :enter="sidebarEnter"
+      :duration="sidebarDuration"
       :class="{ 'hidden': !isProjectsMenuOpen, 'flex': isProjectsMenuOpen }"
       class="h-dvh w-full bg-[#161a1d] p-4 flex-col border-r border-gray-600 overflow-y-auto md:w-72 md:flex"
       @showCreateProjectModal="showCreateProjectModal = true"
@@ -44,7 +44,7 @@
 </template>
   
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import ProjectsSidebar from "@/components/ProjectsSidebar.vue";
 import CreateProject from "@/components/CreateProject.vue";
@@ -80,4 +80,22 @@ const isProjectsMenuOpen = ref(false);
 const toggleProjectsMenu = () => {
   isProjectsMenuOpen.value = !isProjectsMenuOpen.value;
 };
+
+const windowSize = ref(window.innerWidth);
+
+const sidebarInitial = computed(() => {
+  return windowSize.value >= 768 ? { x: -288 } : { opacity: 0, x: 0 };
+});
+
+const sidebarEnter = computed(() => {
+  return windowSize.value >= 768 ? { x: 0 } : { opacity: 1, x: 0 };
+});
+
+const sidebarDuration = computed(() => {
+  return windowSize.value >= 768 ? 500 : 750;
+});
+
+window.addEventListener('resize', () => {
+  windowSize.value = window.innerWidth;
+});
 </script>
