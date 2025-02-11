@@ -38,7 +38,8 @@
       <router-link
         v-if="isAdmin"
         to="/comments/manage"
-        class="flex items-center px-5 py-3 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
+        @click="$emit('closeCommentsMenu')"
+        class="flex items-center px-5 py-4 md:py-3 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
         active-class="bg-[#495057] border-l-4 border-white pl-4"
       >
         <div class="flex flex-col justify-center w-full">

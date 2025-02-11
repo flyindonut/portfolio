@@ -89,16 +89,16 @@ onMounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white"
+      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white mt-14 md:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->
       <Breadcrumb />
 
       <!-- Title -->
-      <div class="mb-6 flex justify-between items-center">
-        <h1 class="text-5xl font-bold">Manage Comments</h1>
-        <div class="flex space-x-4">
+      <div class="mb-6 flex flex-col sm:flex-row justify-between items-center">
+        <h1 class="text-3xl md:text-5xl font-bold">Manage Comments</h1>
+        <div class="flex space-x-4 mt-4 md:mt-0">
           <div class="relative">
             <select v-model="filterStatus" class="bg-[#343a40] text-white p-2 rounded-md appearance-none pr-10">
               <option value="ALL">All</option>
@@ -134,7 +134,7 @@ onMounted(() => {
       <div v-if="filteredComments.length > 0">
         <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full mb-7"></div>
         <div v-for="comment in filteredComments" :key="comment.commentId" class="bg-[#161a1d] p-6 rounded-lg shadow-md backdrop-blur-md relative mb-4">
-          <div class="flex items-center mb-4">
+          <div class="flex items-center mb-4 mt-4 md:mt-0">
             <div class="w-10 h-10 rounded-full overflow-hidden">
               <div v-if="!comment.auth0Avatar" class="bg-[#3b82f6] w-10 h-10 rounded-full flex items-center justify-center text-white font-bold">
                 {{ comment.firstName.charAt(0).toUpperCase() }}{{ comment.lastName.charAt(0).toUpperCase() }}
