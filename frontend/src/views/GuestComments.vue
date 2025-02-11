@@ -15,7 +15,7 @@ const newCommentContent = ref<string>("");
 const firstName = ref<string>("");
 const lastName = ref<string>("");
 const successMessage = ref<string | null>(null);
-const emit = defineEmits(["showGoBack"]);
+const emit = defineEmits(["showGoBack", "hideMobileButtons", "showMobileButtons", "closeCommentsMenu"]);
 const fetchAllGuestComments = async () => {
   try {
     const response = await fetchGuestComments();
@@ -48,7 +48,7 @@ const handleCreateComment = async () => {
 };
 
 onMounted(() => {
-  emit("showGoBack");
+  emit("closeCommentsMenu")
   fetchAllGuestComments();
 });
 </script>
@@ -72,7 +72,7 @@ onMounted(() => {
       <!-- Title -->
       <div class="mb-6 flex justify-between items-center">
         <h1 class="text-3xl md:text-5-xl font-bold">{{ t('guestCommentsPage.title') }}</h1>
-        <button @click="showModal = true" class="text-white hover:text-gray-300 transition">
+        <button @click="showModal = true, $emit('hideMobileButtons')" class="text-white hover:text-gray-300 transition">
           <Plus class="w-6 h-6" />
         </button>
       </div>
@@ -133,7 +133,7 @@ onMounted(() => {
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-3">
-          <button type="button" @click="showModal = false" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('guestCommentsPage.cancel') }}</button>
+          <button type="button" @click="showModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('guestCommentsPage.cancel') }}</button>
           <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">{{ t('guestCommentsPage.post') }}</button>
         </div>
       </form>
@@ -142,7 +142,7 @@ onMounted(() => {
       <div v-if="successMessage" class="space-y-4">
         <p class="text-green-500">{{ successMessage }}</p>
         <div class="flex justify-end">
-          <button type="button" @click="showModal = false; successMessage = null" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('guestCommentsPage.close') }}</button>
+          <button type="button" @click="showModal = false; successMessage = null, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('guestCommentsPage.close') }}</button>
         </div>
       </div>
     </div>

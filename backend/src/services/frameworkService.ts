@@ -33,7 +33,7 @@ export default class FrameworkService {
 
   static async createFramework(data: any) {
     logger.info('Creating Framework in DB');
-    data.slug = slugify(data.translations.en.name, { lower: true, strict: true });
+    data.slug = slugify(data.name, { lower: true, strict: true });
 
     // Validate duplicate slug
     const existingFramework = await Framework.findOne({ slug: data.slug });
@@ -50,8 +50,8 @@ export default class FrameworkService {
   static async updateFramework(slug: string, updateData: any) {
     logger.info(`Updating Framework in DB: ${slug}`);
     // Generate new slug if the framework name has changed
-    if (updateData.translations && updateData.translations.en && updateData.translations.en.name) {
-      updateData.slug = slugify(updateData.translations.en.name, { lower: true, strict: true });
+    if (updateData && updateData.name) {
+      updateData.slug = slugify(updateData.name, { lower: true, strict: true });
     }
 
     const updatedFramework = await Framework.findOneAndUpdate({ slug }, updateData, { new: true });

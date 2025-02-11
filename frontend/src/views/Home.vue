@@ -143,6 +143,7 @@ const handleUpdateAbout = async () => {
 
   await updateAbout("debo-huang", updatedAbout);
   showModal.value = false;
+  emit('showMenuButton');
   fetchAllData();
   currentStep.value = 1;
 };
@@ -190,6 +191,8 @@ const addTechnology = () => {
 const removeTechnology = (technology: string) => {
   selectedTechnologies.value = selectedTechnologies.value.filter(t => t !== technology);
 };
+
+const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuButton', 'showMenuButton']);
 </script>
 
 <template>
@@ -210,10 +213,10 @@ const removeTechnology = (technology: string) => {
       <div class="mb-10" v-if="about">
         <div class="flex justify-between items-center">
           <div>
-            <h1 class="text-4xl sm:text-5xl font-bold">{{ t(about.firstName) }} {{ t(about.lastName) }}</h1>
+            <h1 class="text-4xl sm:text-5xl font-bold">{{ t('name') }}</h1>
             <h2 class="text-xl text-gray-400">{{ about.translations[locale as Locale].title }}</h2>
           </div>
-          <button v-if="isAuthStatusDefined && isAdmin" @click="showModal = true" class="mr-8 md:mr-0 text-white hover:text-gray-300 transition">
+          <button v-if="isAuthStatusDefined && isAdmin" @click="showModal = true, $emit('hideMenuButton')" class="mr-8 md:mr-0 text-white hover:text-gray-300 transition">
             <Edit class="w-6 h-6" />
           </button>
         </div>
@@ -318,7 +321,7 @@ const removeTechnology = (technology: string) => {
 
           <!-- Action Buttons -->
           <div class="flex justify-between">
-            <button type="button" @click="showModal = false" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-700">Close</button>
+            <button type="button" @click="showModal = false, $emit('showMenuButton')" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-700">Close</button>
             <button type="button" @click="nextStep" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Next</button>
           </div>
         </div>

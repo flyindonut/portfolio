@@ -14,7 +14,12 @@
 
     <!-- Page Content -->
     <div class="flex-1 overflow-y-auto">
-      <router-view :key="$route.fullPath" />
+      <router-view
+        :key="$route.fullPath"
+        @closeIconsMenu="isIconsMenuOpen = false"
+        @hideMobileButtons="$emit('hideMobileButtons')"
+        @showMobileButtons="$emit('showMobileButtons')"
+      />
     </div>
   </div>
 </template>

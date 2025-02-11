@@ -33,7 +33,7 @@ export default class TechnologyService {
 
   static async createTechnology(data: any) {
     logger.info('Creating Technology in DB');
-    data.slug = slugify(data.translations.en.name, { lower: true, strict: true });
+    data.slug = slugify(data.name, { lower: true, strict: true });
 
     // Validate duplicate slug
     const existingTechnology = await Technology.findOne({ slug: data.slug });
@@ -50,8 +50,8 @@ export default class TechnologyService {
   static async updateTechnology(slug: string, updateData: any) {
     logger.info(`Updating Technology in DB: ${slug}`);
     // Generate new slug if the technology name has changed
-    if (updateData.translations && updateData.translations.en && updateData.translations.en.name) {
-      updateData.slug = slugify(updateData.translations.en.name, { lower: true, strict: true });
+    if (updateData && updateData.name) {
+      updateData.slug = slugify(updateData.name, { lower: true, strict: true });
     }
 
     const updatedTechnology = await Technology.findOneAndUpdate({ slug }, updateData, { new: true });

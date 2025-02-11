@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch, nextTick } from "vue";
 import { useAuth0 } from "@auth0/auth0-vue";
 import Sidebar from "./components/Sidebar.vue";
 import { ChevronLeft, Menu, X } from "lucide-vue-next";
@@ -13,30 +13,51 @@ const isMobileMenuOpen = ref(false);
 const route = useRoute();
 
 const toggleMobileMenu = () => {
-  if (isGoBackVisible.value) {
-    isGoBackVisible.value = false;
-  }
-  if (isMobileMenuOpen.value) {
-    if ((route.path.startsWith('/projects/') && route.path !== '/projects') || 
-        (route.path.startsWith('/comments/') && route.path !== '/comments')) {
-      isGoBackVisible.value = true;
-    }
-  }
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
 };
 
 const isGoBackVisible = ref(false);
 
-const toggleGoBack = () => {
-  isGoBackVisible.value = !isGoBackVisible.value;
-};
-
 const router = useRouter();
 
 const goBack = () => {
   router.go(-1);
-  isGoBackVisible.value = false;
 };
+
+const isMobileMenuVisible = ref(true);
+
+const showGoBackButton = () => {
+  isGoBackVisible.value = true
+}
+
+const hideGoBackButton = () => {
+  isGoBackVisible.value = false;
+}
+
+const showMenuButton = () => {
+  isMobileMenuVisible.value = true;
+}
+
+const hideMenuButton = () => {
+  isMobileMenuVisible.value = false;
+}
+
+watch([isMobileMenuOpen, () => route.path], ([newIsMobileMenuOpen, newPath]) => {
+  if (newIsMobileMenuOpen) {
+    isGoBackVisible.value = false;
+  }
+
+  if (newPath == "/projects" || newPath === "/comments" || newPath === "/icons" || newPath === "/") {
+    isMobileMenuVisible.value = true;
+    isGoBackVisible.value = false;
+  } else if (newPath.startsWith("/projects/") || newPath.startsWith("/comments/") || newPath.startsWith("/icons/")) {
+    if (!newIsMobileMenuOpen) {
+      isGoBackVisible.value = true;
+      isMobileMenuVisible.value = true;
+    }
+  }
+});
+
 </script>
 
 <template>
@@ -50,6 +71,7 @@ const goBack = () => {
     <!-- Mobile Menu -->
     <div 
       @click="toggleMobileMenu"
+      :class="{ 'hidden': !isMobileMenuVisible, 'flex': isMobileMenuVisible }"
       class="border-gray-600 bg-[#343a40]/5 absolute top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden"
     >
       <div tabindex="0">
@@ -84,7 +106,10 @@ const goBack = () => {
     <main v-else class="flex-1 overflow-y-auto relative z-10 bg-transparent">
       <div class="relative">
         <router-view
-          @showGoBack="toggleGoBack"
+          @showMobileButtons="showGoBackButton(), showMenuButton()"
+          @hideMobileButtons="hideGoBackButton(), hideMenuButton()"
+          @hideMenuButton="hideMenuButton"
+          @showMenuButton="showMenuButton"
         />
       </div>
     </main>

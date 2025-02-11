@@ -1,25 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/Home.vue'
-import Projects from '@/views/Projects.vue'
-import Comments from '@/views/Comments.vue'
-import Contact from '@/views/Contact.vue'
-import Project from '@/views/Project.vue'
-import ProjectsLayout from '@/layouts/ProjectsLayout.vue'
 import { authGuard } from '@auth0/auth0-vue'
-import NotFound from '@/views/errors/NotFound.vue'
-import InternalServerError from '@/views/errors/InternalServerError.vue'
-import Unauthorized from '@/views/errors/Unauthorized.vue'
-import Forbidden from '@/views/errors/Forbidden.vue'
-import Technologies from '@/views/Technologies.vue'
-import IconsLayout from '@/layouts/IconsLayout.vue'
-import Languages from '@/views/Languages.vue'
-import Frameworks from '@/views/Frameworks.vue'
-import Icons from '@/views/Icons.vue'
-import CommentsLayout from '@/layouts/CommentsLayout.vue'
-import VerifiedComments from '@/views/VerifiedComments.vue'
-import GuestComments from '@/views/GuestComments.vue'
-import ManageComments from '@/views/ManageComments.vue'
-import Services from '@/views/Services.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,47 +7,47 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: () => import('@/views/Home.vue'),
     },
     {
       path: '/projects',
-      component: ProjectsLayout,
+      component: () => import('@/layouts/ProjectsLayout.vue'),
       children: [
         {
           path: '',
           name: 'projects',
-          component: Projects,
+          component: () => import('@/views/Projects.vue'),
         },
         {
           path: ':name',
           name: 'project',
-          component: Project,
+          component: () => import('@/views/Project.vue'),
         },
       ],
     },
     {
       path: '/comments',
-      component: CommentsLayout,
+      component: () => import('@/layouts/CommentsLayout.vue'),
       children: [
         {
           path: '',
           name: 'comments',
-          component: Comments,
+          component: () => import('@/views/Comments.vue'),
         },
         {
           path: 'verified',
           name: 'verified',
-          component: VerifiedComments,
+          component: () => import('@/views/VerifiedComments.vue'),
         },
         {
           path: 'guest',
           name: 'guest',
-          component: GuestComments,
+          component: () => import('@/views/GuestComments.vue'),
         },
         {
           path: 'manage',
           name: 'manage',
-          component: ManageComments,
+          component: () => import('@/views/ManageComments.vue'),
           beforeEnter: authGuard,
         }
       ],
@@ -75,38 +55,38 @@ const router = createRouter({
     {
       path: '/contact',
       name: 'contact',
-      component: Contact,
+      component: () => import('@/views/Contact.vue'),
     },
     // Only For Me
     {
       path: '/icons',
-      component: IconsLayout,
+      component: () => import('@/layouts/IconsLayout.vue'),
       beforeEnter: authGuard,
       children: [
         {
           path: '',
           name: 'Icons',
-          component: Icons,
+          component: () => import('@/views/Icons.vue'),
         },
         {
           path: 'languages',
           name: 'languages',
-          component: Languages,
+          component: () => import('@/views/Languages.vue'),
         },
         {
           path: 'frameworks',
           name: 'frameworks',
-          component: Frameworks,
+          component: () => import('@/views/Frameworks.vue'),
         },
         {
           path: 'technologies',
           name: 'technologies',
-          component: Technologies,
+          component: () => import('@/views/Technologies.vue'),
         },
         {
           path: 'services',
           name: 'services',
-          component: Services,
+          component: () => import('@/views/Services.vue'),
         },
       ],
     },
@@ -114,22 +94,22 @@ const router = createRouter({
     {
       path: '/forbidden',
       name: 'forbidden',
-      component: Forbidden,
+      component: () => import('@/views/errors/Forbidden.vue'),
     },
     {
       path: '/unauthorized',
       name: 'unauthorized',
-      component: Unauthorized,
+      component: () => import('@/views/errors/Unauthorized.vue'),
     },
     {
       path: '/internal-server-error',
       name: 'internalservererror',
-      component: InternalServerError,
+      component: () => import('@/views/errors/InternalServerError.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'notfound',
-      component: NotFound,
+      component: () => import('@/views/errors/NotFound.vue'),
     },
   ],
 })

@@ -25,7 +25,7 @@ type Locale = 'en' | 'fr';
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const emit = defineEmits(["showModifyProjectModal", "refreshProjects", "closeProjectsMenu", "showGoBack"]);
+const emit = defineEmits(["showModifyProjectModal", "refreshProjects", "closeProjectsMenu", "showGoBack", "hideMobileButtons", "showMobileButtons"]);
 
 const authStore = useAuthStore();
 const isAdmin = ref(authStore.hasRole('Admin'));
@@ -100,7 +100,6 @@ watch(
 );
 
 onMounted(() => {
-  emit("showGoBack")
   emit("closeProjectsMenu")
   setTimeout(() => {
     isAnimating.value = false;
@@ -150,7 +149,7 @@ window.addEventListener('resize', () => {
         <div v-else-if="project" class="space-y-6">
           <div class="flex justify-between items-center">
             <h1 class="text-4xl md:text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
-            <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project)" class="text-white hover:text-gray-300 transition">
+            <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project), $emit('hideMobileButtons')" class="text-white hover:text-gray-300 transition">
               <Edit class="w-6 h-6" />
             </button>
           </div>
@@ -242,7 +241,7 @@ window.addEventListener('resize', () => {
           <!-- Delete Project Button -->
           <div v-if="isAdmin" class="mb-10 flex justify-end">
             <button 
-              @click="showDeleteModal = true" 
+              @click="showDeleteModal = true, $emit('hideMobileButtons')" 
               class="text-red-500 hover:text-red-700 transition"
             >
               <Trash2 class="w-6 h-6" />
@@ -255,11 +254,11 @@ window.addEventListener('resize', () => {
 
   <!-- Delete Confirmation Modal -->
   <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md">
+    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md m-4">
       <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
       <p>Are you sure you want to delete this project?</p>
       <div class="flex justify-end space-x-3 mt-4">
-        <button type="button" @click="showDeleteModal = false" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
         <button type="button" @click="handleDelete" class="bg-red-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">Delete</button>
       </div>
     </div>

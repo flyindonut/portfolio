@@ -13,6 +13,7 @@
       @refreshProjects="handleRefreshProjects"
       @closeProjectsMenu="toggleProjectsMenu"
       @showProjectsMenu="isProjectsMenuOpen = true"
+      @hideMenuButton="$emit('hideMenuButton')"
     />
 
     <!-- Page Content -->
@@ -22,7 +23,8 @@
         @showModifyProjectModal="handleShowModifyProjectModal" 
         @refreshProjects="handleRefreshProjects"
         @closeProjectsMenu="isProjectsMenuOpen = false"
-        @showGoBack="$emit('showGoBack')"
+        @hideMobileButtons="$emit('hideMobileButtons')"
+        @showMobileButtons="$emit('showMobileButtons')"
       />
     </div>
 
@@ -31,21 +33,23 @@
       v-if="showCreateProjectModal" 
       @close="handleCreateProjectModalClose" 
       @refreshProjects="handleRefreshProjects"
+      @showMenuButton="$emit('showMenuButton')"
     />
 
     <!-- Modify Project Modal -->
     <ModifyProject
       v-if="showModifyProjectModal && selectedProject" :project="selectedProject" 
-      @close="handleModifyProjectModalClose" 
+      @close="handleModifyProjectModalClose"
       @refreshProjects="handleRefreshProjects"
+      @showMobileButtons="$emit('showMobileButtons')"
     />
 
   </div>
 </template>
   
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import ProjectsSidebar from "@/components/ProjectsSidebar.vue";
 import CreateProject from "@/components/CreateProject.vue";
 import ModifyProject from "@/components/ModifyProject.vue";
@@ -55,6 +59,7 @@ const showCreateProjectModal = ref(false);
 const showModifyProjectModal = ref(false);
 const selectedProject = ref<Project | null>(null);
 const router = useRouter();
+const route = useRoute();
 
 const handleCreateProjectModalClose = () => {
   showCreateProjectModal.value = false;
@@ -65,7 +70,6 @@ const handleModifyProjectModalClose = () => {
 };
 
 const handleShowModifyProjectModal = (project: Project) => {
-  router.push("/projects");
   selectedProject.value = project;
   showModifyProjectModal.value = true;
 };
@@ -97,5 +101,10 @@ const sidebarDuration = computed(() => {
 
 window.addEventListener('resize', () => {
   windowSize.value = window.innerWidth;
+});
+
+watch(route, () => {
+  handleModifyProjectModalClose();
+  handleCreateProjectModalClose();
 });
 </script>

@@ -117,7 +117,7 @@
 
         <!-- Action Buttons -->
         <div class="col-span-1 md:col-span-2 flex justify-end space-x-3">
-          <button type="button" @click="$emit('close')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+          <button type="button" @click="$emit('close'), $emit('showMenuButton')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
           <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">Create</button>
         </div>
       </form>
@@ -137,7 +137,7 @@ import type { Framework } from "@/types/Framework";
 import type { Technology } from "@/types/Technology";
 
 const router = useRouter();
-const emit = defineEmits(['close', 'refreshProjects']);
+const emit = defineEmits(['close', 'refreshProjects', 'showMenuButton']);
 
 const projectNameEn = ref<string>("");
 const projectDescriptionEn = ref<string>("");

@@ -12,6 +12,8 @@ const showModal = ref(false);
 const showDeleteModal = ref(false);
 const serviceToDelete = ref<Service | null>(null);
 
+const emit = defineEmits(["closeIconsMenu", "hideMobileButtons", "showMobileButtons"]);
+
 const fetchAllServices = async () => {
   try {
     const response = await fetchServices();
@@ -31,6 +33,7 @@ const handleCreateService = async () => {
     newService.value = { slug: "", translations: { en: { name: "" }, fr: { name: "" } }, icon: "" };
     uploadedFileName.value = null;
     showModal.value = false;
+    emit('showMobileButtons')
     fetchAllServices();
     
     setTimeout(() => {
@@ -46,6 +49,7 @@ const handleDeleteService = async () => {
     try {
       await deleteService(serviceToDelete.value.slug);
       showDeleteModal.value = false;
+      emit('showMobileButtons')
       serviceToDelete.value = null;
       fetchAllServices();
     } catch (error) {
@@ -55,6 +59,7 @@ const handleDeleteService = async () => {
 };
 
 onMounted(() => {
+  emit("closeIconsMenu");
   fetchAllServices();
 });
 
@@ -97,13 +102,15 @@ const handleIconUpload = (event: Event) => {
       <!-- Breadcrumb Navigation -->
       <Breadcrumb />
 
-      <div class="mb-6 flex justify-between items-center">
+      <div class="flex justify-between items-center">
         <h1 class="text-4xl md:text-5xl font-bold">Services</h1>
-        <button @click="showModal = true" class="text-white hover:text-gray-300 transition">
+        <button @click="showModal = true, $emit('hideMobileButtons')" class="text-white hover:text-gray-300 transition">
           <Plus class="w-6 h-6" />
         </button>
       </div>
-      <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full"></div>
+      <div class="relative">
+        <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full mt-6"></div>
+      </div>
 
       <!-- Error Message -->
       <p v-if="errorMessage" class="text-white bg-red-500/90 border border-red-700 p-3 rounded-md mt-6">
@@ -131,7 +138,8 @@ const handleIconUpload = (event: Event) => {
           <div v-html="service.icon" class="w-12 h-12 service-icon"></div>
           <span class="mt-2 text-white text-sm">{{ service.translations.en.name }}</span>
           
-          <button @click="serviceToDelete = service; showDeleteModal = true" 
+          <button
+            @click="serviceToDelete = service; showDeleteModal = true, $emit('hideMobileButtons')" 
             class="absolute bottom-2 right-2 text-red-500 hover:text-red-700 transition">
             <Trash class="w-5 h-5" />
           </button>
@@ -184,7 +192,7 @@ const handleIconUpload = (event: Event) => {
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-3">
-          <button type="button" @click="showModal = false" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+          <button type="button" @click="showModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
           <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
         </div>
       </form>
@@ -197,7 +205,7 @@ const handleIconUpload = (event: Event) => {
       <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
       <p>Are you sure you want to delete this service?</p>
       <div class="flex justify-end space-x-3 mt-4">
-        <button type="button" @click="showDeleteModal = false" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
         <button type="button" @click="handleDeleteService" class="bg-red-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">Delete</button>
       </div>
     </div>

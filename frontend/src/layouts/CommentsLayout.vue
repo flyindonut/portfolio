@@ -14,9 +14,11 @@
 
     <!-- Page Content -->
     <div class="flex-1 overflow-y-auto">
-      <router-view 
-        :key="$route.fullPath" 
-        @showGoBack="$emit('showGoBack')"
+      <router-view
+        :key="$route.fullPath"
+        @closeCommentsMenu="isCommentsMenuOpen = false"
+        @hideMobileButtons="$emit('hideMobileButtons')"
+        @showMobileButtons="$emit('showMobileButtons')"
       />
     </div>
   </div>

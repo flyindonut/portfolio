@@ -5,7 +5,6 @@ import { computed } from "vue";
 import { Home, FolderKanban, FileText, Mail, Github, Linkedin, FileDown, Layers, Menu, X } from "lucide-vue-next";
 import { useAuth0 } from "@auth0/auth0-vue";
 import { useAuthStore } from "@/stores/auth";
-import { useMotion } from "@vueuse/motion";
 
 const { t, locale } = useI18n();
 const { loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0();

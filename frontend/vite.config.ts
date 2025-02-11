@@ -21,5 +21,15 @@ export default defineConfig({
   },
   server: {
     port: 27182
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'pinia', 'vue-router', '@vueuse/motion']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 500
   }
 })

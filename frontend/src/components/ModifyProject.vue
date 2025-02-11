@@ -119,7 +119,7 @@
 
         <!-- Action Buttons -->
         <div class="col-span-1 md:col-span-2 flex justify-end space-x-3">
-          <button type="button" @click="returnToProject" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+          <button type="button" @click="$emit('close'), $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
           <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">Save Changes</button>
         </div>
       </form>
@@ -140,7 +140,7 @@ import type { Technology } from "@/types/Technology";
 import type { Project } from "@/types/Project";
 
 const props = defineProps<{ project: Project }>();
-const emit = defineEmits(['close', 'refreshProjects']);
+const emit = defineEmits(['close', 'refreshProjects', 'showMobileButtons']);
 const router = useRouter();
 
 const projectNameEn = ref(props.project.translations.en.name);
@@ -219,11 +219,6 @@ const removeTechnology = (technology: string) => {
 
 const removeImage = (image: string) => {
   projectImages.value = projectImages.value.filter(i => i !== image);
-};
-
-const returnToProject = () => {
-  router.go(-1);
-  emit('close');
 };
 
 const modifyProject = async () => {
