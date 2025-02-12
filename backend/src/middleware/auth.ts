@@ -1,11 +1,9 @@
 import { auth } from "express-oauth2-jwt-bearer";
 import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
-import pino from 'pino';
+import logger from '../config/logger';
 
 dotenv.config();
-
-const logger = pino({ level: 'info' });
 
 const checkJwt = auth({
   audience: process.env.AUTH0_AUDIENCE,

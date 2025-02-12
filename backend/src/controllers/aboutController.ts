@@ -1,15 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import AboutService from "../services/aboutService";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
+import logger from '../config/logger';
 
 export default class AboutController {
   static async getAllAbouts(req: Request, res: Response, next: NextFunction): Promise<void> {

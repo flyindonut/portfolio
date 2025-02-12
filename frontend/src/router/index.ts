@@ -30,19 +30,9 @@ const router = createRouter({
       component: () => import('@/layouts/CommentsLayout.vue'),
       children: [
         {
-          path: '',
-          name: 'comments',
-          component: () => import('@/views/Comments.vue'),
-        },
-        {
-          path: 'verified',
-          name: 'verified',
-          component: () => import('@/views/VerifiedComments.vue'),
-        },
-        {
-          path: 'guest',
-          name: 'guest',
-          component: () => import('@/views/GuestComments.vue'),
+          path: 'show',
+          name: 'showcomments',
+          component: () => import('@/views/ShowComments.vue'),
         },
         {
           path: 'manage',

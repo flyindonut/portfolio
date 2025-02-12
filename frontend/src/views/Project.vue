@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from "vue";
+import { ref, watch, onMounted, computed, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { fetchProjectBySlug, deleteProject } from "@/api/projectApi";
@@ -120,8 +120,14 @@ const swiperNavigationSize = computed(() => {
   return windowSize.value >= 768 ? '50px' : '20px';
 });
 
-window.addEventListener('resize', () => {
+const updateWindowSize = () => {
   windowSize.value = window.innerWidth;
+};
+
+window.addEventListener('resize', updateWindowSize);
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowSize);
 });
 </script>
 

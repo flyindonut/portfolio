@@ -1,15 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import ServiceService from "../services/serviceService";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
+import logger from '../config/logger';
 
 export default class ServiceController {
   static async getAllServices(req: Request, res: Response, next: NextFunction): Promise<void> {

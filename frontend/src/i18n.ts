@@ -1,4 +1,5 @@
 import { createI18n } from "vue-i18n";
+import ShowComments from "./views/ShowComments.vue";
 
 const messages = {
   en: {
@@ -62,8 +63,7 @@ const messages = {
     },
     commentsSidebar: {
       title: "Comments",
-      verifiedComments: "Verified Comments",
-      guestComments: "Guest Comments",
+      showComments: "Show Comments",
       manageComments: "Manage Comments",
       loginToComment: "Login to leave a verified comment."
     },
@@ -78,12 +78,17 @@ const messages = {
       title: "Icons",
       description: "Please select an item to manage"
     },
-    verifiedCommentsPage: {
-      title: "Verified Comments",
+    showCommentsPage: {
+      title: "Comments",
       allComments: "All Comments",
+      verifiedComments: "Verified Comments",
+      guestComments: "Guest Comments",
       myComments: "My Comments",
       noComments: "No comments available.",
-      addComment: "Add Comment",
+      addVerifiedComment: "Add Verified Comment",
+      addGuestComment: "Add Guest Comment",
+      firstName: "First Name",
+      lastName: "Last Name",
       content: "Content",
       cancel: "Cancel",
       post: "Post",
@@ -99,20 +104,6 @@ const messages = {
       modifyError: "Failed to modify comment.",
       successMessage: "Your comment has been created, it will be posted once reviewed by Debo.",
       modifySuccess: "Your comment has been updated, it will be posted once reviewed by Debo."
-    },
-    guestCommentsPage: {
-      title: "Guest Comments",
-      noComments: "No guest comments available.",
-      addComment: "Add New Comment",
-      firstName: "First Name",
-      lastName: "Last Name",
-      content: "Content",
-      cancel: "Cancel",
-      post: "Post",
-      close: "Close",
-      errorMessage: "Failed to fetch guest comments.",
-      createError: "Failed to create comment.",
-      successMessage: "Your comment has been created, it will be posted once approved by Debo."
     }
   },
   fr: {
@@ -176,8 +167,7 @@ const messages = {
     },
     commentsSidebar: {
       title: "Commentaires",
-      verifiedComments: "Commentaires vérifiés",
-      guestComments: "Commentaires des visiteurs",
+      showComments: "Voir les commentaires",
       manageComments: "Gérer les commentaires",
       loginToComment: "Connectez-vous pour laisser un commentaire vérifié."
     },
@@ -192,12 +182,17 @@ const messages = {
       title: "Icônes",
       description: "Veuillez sélectionner un élément à gérer"
     },
-    verifiedCommentsPage: {
-      title: "Commentaires vérifiés",
+    showCommentsPage: {
+      title: "Commentaires",
       allComments: "Tous les commentaires",
+      verifiedComments: "Commentaires vérifiés",
+      guestComments: "Commentaires des visiteurs",
       myComments: "Mes commentaires",
       noComments: "Aucun commentaire disponible.",
-      addComment: "Ajouter un commentaire",
+      addVerifiedComment: "Ajouter un commentaire vérifié",
+      addGuestComment: "Ajouter un commentaire de visiteur",
+      firstName: "Prénom",
+      lastName: "Nom",
       content: "Contenu",
       cancel: "Annuler",
       post: "Publier",
@@ -213,20 +208,6 @@ const messages = {
       modifyError: "Échec de la modification du commentaire.",
       successMessage: "Votre commentaire a été créé, il sera publié une fois approuvé par Debo.",
       modifySuccess: "Votre commentaire a été modifié, il sera publié une fois approuvé par Debo."
-    },
-    guestCommentsPage: {
-      title: "Commentaires des visiteurs",
-      noComments: "Aucun commentaire de visiteur disponible.",
-      addComment: "Ajouter un nouveau commentaire",
-      firstName: "Prénom",
-      lastName: "Nom",
-      content: "Contenu",
-      cancel: "Annuler",
-      post: "Publier",
-      close: "Fermer",
-      errorMessage: "Échec de la récupération des commentaires des visiteurs.",
-      createError: "Échec de la création du commentaire.",
-      successMessage: "Votre commentaire a été créé, il sera publié une fois approuvé par Debo."
     }
   },
 };

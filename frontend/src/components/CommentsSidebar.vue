@@ -5,27 +5,14 @@
     <!-- Comments List -->
     <nav class="flex flex-col space-y-4 mt-6 md:mt-0">
       <router-link
-        to="/comments/verified"
+        to="/comments/show"
         @click="$emit('closeCommentsMenu')"
         class="flex items-center px-5 py-4 md:py-3 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
         active-class="bg-[#495057] border-l-4 border-white pl-4"
       >
         <div class="flex flex-col justify-center w-full">
-          <h3 :class="getFontSizeClass(t('commentsSidebar.verifiedComments'))" class="text-white font-medium truncate">
-            {{ t('commentsSidebar.verifiedComments') }}
-          </h3>
-        </div>
-        <ChevronRight class="text-gray-400 ml-auto w-6 h-6" />
-      </router-link>
-      <router-link
-        to="/comments/guest"
-        @click="$emit('closeCommentsMenu')"
-        class="flex items-center px-5 py-4 md:py-3 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101"
-        active-class="bg-[#495057] border-l-4 border-white pl-4"
-      >
-        <div class="flex flex-col justify-center w-full ">
-          <h3 :class="getFontSizeClass(t('commentsSidebar.guestComments'))" class="text-white font-medium truncate">
-            {{ t('commentsSidebar.guestComments') }}
+          <h3 :class="getFontSizeClass(t('commentsSidebar.showComments'))" class="text-white font-medium truncate">
+            {{ t('commentsSidebar.showComments') }}
           </h3>
         </div>
         <ChevronRight class="text-gray-400 ml-auto w-6 h-6" />

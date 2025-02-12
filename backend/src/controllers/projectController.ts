@@ -1,15 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import ProjectService from "../services/projectService";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
+import logger from '../config/logger';
 
 export default class ProjectController {
   static async getProjects(req: Request, res: Response, next: NextFunction): Promise<void> {

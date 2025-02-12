@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-import { fetchVerifiedComments, createVerifiedComment, deleteComment, updateCommentContent } from "@/api/commentApi";
+import { fetchVerifiedComments, createVerifiedComment, deleteComment, updateCommentContent, fetchGuestComments, addGuestComments } from "@/api/commentApi";
 import type { Comment } from "@/types/Comment";
 import { useAuth0 } from "@auth0/auth0-vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
@@ -8,35 +8,37 @@ import { Plus, Trash, Edit, CheckCircle, ChevronDown } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+const { t, d } = useI18n();
 const { isAuthenticated, user } = useAuth0();
 const authStore = useAuthStore();
 const commentCreator = computed(() => authStore.userId);
 const verifiedComments = ref<Comment[]>([]);
+const guestComments = ref<Comment[]>([]);
 const errorMessage = ref<string | null>(null);
 const showModal = ref(false);
 const showDeleteModal = ref(false);
 const showModifyModal = ref(false);
 const newCommentContent = ref<string>("");
+const firstName = ref<string>("");
+const lastName = ref<string>("");
 const commentToModify = ref<Comment | null>(null);
 const commentToDelete = ref<Comment | null>(null);
 const successMessage = ref<string | null>(null);
 const filterUserComments = ref<string>("ALL");
 const emit = defineEmits(["showGoBack", "hideMobileButtons", "showMobileButtons", "closeCommentsMenu"]);
 
-const fetchAllVerifiedComments = async () => {
+const fetchAllComments = async () => {
   try {
-    const response = await fetchVerifiedComments();
-    verifiedComments.value = response
-      .filter(comment => comment.commentStatus === 'APPROVED')
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const [verifiedResponse, guestResponse] = await Promise.all([fetchVerifiedComments(), fetchGuestComments()]);
+    verifiedComments.value = verifiedResponse.filter(comment => comment.commentStatus === 'APPROVED');
+    guestComments.value = guestResponse.filter(comment => comment.commentStatus === 'APPROVED');
   } catch (error) {
-    errorMessage.value = t('verifiedCommentsPage.errorMessage');
+    errorMessage.value = t('showCommentsPage.errorMessage');
   }
 };
 
 const handleCreateComment = async () => {
-  if (user.value) {
+  if (isAuthenticated.value && user.value) {
     const newComment = {
       content: newCommentContent.value,
       firstName: user.value.given_name,
@@ -47,10 +49,28 @@ const handleCreateComment = async () => {
     try {
       await createVerifiedComment(newComment);
       newCommentContent.value = "";
-      successMessage.value = t('verifiedCommentsPage.successMessage');
-      fetchAllVerifiedComments();
+      successMessage.value = t('showCommentsPage.successMessage');
+      fetchAllComments();
     } catch (error) {
-      errorMessage.value = t('verifiedCommentsPage.createError');
+      errorMessage.value = t('showCommentsPage.createError');
+    }
+  } else {
+    const newComment = {
+      content: newCommentContent.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+      auth0UserId: "",
+      auth0Avatar: "",
+    };
+    try {
+      await addGuestComments(newComment);
+      newCommentContent.value = "";
+      firstName.value = "";
+      lastName.value = "";
+      successMessage.value = t('showCommentsPage.successMessage');
+      fetchAllComments();
+    } catch (error) {
+      errorMessage.value = t('showCommentsPage.createError');
     }
   }
 };
@@ -62,9 +82,9 @@ const handleDeleteComment = async () => {
       showDeleteModal.value = false;
       emit('showMobileButtons')
       commentToDelete.value = null;
-      fetchAllVerifiedComments();
+      fetchAllComments();
     } catch (error) {
-      errorMessage.value = t('verifiedCommentsPage.deleteError');
+      errorMessage.value = t('showCommentsPage.deleteError');
     }
   }
 };
@@ -73,24 +93,30 @@ const handleModifyComment = async () => {
   if (commentToModify.value) {
     try {
       await updateCommentContent(commentToModify.value.commentId, newCommentContent.value);
-      successMessage.value = t('verifiedCommentsPage.modifySuccess');
-      fetchAllVerifiedComments();
+      successMessage.value = t('showCommentsPage.modifySuccess');
+      fetchAllComments();
     } catch (error) {
-      errorMessage.value = t('verifiedCommentsPage.modifyError');
+      errorMessage.value = t('showCommentsPage.modifyError');
     }
   }
 };
 
 const filteredComments = computed(() => {
+  let allComments = [...verifiedComments.value, ...guestComments.value];
+  allComments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   if (filterUserComments.value === "USER") {
-    return verifiedComments.value.filter(comment => comment.auth0UserId === commentCreator.value);
+    return allComments.filter(comment => comment.auth0UserId === commentCreator.value);
+  } else if (filterUserComments.value === "VERIFIED") {
+    return verifiedComments.value.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  } else if (filterUserComments.value === "GUEST") {
+    return guestComments.value.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
-  return verifiedComments.value;
+  return allComments;
 });
 
 onMounted(() => {
   emit("closeCommentsMenu")
-  fetchAllVerifiedComments();
+  fetchAllComments();
 });
 </script>
 
@@ -111,16 +137,18 @@ onMounted(() => {
       />
 
       <div class="mb-6 flex flex-col sm:flex-row justify-between items-center">
-        <h1 class="font-bold text-3xl md:text-5xl">{{ t('verifiedCommentsPage.title') }}</h1>
-        <div v-if="isAuthenticated" class="flex space-x-4 mt-4 md:mt-0">
+        <h1 class="font-bold text-3xl md:text-5xl">{{ t('showCommentsPage.title') }}</h1>
+        <div class="flex space-x-4 mt-4 md:mt-0">
           <div class="relative">
             <select v-model="filterUserComments" class="bg-[#343a40] text-white p-2 rounded-md appearance-none pr-10">
-              <option value="ALL">{{ t('verifiedCommentsPage.allComments') }}</option>
-              <option value="USER">{{ t('verifiedCommentsPage.myComments') }}</option>
+              <option value="ALL">{{ t('showCommentsPage.allComments') }}</option>
+              <option value="VERIFIED">{{ t('showCommentsPage.verifiedComments') }}</option>
+              <option value="GUEST">{{ t('showCommentsPage.guestComments') }}</option>
+              <option v-if="isAuthenticated" value="USER">{{ t('showCommentsPage.myComments') }}</option>
             </select>
             <ChevronDown class="absolute top-1/2 right-2 transform -translate-y-1/2 w-5 h-5 text-white pointer-events-none" />
           </div>
-          <button v-if="isAuthenticated" @click="showModal = true, $emit('hideMobileButtons')" class="text-white hover:text-gray-300 transition">
+          <button @click="showModal = true, $emit('hideMobileButtons')" class="text-white hover:text-gray-300 transition">
             <Plus class="w-6 h-6" />
           </button>
         </div>
@@ -133,7 +161,7 @@ onMounted(() => {
 
       <div v-if="!errorMessage && filteredComments.length === 0" class="text-gray-400">
         <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full mb-7"></div>
-        {{ t('verifiedCommentsPage.noComments') }}
+        {{ t('showCommentsPage.noComments') }}
       </div>
       
       <!-- Comments List -->
@@ -161,7 +189,7 @@ onMounted(() => {
           </div>
           <p class="text-gray-300">{{ comment.content }}</p>
           <p class="text-gray-400 text-sm absolute bottom-2 right-2">{{ new Date(comment.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) }}</p>
-          <CheckCircle v-if="commentCreator !== comment.auth0UserId" class="w-5 h-5 text-blue-500 absolute top-2 right-2" />
+          <CheckCircle v-if="comment.auth0UserId && commentCreator !== comment.auth0UserId" class="w-5 h-5 text-blue-500 absolute top-2 right-2" />
           <div v-if="commentCreator === comment.auth0UserId" class="absolute top-2 right-2 flex space-x-2">
             <Edit class="text-yellow-500 hover:text-yellow-700 transition" @click="commentToModify = comment; newCommentContent = comment.content; showModifyModal = true, $emit('hideMobileButtons')" />
             <Trash class="text-red-500 hover:text-red-700 transition" @click="commentToDelete = comment; showDeleteModal = true, $emit('hideMobileButtons')" />
@@ -174,19 +202,31 @@ onMounted(() => {
   <!-- Add Comment Modal -->
   <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
     <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-4">
-      <h2 class="text-xl font-bold mb-4">{{ t('verifiedCommentsPage.addComment') }}</h2>
+      <h2 class="text-xl font-bold mb-4">{{ isAuthenticated ? t('showCommentsPage.addVerifiedComment') : t('showCommentsPage.addGuestComment') }}</h2>
       <form v-if="!successMessage" @submit.prevent="handleCreateComment" class="space-y-4">
         
+        <!-- First and Last Name Inputs for Guest -->
+        <div v-if="!isAuthenticated" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-300">{{ t('showCommentsPage.firstName') }}</label>
+            <input v-model="firstName" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300">{{ t('showCommentsPage.lastName') }}</label>
+            <input v-model="lastName" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+          </div>
+        </div>
+
         <!-- Content Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">{{ t('verifiedCommentsPage.content') }}</label>
+          <label class="block text-sm font-medium text-gray-300">{{ t('showCommentsPage.content') }}</label>
           <textarea v-model="newCommentContent" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500 h-48" required></textarea>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-3">
-          <button type="button" @click="showModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('verifiedCommentsPage.cancel') }}</button>
-          <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">{{ t('verifiedCommentsPage.post') }}</button>
+          <button type="button" @click="showModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('showCommentsPage.cancel') }}</button>
+          <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">{{ t('showCommentsPage.post') }}</button>
         </div>
       </form>
 
@@ -194,7 +234,7 @@ onMounted(() => {
       <div v-if="successMessage" class="space-y-4">
         <p class="text-green-500">{{ successMessage }}</p>
         <div class="flex justify-end">
-          <button type="button" @click="showModal = false; successMessage = null, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('verifiedCommentsPage.close') }}</button>
+          <button type="button" @click="showModal = false; successMessage = null, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('showCommentsPage.close') }}</button>
         </div>
       </div>
     </div>
@@ -203,11 +243,11 @@ onMounted(() => {
   <!-- Delete Confirmation Modal -->
   <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
     <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md m-4">
-      <h2 class="text-xl font-bold mb-4">{{ t('verifiedCommentsPage.confirmDeletion') }}</h2>
-      <p>{{ t('verifiedCommentsPage.confirmDeletionMessage') }}</p>
+      <h2 class="text-xl font-bold mb-4">{{ t('showCommentsPage.confirmDeletion') }}</h2>
+      <p>{{ t('showCommentsPage.confirmDeletionMessage') }}</p>
       <div class="flex justify-end space-x-3 mt-4">
-        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('verifiedCommentsPage.cancel') }}</button>
-        <button type="button" @click="handleDeleteComment" class="bg-red-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">{{ t('verifiedCommentsPage.delete') }}</button>
+        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('showCommentsPage.cancel') }}</button>
+        <button type="button" @click="handleDeleteComment" class="bg-red-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">{{ t('showCommentsPage.delete') }}</button>
       </div>
     </div>
   </div>
@@ -215,19 +255,19 @@ onMounted(() => {
   <!-- Modify Comment Modal -->
   <div v-if="showModifyModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
     <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md m-4">
-      <h2 class="text-xl font-bold mb-4">{{ t('verifiedCommentsPage.modifyComment') }}</h2>
+      <h2 class="text-xl font-bold mb-4">{{ t('showCommentsPage.modifyComment') }}</h2>
       <form v-if="!successMessage" @submit.prevent="handleModifyComment" class="space-y-4">
         
         <!-- Content Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">{{ t('verifiedCommentsPage.content') }}</label>
+          <label class="block text-sm font-medium text-gray-300">{{ t('showCommentsPage.content') }}</label>
           <textarea v-model="newCommentContent" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500 h-48" required></textarea>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-3">
-          <button type="button" @click="showModifyModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('verifiedCommentsPage.cancel') }}</button>
-          <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">{{ t('verifiedCommentsPage.save') }}</button>
+          <button type="button" @click="showModifyModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('showCommentsPage.cancel') }}</button>
+          <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">{{ t('showCommentsPage.save') }}</button>
         </div>
       </form>
 
@@ -235,7 +275,7 @@ onMounted(() => {
       <div v-if="successMessage" class="space-y-4">
         <p class="text-green-500">{{ successMessage }}</p>
         <div class="flex justify-end">
-          <button type="button" @click="showModifyModal = false; successMessage = null, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('verifiedCommentsPage.close') }}</button>
+          <button type="button" @click="showModifyModal = false; successMessage = null, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">{{ t('showCommentsPage.close') }}</button>
         </div>
       </div>
     </div>

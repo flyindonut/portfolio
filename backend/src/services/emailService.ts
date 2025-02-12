@@ -1,18 +1,8 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import pino from 'pino';
+import logger from '../config/logger';
 
 dotenv.config();
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
-
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,

@@ -1,15 +1,5 @@
 import CommentModel, { IComment } from '../models/commentModel';
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
-
+import logger from '../config/logger';
 
 class CommentService {
   async createComment(data: Partial<IComment>): Promise<IComment> {

@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import pino from "pino";
 import connectDB from "./config/database";
 import projectRoutes from "./routes/projectRoutes";
 import contactRoutes from "./routes/contactRoutes";
@@ -11,17 +10,9 @@ import technologyRoutes from "./routes/technologyRoutes";
 import commentRoutes from "./routes/commentRoutes";
 import aboutRoutes from "./routes/aboutRoutes";
 import serviceRoutes from "./routes/serviceRoutes";
+import logger from './config/logger';
 
 dotenv.config();
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
 
 const app = express();
 

@@ -1,16 +1,6 @@
 import Technology from "../models/technologyModel";
 import slugify from "slugify";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
-
+import logger from '../config/logger';
 
 export default class TechnologyService {
   static async getAllTechnologies() {

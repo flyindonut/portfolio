@@ -48,7 +48,7 @@
 </template>
   
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ProjectsSidebar from "@/components/ProjectsSidebar.vue";
 import CreateProject from "@/components/CreateProject.vue";
@@ -99,8 +99,14 @@ const sidebarDuration = computed(() => {
   return windowSize.value >= 768 ? 500 : 750;
 });
 
-window.addEventListener('resize', () => {
+const updateWindowSize = () => {
   windowSize.value = window.innerWidth;
+};
+
+window.addEventListener('resize', updateWindowSize);
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowSize);
 });
 
 watch(route, () => {

@@ -1,16 +1,6 @@
 import Language from "../models/languageModel";
 import slugify from "slugify";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
-
+import logger from '../config/logger';
 
 export default class LanguageService {
   static async getAllLanguages() {

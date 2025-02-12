@@ -26,7 +26,7 @@
   
 <script setup lang="ts">
 import CommentsSidebar from "@/components/CommentsSidebar.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onUnmounted } from "vue";
 
 const isCommentsMenuOpen = ref(false);
 
@@ -48,7 +48,13 @@ const sidebarDuration = computed(() => {
   return windowSize.value >= 768 ? 500 : 750;
 });
 
-window.addEventListener('resize', () => {
+const updateWindowSize = () => {
   windowSize.value = window.innerWidth;
+};
+
+window.addEventListener('resize', updateWindowSize);
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateWindowSize);
 });
 </script>

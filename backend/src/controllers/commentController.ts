@@ -2,16 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import CommentService from '../services/commentService';
 import jwt from 'jsonwebtoken';
 import jwksRsa from 'jwks-rsa';
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
+import logger from '../config/logger';
 
 const jwksClient = jwksRsa({
   jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,

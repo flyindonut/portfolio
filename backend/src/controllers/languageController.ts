@@ -1,15 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import LanguageService from "../services/languageService";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
+import logger from '../config/logger';
 
 export default class LanguageController {
   static async getLanguages(req: Request, res: Response, next: NextFunction): Promise<void> {

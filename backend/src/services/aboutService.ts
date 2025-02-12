@@ -1,16 +1,6 @@
 import About from "../models/aboutModel";
 import slugify from "slugify";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
-
+import logger from '../config/logger';
 
 export default class AboutService {
   static async getAllAbouts() {

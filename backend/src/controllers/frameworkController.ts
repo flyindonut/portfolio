@@ -1,15 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import FrameworkService from "../services/frameworkService";
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true
-    }
-  }
-});
+import logger from '../config/logger';
 
 export default class FrameworkController {
   static async getFrameworks(req: Request, res: Response, next: NextFunction): Promise<void> {
