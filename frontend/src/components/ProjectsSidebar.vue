@@ -65,10 +65,15 @@ const formatDate = (dateStr: string): string => {
   return `${monthNames[locale.value as "en" | "fr"][month - 1]} ${year}`;
 };
 
+const parseDate = (dateStr: string): Date => {
+  const [month, year] = dateStr.split("/").map(Number);
+  return new Date(year, month - 1);
+};
+
 const fetchAllProjects = async () => {
   const response = await fetchProjects() as Project[] | { message: string };
   if (Array.isArray(response)) {
-    projects.value = response;
+    projects.value = response.sort((a, b) => parseDate(b.endDate).getTime() - parseDate(a.endDate).getTime());
   } else {
     errorMessage.value = response.message;
   }

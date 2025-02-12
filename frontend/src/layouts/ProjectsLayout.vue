@@ -49,7 +49,7 @@
   
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import ProjectsSidebar from "@/components/ProjectsSidebar.vue";
 import CreateProject from "@/components/CreateProject.vue";
 import ModifyProject from "@/components/ModifyProject.vue";
@@ -58,7 +58,7 @@ import type { Project } from "@/types/Project";
 const showCreateProjectModal = ref(false);
 const showModifyProjectModal = ref(false);
 const selectedProject = ref<Project | null>(null);
-const router = useRouter();
+
 const route = useRoute();
 
 const handleCreateProjectModalClose = () => {

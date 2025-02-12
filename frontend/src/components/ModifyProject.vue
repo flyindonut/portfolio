@@ -140,7 +140,7 @@ import type { Technology } from "@/types/Technology";
 import type { Project } from "@/types/Project";
 
 const props = defineProps<{ project: Project }>();
-const emit = defineEmits(['close', 'refreshProjects', 'showMobileButtons']);
+const emit = defineEmits(['close', 'refreshProjects', 'showMobileButtons', 'updateProject']);
 const router = useRouter();
 
 const projectNameEn = ref(props.project.translations.en.name);
@@ -242,9 +242,11 @@ const modifyProject = async () => {
   };
 
   const response = await updateProject(props.project.slug, updatedProject);
-  emit('refreshProjects');
+  emit('refreshProjects', response);
   emit('close');
+  await router.push('/projects');
   router.push(`/projects/${response.slug}`);
+
 };
 
 onMounted(() => {
