@@ -20,7 +20,7 @@ const CommentSchema: Schema = new Schema(
     commentStatus: { type: String, enum: ['PENDING', 'APPROVED', 'REJECTED'], default: 'PENDING' },
     userStatus: { type: String, enum: ['GUEST', 'VERIFIED'], required: true },
     firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    lastName: { type: String, default: '' },
     content: { type: String, required: true },
     auth0UserId: { type: String, default: '' },
     auth0Avatar: { type: String, default: '' },
