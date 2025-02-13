@@ -1,10 +1,12 @@
 import { createAuth0 } from '@auth0/auth0-vue';
 
 export default createAuth0({
-  domain: 'dev-deemohuang.ca.auth0.com',
-  clientId: 'cuIdpMytymQHeqULPau2DvsfhGnztv2T',
+  domain: import.meta.env.VITE_AUTH0_DOMAIN,
+  clientId: import.meta.env.VITE_AUTH0_CLIENT_ID,
   authorizationParams: {
     redirect_uri: window.location.origin,
-    audience: 'https://deemo-portfolio.com'
-  }
+    audience: import.meta.env.VITE_AUTH0_AUDIENCE
+  },
+  useRefreshTokens: true,
+  cacheLocation: 'localstorage'
 });
