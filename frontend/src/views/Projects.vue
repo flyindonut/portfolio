@@ -6,10 +6,10 @@
       :enter="{ opacity: 1, y: 0 }"
       :delay="500"
       :duration="1000"
-      class="flex-1 flex flex-col items-center justify-center text-gray-300 text-lg"
+      class="flex-1 flex flex-col items-center justify-center text-[var(--text-3-color)] text-lg"
     >
       <h1 class="text-3xl font-bold mb-4">{{ t('projectPage.title')}}</h1>
-      <p class="text-gray-400 mb-6">{{ t('projectPage.description')}}</p>
+      <p class="text-[var(--text-2-color)] mb-6">{{ t('projectPage.description')}}</p>
     </div>
   </div>
 </template>

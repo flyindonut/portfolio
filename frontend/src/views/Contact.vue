@@ -69,13 +69,13 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 30 }"
       :enter="{ opacity: 1, y: 0 }"
       :duration="500"
-      class="p-6 w-full mx-4 md:max-w-lg bg-[#161a1d] rounded-xl shadow-2xl border border-gray-700 text-white mt-16 md:mt-0"
+      class="p-6 w-full mx-4 md:max-w-lg bg-[var(--bg-color)] rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] mt-16 md:mt-0"
     >
       <h1 class="text-3xl font-bold mb-4 flex items-center gap-2">
         <Mail class="w-6 h-6" />
         {{ t("contactPage.heading") }}
       </h1>
-      <p class="text-gray-400 mb-6">{{ t("contactPage.description") }}</p>
+      <p class="text-[var(--text-2-color)] mb-6">{{ t("contactPage.description") }}</p>
 
       <!-- Success / Error Messages -->
       <p v-if="successMessage" class="text-green-500 bg-green-800 p-3 rounded-md">{{ successMessage }}</p>
@@ -85,11 +85,11 @@ onMounted(() => {
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <!-- Name Input -->
         <div>
-          <label class="block text-gray-300 text-sm mb-1">{{ t("contactPage.nameLabel") }}</label>
+          <label class="block text-[var(--text-3-color)] text-sm mb-1">{{ t("contactPage.nameLabel") }}</label>
           <input
             v-model="form.name"
             type="text"
-            class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500"
+            class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500"
             :class="{ 'border-red-500': errors.name }"
           />
           <p v-if="errors.name" class="text-red-500 text-sm mt-1">{{ errors.name }}</p>
@@ -97,11 +97,11 @@ onMounted(() => {
 
         <!-- Email Input -->
         <div>
-          <label class="block text-gray-300 text-sm mb-1">{{ t("contactPage.emailLabel") }}</label>
+          <label class="block text-[var(--text-3-color)] text-sm mb-1">{{ t("contactPage.emailLabel") }}</label>
           <input
             v-model="form.email"
             type="email"
-            class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500"
+            class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500"
             :class="{ 'border-red-500': errors.email }"
           />
           <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
@@ -109,11 +109,11 @@ onMounted(() => {
 
         <!-- Message Input -->
         <div>
-          <label class="block text-gray-300 text-sm mb-1">{{ t("contactPage.messageLabel") }}</label>
+          <label class="block text-[var(--text-3-color)] text-sm mb-1">{{ t("contactPage.messageLabel") }}</label>
           <textarea
             v-model="form.message"
             rows="4"
-            class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500"
+            class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500"
             :class="{ 'border-red-500': errors.message }"
           ></textarea>
           <p v-if="errors.message" class="text-red-500 text-sm mt-1">{{ errors.message }}</p>

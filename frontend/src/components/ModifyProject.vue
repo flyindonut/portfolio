@@ -1,41 +1,41 @@
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-4xl m-4 overflow-y-auto max-h-[80vh]">
+    <div class="bg-[var(--bg-color)] p-6 rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] w-full max-w-4xl m-4 overflow-y-auto max-h-[80vh]">
       <h2 class="text-xl font-bold mb-4">Modify Project</h2>
       <form @submit.prevent="modifyProject" class="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         
         <!-- English Name Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">Project Name (EN)</label>
-          <input v-model="projectNameEn" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Project Name (EN)</label>
+          <input v-model="projectNameEn" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
         </div>
 
         <!-- French Name Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">Project Name (FR)</label>
-          <input v-model="projectNameFr" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Project Name (FR)</label>
+          <input v-model="projectNameFr" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
         </div>
 
         <!-- English Description Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">Project Description (EN)</label>
-          <textarea v-model="projectDescriptionEn" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Project Description (EN)</label>
+          <textarea v-model="projectDescriptionEn" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500 field-sizing-content" required></textarea>
         </div>
 
         <!-- French Description Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">Project Description (FR)</label>
-          <textarea v-model="projectDescriptionFr" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Project Description (FR)</label>
+          <textarea v-model="projectDescriptionFr" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500 field-sizing-content" required></textarea>
         </div>
 
         <!-- Start & End Date Inputs -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">Start Date</label>
-          <input v-model="startDate" type="month" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Start Date</label>
+          <input v-model="startDate" type="month" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-300">End Date</label>
-          <input v-model="endDate" type="month" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">End Date</label>
+          <input v-model="endDate" type="month" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
         </div>
 
         <!-- Dropdown Fields -->
@@ -43,15 +43,15 @@
           
           <!-- Languages Dropdown -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Languages</label>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Languages</label>
             <div class="flex items-center space-x-2">
-              <select v-model="selectedLanguage" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
+              <select v-model="selectedLanguage" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
                 <option v-for="language in languages" :key="language.slug" :value="language.slug">{{ language.name }}</option>
               </select>
               <button type="button" @click="addLanguage" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="language in projectLanguages" :key="language" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
+              <span v-for="language in projectLanguages" :key="language" class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-full flex items-center space-x-2">
                 {{ language }}
                 <button @click="removeLanguage(language)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
               </span>
@@ -60,15 +60,15 @@
 
           <!-- Frameworks Dropdown -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Frameworks</label>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Frameworks</label>
             <div class="flex items-center space-x-2">
-              <select v-model="selectedFramework" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
+              <select v-model="selectedFramework" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
                 <option v-for="framework in frameworks" :key="framework.slug" :value="framework.slug">{{ framework.name }}</option>
               </select>
               <button type="button" @click="addFramework" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="framework in projectFrameworks" :key="framework" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
+              <span v-for="framework in projectFrameworks" :key="framework" class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-full flex items-center space-x-2">
                 {{ framework }}
                 <button @click="removeFramework(framework)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
               </span>
@@ -77,15 +77,15 @@
 
           <!-- Technologies Dropdown -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Technologies</label>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Technologies</label>
             <div class="flex items-center space-x-2">
-              <select v-model="selectedTechnology" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
+              <select v-model="selectedTechnology" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
                 <option v-for="technology in technologies" :key="technology.slug" :value="technology.slug">{{ technology.name }}</option>
               </select>
               <button type="button" @click="addTechnology" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="technology in projectTechnologies" :key="technology" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
+              <span v-for="technology in projectTechnologies" :key="technology" class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-full flex items-center space-x-2">
                 {{ technology }}
                 <button @click="removeTechnology(technology)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
               </span>
@@ -96,14 +96,14 @@
 
         <!-- Images Input -->
         <div class="col-span-1 md:col-span-2">
-          <label class="block text-sm font-medium text-gray-300">Images</label>
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Images</label>
           <div class="flex items-center space-x-2">
-            <input v-model="imageUrl" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500 break-all" placeholder="Image URL" />
+            <input v-model="imageUrl" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500 break-all" placeholder="Image URL" />
             <button type="button" @click="addImage" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
           </div>
           <div class="mt-2 flex flex-wrap gap-2">
             <span v-for="image in projectImages" :key="image" 
-              class="bg-gray-700 text-white py-1 px-3 rounded-md md:rounded-full flex items-end space-x-2 break-words text-sm md:text-base">
+              class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-md md:rounded-full flex items-end space-x-2 break-words text-sm md:text-base">
               <span class="break-words whitespace-normal max-w-[60vw] md:max-w-full">{{ image }}</span>
               <button @click="removeImage(image)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
             </span>
@@ -113,13 +113,13 @@
 
         <!-- Link Input -->
         <div class="col-span-1 md:col-span-2">
-          <label class="block text-sm font-medium text-gray-300">Project Link</label>
-          <input v-model="link" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" placeholder="Project Link" required />
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Project Link</label>
+          <input v-model="link" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" placeholder="Project Link" required />
         </div>
 
         <!-- Action Buttons -->
         <div class="col-span-1 md:col-span-2 flex justify-end space-x-3">
-          <button type="button" @click="$emit('close'), $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+          <button type="button" @click="$emit('close'), $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-500">Cancel</button>
           <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">Save Changes</button>
         </div>
       </form>

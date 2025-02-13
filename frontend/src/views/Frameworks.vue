@@ -96,7 +96,7 @@ const handleIconUpload = (event: Event) => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white mt-14 md:mt-0"
+      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-[var(--text-color)] mt-14 md:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->
@@ -104,21 +104,21 @@ const handleIconUpload = (event: Event) => {
 
       <div class="flex justify-between items-center">
         <h1 class="text-4xl md:text-5xl font-bold">Frameworks</h1>
-        <button @click="showModal = true, $emit('hideMobileButtons')" class="text-white hover:text-gray-300 transition">
+        <button @click="showModal = true, $emit('hideMobileButtons')" class="text-[var(--text-color)] hover:text-[var(--text-3-color)] transition">
           <Plus class="w-6 h-6" />
         </button>
       </div>
       <div class="relative">
-        <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full mt-6"></div>
+        <div class="h-[3px] bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] rounded-full mt-6"></div>
       </div>
 
       <!-- Error Message -->
-      <p v-if="errorMessage" class="text-white bg-red-500/90 border border-red-700 p-3 rounded-md mt-6">
+      <p v-if="errorMessage" class="text-[var(--text-color)] bg-red-500/90 border border-red-700 p-3 rounded-md mt-6">
         {{ errorMessage }}
       </p>
 
       <!-- No Frameworks Message -->
-      <p v-if="!errorMessage && frameworks.length === 0" class="text-gray-400 mt-6">No frameworks available.</p>
+      <p v-if="!errorMessage && frameworks.length === 0" class="text-[var(--text-2-color)] mt-6">No frameworks available.</p>
 
       <!-- Frameworks List -->
       <transition-group
@@ -133,11 +133,11 @@ const handleIconUpload = (event: Event) => {
             initial: framework.slug === newlyAddedSlug ? { opacity: 0, y: 0} : {},
             enter: framework.slug === newlyAddedSlug ? { opacity: 1, y: 0} : {},
           }"
-          class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+          class="relative flex flex-col items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
         >
 
           <div v-html="framework.icon" class="w-12 h-12 framework-icon"></div>
-          <span class="mt-2 text-white text-sm">{{ framework.name }}</span>
+          <span class="mt-2 text-[var(--text-color)] text-sm">{{ framework.name }}</span>
           
           <button @click="frameworkToDelete = framework; showDeleteModal = true, $emit('hideMobileButtons')" 
             class="absolute bottom-2 right-2 text-red-500 hover:text-red-700 transition">
@@ -150,25 +150,25 @@ const handleIconUpload = (event: Event) => {
 
   <!-- Add Framework Modal -->
   <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-4">
+    <div class="bg-[var(--bg-color)] p-6 rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] w-full max-w-md mx-4">
       <h2 class="text-xl font-bold mb-4">Add New Framework</h2>
       <form @submit.prevent="handleCreateFramework" class="space-y-4">
         
         <!-- Name Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300">Name</label>
-          <input v-model="newFramework.name" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+          <label class="block text-sm font-medium text-[var(--text-3-color)]">Name</label>
+          <input v-model="newFramework.name" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
         </div>
 
         <!-- Icon Upload Input -->
         <div>
-          <label class="block text-sm font-medium text-gray-300 mb-2">Icon (SVG Only)</label>
+          <label class="block text-sm font-medium text-[var(--text-3-color)] mb-2">Icon (SVG Only)</label>
           <div class="relative flex items-center space-x-3">
             <!-- Hidden File Input -->
             <input type="file" accept=".svg" @change="handleIconUpload" ref="fileInput" class="hidden" />
             
             <!-- Custom Button -->
-            <button type="button" @click="triggerFileInput" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-700 flex items-center space-x-2">
+            <button type="button" @click="triggerFileInput" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-500 flex items-center space-x-2">
               <Plus class="w-5 h-5" />
               <span>Select File</span>
             </button>
@@ -185,7 +185,7 @@ const handleIconUpload = (event: Event) => {
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-3">
-          <button type="button" @click="showModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+          <button type="button" @click="showModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-500">Cancel</button>
           <button type="submit" class="bg-blue-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
         </div>
       </form>
@@ -194,11 +194,11 @@ const handleIconUpload = (event: Event) => {
 
 <!-- Delete Confirmation Modal -->
   <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md mx-4">
+    <div class="bg-[var(--bg-color)] p-6 rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] w-full max-w-md mx-4">
       <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
       <p>Are you sure you want to delete this framework?</p>
       <div class="flex justify-end space-x-3 mt-4">
-        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-500">Cancel</button>
         <button type="button" @click="handleDeleteFramework" class="bg-red-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">Delete</button>
       </div>
     </div>

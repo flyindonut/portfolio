@@ -202,10 +202,10 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
     :enter="{ opacity: 1, y: 0 }"
     :delay="250"
     :duration="500"
-    class="p-10 md:p-20 mx-auto max-w-5xl text-white"
+    class="p-10 md:p-20 mx-auto max-w-5xl text-[var(--text-color)]"
   >
     <div v-if="isLoading" class="flex justify-center items-center h-dvh">
-      <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
+      <div class="border-6 border-[var(--border-color)]/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
     </div>
 
     <div v-else>
@@ -214,18 +214,18 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
         <div class="flex justify-between items-center">
           <div>
             <h1 class="text-4xl sm:text-5xl font-bold">{{ t('name') }}</h1>
-            <h2 class="text-xl text-gray-400">{{ about.translations[locale as Locale].title }}</h2>
+            <h2 class="text-xl text-[var(--text-2-color)]">{{ about.translations[locale as Locale].title }}</h2>
           </div>
-          <button v-if="isAuthStatusDefined && isAdmin" @click="showModal = true, $emit('hideMenuButton')" class="mr-8 md:mr-0 text-white hover:text-gray-300 transition">
+          <button v-if="isAuthStatusDefined && isAdmin" @click="showModal = true, $emit('hideMenuButton')" class="mr-8 md:mr-0 text-[var(--text-color)] hover:text-[var(--text-3-color)] transition">
             <Edit class="w-6 h-6" />
           </button>
         </div>
-        <div class="mt-4 h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full"></div>
-        <p class="mt-4 text-gray-300" v-if="about.translations.en.description">
+        <div class="mt-4 h-[3px] bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] rounded-full"></div>
+        <p class="mt-4 text-[var(--text-3-color)]" v-if="about.translations.en.description">
           {{ about.translations[locale as Locale].description }}
         </p>
       </div>
-
+      
       <!-- Skills Section -->
       <div class="mt-10" v-if="services.length">
         <h3 class="text-2xl font-bold">{{ t("homePage.skillsTitle") }}</h3>
@@ -233,10 +233,10 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
           <div 
             v-for="service in services.filter(service => about?.services.includes(service.translations.en.name))"
             :key="service.slug" 
-            class="flex items-center backdrop-blur-md bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+            class="flex items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
           >
-            <div v-html="service.icon" class="w-6 h-6 text-white mr-3"></div>
-            <span :class="getFontSize(service.translations[locale as Locale].name)" class="text-white">{{ service.translations[locale as Locale].name }}</span>
+            <div v-html="service.icon" class="w-6 h-6 text-[var(--text-color)] mr-3"></div>
+            <span :class="getFontSize(service.translations[locale as Locale].name)" class="text-[var(--text-color)]">{{ service.translations[locale as Locale].name }}</span>
           </div>
         </div>
       </div>
@@ -248,26 +248,26 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
           <div 
             v-for="language in languages.filter(language => about?.technologies.includes(language.name))" 
             :key="language.slug" 
-            class="flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+            class="flex flex-col items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
           >
             <div v-html="language.icon" class="w-12 h-12 language-icon"></div>
-            <span class="mt-2 text-white text-sm">{{ language.name }}</span>
+            <span class="mt-2 text-[var(--text-color)] text-sm">{{ language.name }}</span>
           </div>
           <div 
             v-for="framework in frameworks.filter(framework => about?.technologies.includes(framework.name))" 
             :key="framework.slug" 
-            class="flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+            class="flex flex-col items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
           >
             <div v-html="framework.icon" class="w-12 h-12 framework-icon"></div>
-            <span class="mt-2 text-white text-sm">{{ framework.name }}</span>
+            <span class="mt-2 text-[var(--text-color)] text-sm">{{ framework.name }}</span>
           </div>
           <div 
             v-for="technology in technologies.filter(technology => about?.technologies.includes(technology.name))" 
             :key="technology.slug" 
-            class="flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+            class="flex flex-col items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
           >
             <div v-html="technology.icon" class="w-12 h-12 technology-icon"></div>
-            <span class="mt-2 text-white text-sm">{{ technology.name }}</span>
+            <span class="mt-2 text-[var(--text-color)] text-sm">{{ technology.name }}</span>
           </div>
         </div>
       </div>
@@ -286,42 +286,42 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
       <!-- Hobbies Section -->
       <div class="mt-12" v-if="about && about.translations.en.hobbies">
         <h3 class="text-2xl font-bold">{{ t('homePage.hobbiesTitle') }}</h3>
-        <p class="mt-4 text-gray-300">{{ about.translations[locale as Locale].hobbies }}</p>
+        <p class="mt-4 text-[var(--text-3-color)]">{{ about.translations[locale as Locale].hobbies }}</p>
       </div>
     </div>
   </section>
 
   <!-- Update About Modal -->
   <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-2xl m-4 overflow-y-auto max-h-[80vh]">
+    <div class="bg-[var(--bg-color)] p-6 rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] w-full max-w-2xl m-4 overflow-y-auto max-h-[80vh]">
       <h2 class="text-xl font-bold mb-4">Update About</h2>
       <form @submit.prevent="handleUpdateAbout" class="space-y-4">
         <div v-if="currentStep === 1" class="space-y-4">
           <!-- First Name Input -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">First Name</label>
-            <input v-model="aboutFirstName" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">First Name</label>
+            <input v-model="aboutFirstName" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
           </div>
 
           <!-- Last Name Input -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Last Name</label>
-            <input v-model="aboutLastName" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Last Name</label>
+            <input v-model="aboutLastName" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
           </div>
 
           <!-- Title Input -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Title (EN)</label>
-            <input v-model="aboutTitleEn" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Title (EN)</label>
+            <input v-model="aboutTitleEn" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-300">Title (FR)</label>
-            <input v-model="aboutTitleFr" type="text" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Title (FR)</label>
+            <input v-model="aboutTitleFr" type="text" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required />
           </div>
 
           <!-- Action Buttons -->
           <div class="flex justify-between">
-            <button type="button" @click="showModal = false, $emit('showMenuButton')" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-700">Close</button>
+            <button type="button" @click="showModal = false, $emit('showMenuButton')" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-500">Close</button>
             <button type="button" @click="nextStep" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Next</button>
           </div>
         </div>
@@ -329,17 +329,17 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
         <div v-if="currentStep === 2" class="space-y-4">
           <!-- Description Input -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Description (EN)</label>
-            <textarea v-model="aboutDescriptionEn" rows="7" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Description (EN)</label>
+            <textarea v-model="aboutDescriptionEn" rows="7" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-300">Description (FR)</label>
-            <textarea v-model="aboutDescriptionFr" rows="7" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Description (FR)</label>
+            <textarea v-model="aboutDescriptionFr" rows="7" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
           </div>
 
           <!-- Action Buttons -->
           <div class="flex justify-between">
-            <button type="button" @click="previousStep" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-700">Previous</button>
+            <button type="button" @click="previousStep" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-500">Previous</button>
             <button type="button" @click="nextStep" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Next</button>
           </div>
         </div>
@@ -347,15 +347,15 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
         <div v-if="currentStep === 3" class="space-y-4">
           <!-- Services Dropdown -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Services</label>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Services</label>
             <div class="flex items-center space-x-2">
-              <select v-model="selectedService" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
+              <select v-model="selectedService" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
                 <option v-for="service in services.filter(s => !selectedServices.includes(s.translations.en.name))" :key="service.slug" :value="service.translations.en.name">{{ service.translations.en.name }}</option>
               </select>
               <button type="button" @click="addService" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="service in selectedServices" :key="service" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
+              <span v-for="service in selectedServices" :key="service" class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-full flex items-center space-x-2">
                 {{ service }}
                 <button @click="removeService(service)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
               </span>
@@ -364,15 +364,15 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
 
           <!-- Languages Dropdown -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Languages</label>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Languages</label>
             <div class="flex items-center space-x-2">
-              <select v-model="selectedLanguage" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
+              <select v-model="selectedLanguage" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
                 <option v-for="language in languages.filter(l => !selectedLanguages.includes(l.name))" :key="language.slug" :value="language.name">{{ language.name }}</option>
               </select>
               <button type="button" @click="addLanguage" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="language in selectedLanguages" :key="language" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
+              <span v-for="language in selectedLanguages" :key="language" class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-full flex items-center space-x-2">
                 {{ language }}
                 <button @click="removeLanguage(language)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
               </span>
@@ -381,15 +381,15 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
 
           <!-- Frameworks Dropdown -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Frameworks</label>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Frameworks</label>
             <div class="flex items-center space-x-2">
-              <select v-model="selectedFramework" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
+              <select v-model="selectedFramework" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
                 <option v-for="framework in frameworks.filter(f => !selectedFrameworks.includes(f.name))" :key="framework.slug" :value="framework.name">{{ framework.name }}</option>
               </select>
               <button type="button" @click="addFramework" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="framework in selectedFrameworks" :key="framework" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
+              <span v-for="framework in selectedFrameworks" :key="framework" class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-full flex items-center space-x-2">
                 {{ framework }}
                 <button @click="removeFramework(framework)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
               </span>
@@ -398,15 +398,15 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
 
           <!-- Technologies Dropdown -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Technologies</label>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Technologies</label>
             <div class="flex items-center space-x-2">
-              <select v-model="selectedTechnology" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
+              <select v-model="selectedTechnology" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500">
                 <option v-for="technology in technologies.filter(t => !selectedTechnologies.includes(t.name))" :key="technology.slug" :value="technology.name">{{ technology.name }}</option>
               </select>
               <button type="button" @click="addTechnology" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Add</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2">
-              <span v-for="technology in selectedTechnologies" :key="technology" class="bg-gray-700 text-white py-1 px-3 rounded-full flex items-center space-x-2">
+              <span v-for="technology in selectedTechnologies" :key="technology" class="bg-[var(--item)] text-[var(--text-color)] py-1 px-3 rounded-full flex items-center space-x-2">
                 {{ technology }}
                 <button @click="removeTechnology(technology)" class="text-red-500 hover:text-red-700 ml-2">&times;</button>
               </span>
@@ -415,7 +415,7 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
 
           <!-- Action Buttons -->
           <div class="flex justify-between">
-            <button type="button" @click="previousStep" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-700">Previous</button>
+            <button type="button" @click="previousStep" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-500">Previous</button>
             <button type="button" @click="nextStep" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Next</button>
           </div>
         </div>
@@ -423,17 +423,17 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
         <div v-if="currentStep === 4" class="space-y-4">
           <!-- Hobbies Input -->
           <div>
-            <label class="block text-sm font-medium text-gray-300">Hobbies (EN)</label>
-            <textarea v-model="aboutHobbiesEn" rows="7" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Hobbies (EN)</label>
+            <textarea v-model="aboutHobbiesEn" rows="7" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-300">Hobbies (FR)</label>
-            <textarea v-model="aboutHobbiesFr" rows="7" class="w-full bg-[#212529] text-white border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
+            <label class="block text-sm font-medium text-[var(--text-3-color)]">Hobbies (FR)</label>
+            <textarea v-model="aboutHobbiesFr" rows="7" class="w-full bg-[var(--input-color)] text-[var(--text-color)] border border-gray-600 rounded-lg p-2 focus:ring focus:ring-gray-500" required></textarea>
           </div>
 
           <!-- Action Buttons -->
           <div class="flex justify-between">
-            <button type="button" @click="previousStep" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-700">Previous</button>
+            <button type="button" @click="previousStep" class="bg-gray-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-gray-500">Previous</button>
             <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700">Save</button>
           </div>
         </div>

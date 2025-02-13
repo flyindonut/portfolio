@@ -1,16 +1,16 @@
 <template>
-  <nav class="text-gray-400 text-sm mb-6">
+  <nav class="text-[var(--text-2-color)] text-sm mb-6">
     <ul class="flex space-x-2">
       <li v-for="(crumb, index) in breadcrumbs" :key="index" class="flex items-center">
         <router-link 
           v-if="crumb.path" 
           :to="crumb.path" 
           @click="$emit('showGoBack')"
-          class="hover:text-white transition duration-200"
+          class="hover:text-[var(--text-color)] transition duration-200"
         >
           {{ crumb.label }}
         </router-link>
-        <span v-else class="text-white">{{ crumb.label }}</span>
+        <span v-else class="text-[var(--text-color)]">{{ crumb.label }}</span>
         <span v-if="index !== breadcrumbs.length - 1" class="mx-2 text-gray-500">›</span>
       </li>
     </ul>

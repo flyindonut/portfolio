@@ -89,7 +89,7 @@ onMounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-white mt-14 md:mt-0"
+      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-[var(--text-color)] mt-14 md:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->
@@ -100,43 +100,43 @@ onMounted(() => {
         <h1 class="text-3xl md:text-5xl font-bold">Manage Comments</h1>
         <div class="flex space-x-4 mt-4 md:mt-0">
           <div class="relative">
-            <select v-model="filterStatus" class="bg-[#343a40] text-white p-2 rounded-md appearance-none pr-10">
+            <select v-model="filterStatus" class="bg-[var(--item)] text-[var(--text-color)] p-2 rounded-md appearance-none pr-10">
               <option value="ALL">All</option>
               <option value="PENDING">Pending</option>
               <option value="APPROVED">Approved</option>
               <option value="REJECTED">Rejected</option>
             </select>
-            <ChevronDown class="absolute top-1/2 right-2 transform -translate-y-1/2 w-5 h-5 text-white pointer-events-none" />
+            <ChevronDown class="absolute top-1/2 right-2 transform -translate-y-1/2 w-5 h-5 text-[var(--text-color)] pointer-events-none" />
           </div>
           <div class="relative">
-            <select v-model="userStatusFilter" class="bg-[#343a40] text-white p-2 rounded-md appearance-none pr-10">
+            <select v-model="userStatusFilter" class="bg-[var(--item)] text-[var(--text-color)] p-2 rounded-md appearance-none pr-10">
               <option value="ALL">All Users</option>
               <option value="VERIFIED">Verified Users</option>
               <option value="GUEST">Guest Users</option>
             </select>
-            <ChevronDown class="absolute top-1/2 right-2 transform -translate-y-1/2 w-5 h-5 text-white pointer-events-none" />
+            <ChevronDown class="absolute top-1/2 right-2 transform -translate-y-1/2 w-5 h-5 text-[var(--text-color)] pointer-events-none" />
           </div>
         </div>
       </div>
 
       <!-- Error Message -->
-      <p v-if="errorMessage" class="text-white bg-red-500/90 border border-red-700 p-3 rounded-md mt-6">
+      <p v-if="errorMessage" class="text-[var(--text-color)] bg-red-500/90 border border-red-700 p-3 rounded-md mt-6">
         {{ errorMessage }}
       </p>
 
       <!-- No Comments Message -->
-      <div v-if="!errorMessage && filteredComments.length === 0" class="text-gray-400">
-        <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full mb-7"></div>
+      <div v-if="!errorMessage && filteredComments.length === 0" class="text-[var(--text-2-color)]">
+        <div class="h-[3px] bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] rounded-full mb-7"></div>
         No comments available.
       </div>
 
       <!-- Comments List -->
       <div v-if="filteredComments.length > 0">
-        <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full mb-7"></div>
-        <div v-for="comment in filteredComments" :key="comment.commentId" class="bg-[#161a1d] p-6 rounded-lg shadow-md backdrop-blur-md relative mb-4">
+        <div class="h-[3px] bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] rounded-full mb-7"></div>
+        <div v-for="comment in filteredComments" :key="comment.commentId" class="bg-[var(--bg-color)] p-6 rounded-lg shadow-md backdrop-blur-md relative mb-4">
           <div class="flex items-center mb-4 mt-4 md:mt-0">
             <div class="w-10 h-10 rounded-full overflow-hidden">
-              <div v-if="!comment.auth0Avatar" class="bg-[#3b82f6] w-10 h-10 rounded-full flex items-center justify-center text-white font-bold">
+              <div v-if="!comment.auth0Avatar" class="bg-[#3b82f6] w-10 h-10 rounded-full flex items-center justify-center text-[var(--text-color)] font-bold">
                 {{ comment.firstName.charAt(0).toUpperCase() }}{{ comment.lastName.charAt(0).toUpperCase() }}
               </div>
               <img 
@@ -150,11 +150,11 @@ onMounted(() => {
             </div>
             <div class="ml-4">
               <h3 class="text-lg font-bold">{{ comment.firstName.charAt(0).toUpperCase() + comment.firstName.slice(1) }} {{ comment.lastName.charAt(0).toUpperCase() + comment.lastName.slice(1) }}</h3>
-              <p class="text-gray-400 text-sm">{{ new Date(comment.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</p>
+              <p class="text-[var(--text-2-color)] text-sm">{{ new Date(comment.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}</p>
             </div>
           </div>
-          <p class="text-gray-300">{{ comment.content }}</p>
-          <p class="text-gray-400 text-sm absolute bottom-2 right-2">{{ new Date(comment.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) }}</p>
+          <p class="text-[var(--text-3-color)]">{{ comment.content }}</p>
+          <p class="text-[var(--text-2-color)] text-sm absolute bottom-2 right-2">{{ new Date(comment.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) }}</p>
           <div class="absolute top-2 right-2 flex space-x-2">
             <Check :class="{'text-green-500': comment.commentStatus === 'APPROVED', 'text-gray-500 hover:text-green-500': comment.commentStatus !== 'APPROVED'}" @click="approveComment(comment.commentId)" />
             <X :class="{'text-red-500': comment.commentStatus === 'REJECTED', 'text-gray-500 hover:text-red-500': comment.commentStatus !== 'REJECTED'}" @click="rejectComment(comment.commentId)" />
@@ -168,11 +168,11 @@ onMounted(() => {
 
   <!-- Delete Confirmation Modal -->
   <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md">
+    <div class="bg-[var(--bg-color)] p-6 rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] w-full max-w-md">
       <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
       <p>Are you sure you want to delete this comment?</p>
       <div class="flex justify-end space-x-3 mt-4">
-        <button type="button" @click="showDeleteModal = false" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
+        <button type="button" @click="showDeleteModal = false" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-500">Cancel</button>
         <button type="button" @click="handleDeleteComment" class="bg-red-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">Delete</button>
       </div>
     </div>

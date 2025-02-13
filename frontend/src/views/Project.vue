@@ -139,10 +139,10 @@ onUnmounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="500"
       :duration="500"
-      class="p-10 md:p-20 mt-14 md:mt-0 mx-auto max-w-4xl text-white"
+      class="p-10 md:p-20 mt-14 md:mt-0 mx-auto max-w-4xl text-[var(--text-color)]"
     >
       <div v-if="isLoading" class="flex justify-center items-center h-dvh">
-        <div class="border-6 border-white/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
+        <div class="border-6 border-[var(--border-color)]/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
       </div>
 
       <div v-else>
@@ -155,12 +155,12 @@ onUnmounted(() => {
         <div v-else-if="project" class="space-y-6">
           <div class="flex justify-between items-center">
             <h1 class="text-4xl md:text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
-            <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project), $emit('hideMobileButtons')" class="text-white hover:text-gray-300 transition">
+            <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project), $emit('hideMobileButtons')" class="text-[var(--text-color)] hover:text-[var(--text-3-color)] transition">
               <Edit class="w-6 h-6" />
             </button>
           </div>
-          <div class="h-[3px] bg-gradient-to-r from-[#b7c3d7] to-white rounded-full"></div>
-          <p class="text-gray-400 mt-2">{{ project.translations[locale as Locale].description }}</p>
+          <div class="mt-4 h-[3px] bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] rounded-full"></div>
+          <p class="text-[var(--text-2-color)] mt-2">{{ project.translations[locale as Locale].description }}</p>
 
           <!-- Image Carousel Section -->
           <div v-if="project.images.length" class="mt-10">
@@ -194,10 +194,10 @@ onUnmounted(() => {
               <div
                 v-for="language in project.languages"
                 :key="language"
-                class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+                class="relative flex flex-col items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
               >
                 <div v-html="languages.find(l => l.slug === language)?.icon" class="w-12 h-12"></div>
-                <span class="mt-2 text-white text-sm">{{ languages.find(l => l.slug === language)?.name }}</span>
+                <span class="mt-2 text-[var(--text-color)] text-sm">{{ languages.find(l => l.slug === language)?.name }}</span>
               </div>
             </div>
           </div>
@@ -209,10 +209,10 @@ onUnmounted(() => {
               <div
                 v-for="framework in project.frameworks"
                 :key="framework"
-                class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+                class="relative flex flex-col items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
               >
                 <div v-html="frameworks.find(f => f.slug === framework)?.icon" class="w-12 h-12"></div>
-                <span class="mt-2 text-white text-sm">{{ frameworks.find(f => f.slug === framework)?.name }}</span>
+                <span class="mt-2 text-[var(--text-color)] text-sm">{{ frameworks.find(f => f.slug === framework)?.name }}</span>
               </div>
             </div>
           </div>
@@ -224,10 +224,10 @@ onUnmounted(() => {
               <div
                 v-for="technology in project.technologies"
                 :key="technology"
-                class="relative flex flex-col items-center backdrop-blur-[10px] bg-[#ffffff15] border border-[#ffffff22] p-4 rounded-xl shadow-md hover:bg-[#ffffff25] transition"
+                class="relative flex flex-col items-center bg-[var(--skill-item)] border border-[var(--border-color)] p-4 rounded-xl shadow-md hover:bg-[var(--skill-item-hover)] transition"
               >
                 <div v-html="technologies.find(t => t.slug === technology)?.icon" class="w-12 h-12"></div>
-                <span class="mt-2 text-white text-sm">{{ technologies.find(t => t.slug === technology)?.name }}</span>
+                <span class="mt-2 text-[var(--text-color)] text-sm">{{ technologies.find(t => t.slug === technology)?.name }}</span>
               </div>
             </div>
           </div>
@@ -235,7 +235,7 @@ onUnmounted(() => {
           <!-- Project Timeline -->
           <div class="mt-10">
             <h3 class="text-2xl font-bold">Project Timeline</h3>
-            <p class="text-gray-300 mt-2">{{ project.startDate }} - {{ project.endDate }}</p>
+            <p class="text-[var(--text-3-color)] mt-2">{{ project.startDate }} - {{ project.endDate }}</p>
           </div>
 
           <!-- Project Link -->
@@ -260,12 +260,12 @@ onUnmounted(() => {
 
   <!-- Delete Confirmation Modal -->
   <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
-    <div class="bg-[#161a1d] p-6 rounded-xl shadow-2xl border border-gray-700 text-white w-full max-w-md m-4">
+    <div class="bg-[var(--bg-color)] p-6 rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] w-full max-w-md m-4">
       <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
       <p>Are you sure you want to delete this project?</p>
       <div class="flex justify-end space-x-3 mt-4">
-        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-gray-700">Cancel</button>
-        <button type="button" @click="handleDelete" class="bg-red-600 text-white py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">Delete</button>
+        <button type="button" @click="showDeleteModal = false, $emit('showMobileButtons')" class="bg-gray-600 text-[var(--text-color)] py-2 px-3 rounded-md transition duration-200 hover:bg-[var(--item)]">Cancel</button>
+        <button type="button" @click="handleDelete" class="bg-red-600 text-[var(--text-color)] py-2 px-3 rounded-md transition duration-200 hover:bg-red-700">Delete</button>
       </div>
     </div>
   </div>

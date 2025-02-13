@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
-import { Home, FolderKanban, FileText, Mail, Github, Linkedin, FileDown, Layers, Menu, X } from "lucide-vue-next";
+import { Home, FolderKanban, FileText, Mail, Github, Linkedin, FileDown, Layers, Sun, Moon, Globe } from "lucide-vue-next";
 import { useAuth0 } from "@auth0/auth0-vue";
 import { useAuthStore } from "@/stores/auth";
 
@@ -16,7 +16,7 @@ const cvLink = computed(() => `/cv/DeboHuang_CV_${locale.value.toUpperCase()}.pd
 const returnToUrl = window.location.origin;
 
 const toggleLanguage = () => {
-  locale.value = locale.value === "en" ? "fr" : "en";
+  locale.value = locale.value === 'en' ? 'fr' : 'en';
   localStorage.setItem("selectedLanguage", locale.value);
 };
 
@@ -42,47 +42,74 @@ const viewAndDownloadCV = () => {
 
 const authStore = useAuthStore();
 const isAdmin = computed(() => authStore.hasRole("Admin"));
+
+const isLightMode = ref(false);
+
+const toggleLightMode = () => {
+  isLightMode.value = !isLightMode.value;
+  document.documentElement.classList.toggle('light', isLightMode.value);
+  localStorage.setItem('lightMode', isLightMode.value ? 'true' : 'false');
+};
+
+onMounted(() => {
+  const savedLightMode = localStorage.getItem('lightMode');
+  if (savedLightMode === 'true') {
+    isLightMode.value = true;
+    document.documentElement.classList.add('light');
+  }
+});
+
+const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
 </script>
 
 <template>
   <aside>
     <!-- Profile Info -->
-    <div>
-      <h1 class="hidden text-lg font-bold text-white md:flex">{{ t("name") }}</h1>
-      <p class="hidden text-gray-400 text-sm md:flex">{{ t("title") }}</p>
+    <div class="flex items-center justify-between flex-row-reverse md:flex-row">
+      <div>
+        <h1 class="hidden text-lg font-bold text-[var(--text-color)] md:flex">{{ t("name") }}</h1>
+        <p class="hidden text-[var(--text-2-color)] text-sm md:flex">{{ t("title") }}</p>
+      </div>
+      <div class="flex items-center justify-center space-x-2 mt-6 mb-6 w-dvw md:mt-0 md:mb-0 md:w-auto">
+        <div class="flex items-center space-x-1 cursor-pointer hover:bg-[var(--item-hover)] rounded-md p-1" @click="toggleLanguage">
+          <span class="text-[var(--text-color)]">{{ currentLanguage }}</span>
+          <Globe class="w-5 h-5 text-[var(--text-color)]" />
+        </div>
+        <component @click="toggleLightMode" :is="isLightMode ? Moon : Sun" class="w-7 h-7 text-[var(--text-color)] cursor-pointer hover:bg-[var(--item-hover)] p-1 rounded-full" />
+      </div>
     </div>
 
     <!-- Public Navigation Links -->
-    <nav class="flex flex-col mt-20 space-y-3 lg:mt-6">
+    <nav class="flex flex-col space-y-3 lg:mt-6">
       <router-link 
         to="/"
         @click="$emit('closeMobileMenu')"
-        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
-        active-class="bg-[#495057] border-l-4 border-white pl-3"
+        class="flex items-center px-4 py-4 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101 lg:py-2"
+        active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-3"
       >
         <Home class="w-5 h-5 mr-2" /> {{ t("home") }}
       </router-link>
       <router-link 
         to="/projects" 
         @click="$emit('closeMobileMenu')"
-        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
-        active-class="bg-[#495057] border-l-4 border-white pl-3"
+        class="flex items-center px-4 py-4 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101 lg:py-2"
+        active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-3"
       >
         <FolderKanban class="w-5 h-5 mr-2" /> {{ t("projects") }}
       </router-link>
       <router-link
         to="/comments" 
         @click="$emit('closeMobileMenu')"
-        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
-        active-class="bg-[#495057] border-l-4 border-white pl-3"
+        class="flex items-center px-4 py-4 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101 lg:py-2"
+        active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-3"
       >
         <FileText class="w-5 h-5 mr-2" /> {{ t("comments") }}
       </router-link>
       <router-link
         to="/contact"
         @click="$emit('closeMobileMenu')"
-        class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
-        active-class="bg-[#495057] border-l-4 border-white pl-3"
+        class="flex items-center px-4 py-4 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101 lg:py-2"
+        active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-3"
       >
         <Mail class="w-5 h-5 mr-2" /> {{ t("contact") }}
       </router-link>
@@ -110,8 +137,8 @@ const isAdmin = computed(() => authStore.hasRole("Admin"));
         <router-link 
           to="/icons"
           @click="$emit('closeMobileMenu')"
-          class="flex items-center px-4 py-4 rounded-lg text-white transition-all duration-200 bg-[#343a40] hover:bg-[#374151] hover:scale-101 lg:py-2"
-          active-class="bg-[#495057] border-l-4 border-white pl-3"
+          class="flex items-center px-4 py-4 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101 lg:py-2"
+          active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-3"
         >
           <Layers class="w-5 h-5 mr-2" /> {{ t("manageIcons") }}
         </router-link>
@@ -120,39 +147,26 @@ const isAdmin = computed(() => authStore.hasRole("Admin"));
 
     <!-- Social Icons -->
     <div class="flex justify-center space-x-4 mt-auto">
-      <a :href="githubLink" target="_blank" class="social-icon">
+      <a :href="githubLink" target="_blank" class="flex items-center justify-center p-2 rounded-lg bg-[var(--item)] transition-all duration-200 text-[var(--text-color)] hover:bg-[var(--item-hover)] hover:scale-101">
         <Github class="w-6 h-6" />
       </a>
-      <a :href="linkedinLink" target="_blank" class="social-icon">
+      <a :href="linkedinLink" target="_blank" class="flex items-center justify-center p-2 rounded-lg bg-[var(--item)] transition-all duration-200 text-[var(--text-color)] hover:bg-[var(--item-hover)] hover:scale-101">
         <Linkedin class="w-6 h-6" />
       </a>
-      <button @click="viewAndDownloadCV" class="social-icon">
+      <button @click="viewAndDownloadCV" class="flex items-center justify-center p-2 rounded-lg bg-[var(--item)] transition-all duration-200 text-[var(--text-color)] hover:bg-[var(--item-hover)] hover:scale-101">
         <FileDown class="w-6 h-6" />
       </button>
     </div>
 
     <!-- Separator -->
-    <hr class="border-gray-600 mt-6 mb-4" />
-
-    <!-- Footer Buttons -->
-    <div class="flex flex-row space-x-2">
-      <button class="flex-1 px-4 py-2 rounded-lg bg-[#343a40] text-white transition-all duration-200 hover:bg-[#374151] hover:scale-101">
-        {{ t("other") }}
-      </button>
-      <button 
-        class="flex-1 px-4 py-2 rounded-lg bg-[#343a40] text-white transition-all duration-200 hover:bg-[#374151] hover:scale-101"
-        @click="toggleLanguage"
-      >
-        {{ t("language") }}
-      </button>
-    </div>
+    <hr class="border-gray-600 mt-6" />
 
     <!-- Auth Buttons -->
     <div class="flex flex-row space-x-2 mt-4">
       <button 
         v-if="isLoading" 
         disabled
-        class="flex-1 px-4 py-2 rounded-lg bg-gray-500 text-white opacity-50 cursor-not-allowed"
+        class="flex-1 px-4 py-2 rounded-lg bg-gray-500 text-[var(--text-color)] opacity-50 cursor-not-allowed"
       >
         {{ t("loading") }}
       </button>
@@ -181,22 +195,5 @@ const isAdmin = computed(() => authStore.hasRole("Admin"));
 
 * {
   font-family: 'Poppins', sans-serif;
-}
-
-/* Social Icons */
-.social-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 8px;
-  background-color: #343a40;
-  transition: all 0.2s ease-in-out;
-  color: white;
-}
-
-.social-icon:hover {
-  background-color: #495057;
-  transform: scale(1.1);
 }
 </style>
