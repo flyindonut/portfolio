@@ -57,7 +57,6 @@ watch([isMobileMenuOpen, () => route.path], ([newIsMobileMenuOpen, newPath]) => 
     }
   }
 });
-
 </script>
 
 <template>

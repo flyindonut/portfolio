@@ -1,3 +1,130 @@
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { fetchLanguages } from "@/api/languageApi";
+import { fetchFrameworks } from "@/api/frameworkApi";
+import { fetchTechnologies } from "@/api/technologyApi";
+import { updateProject } from "@/api/projectApi";
+import type { Language } from "@/types/Language";
+import type { Framework } from "@/types/Framework";
+import type { Technology } from "@/types/Technology";
+import type { Project } from "@/types/Project";
+
+const props = defineProps<{ project: Project }>();
+const emit = defineEmits(['close', 'refreshProjects', 'showMobileButtons', 'updateProject']);
+const router = useRouter();
+
+const projectNameEn = ref(props.project.translations.en.name);
+const projectDescriptionEn = ref(props.project.translations.en.description);
+const projectNameFr = ref(props.project.translations.fr.name);
+const projectDescriptionFr = ref(props.project.translations.fr.description);
+
+const formatDateForInput = (date: string) => {
+  const [month, year] = date.split("/");
+  return `${year}-${month}`;
+};
+
+const startDate = ref(formatDateForInput(props.project.startDate));
+const endDate = ref(formatDateForInput(props.project.endDate));
+const link = ref(props.project.link);
+
+const languages = ref<Language[]>([]);
+const frameworks = ref<Framework[]>([]);
+const technologies = ref<Technology[]>([]);
+
+const selectedLanguage = ref<string>("");
+const selectedFramework = ref<string>("");
+const selectedTechnology = ref<string>("");
+
+const projectLanguages = ref<string[]>(props.project.languages);
+const projectFrameworks = ref<string[]>(props.project.frameworks);
+const projectTechnologies = ref<string[]>(props.project.technologies);
+const projectImages = ref<string[]>(props.project.images);
+const imageUrl = ref<string>("");
+
+const fetchAllData = async () => {
+  languages.value = await fetchLanguages();
+  frameworks.value = await fetchFrameworks();
+  technologies.value = await fetchTechnologies();
+};
+
+const addLanguage = () => {
+  if (selectedLanguage.value && !projectLanguages.value.includes(selectedLanguage.value)) {
+    projectLanguages.value.push(selectedLanguage.value);
+    selectedLanguage.value = "";
+  }
+};
+
+const addFramework = () => {
+  if (selectedFramework.value && !projectFrameworks.value.includes(selectedFramework.value)) {
+    projectFrameworks.value.push(selectedFramework.value);
+    selectedFramework.value = "";
+  }
+};
+
+const addTechnology = () => {
+  if (selectedTechnology.value && !projectTechnologies.value.includes(selectedTechnology.value)) {
+    projectTechnologies.value.push(selectedTechnology.value);
+    selectedTechnology.value = "";
+  }
+};
+
+const addImage = () => {
+  if (imageUrl.value && !projectImages.value.includes(imageUrl.value)) {
+    projectImages.value.push(imageUrl.value);
+    imageUrl.value = "";
+  }
+};
+
+const removeLanguage = (language: string) => {
+  projectLanguages.value = projectLanguages.value.filter(l => l !== language);
+};
+
+const removeFramework = (framework: string) => {
+  projectFrameworks.value = projectFrameworks.value.filter(f => f !== framework);
+};
+
+const removeTechnology = (technology: string) => {
+  projectTechnologies.value = projectTechnologies.value.filter(t => t !== technology);
+};
+
+const removeImage = (image: string) => {
+  projectImages.value = projectImages.value.filter(i => i !== image);
+};
+
+const modifyProject = async () => {
+  const formatDate = (date: string) => {
+    const [year, month] = date.split("-");
+    return `${month}/${year}`;
+  };
+
+  const updatedProject = {
+    translations: {
+      en: { name: projectNameEn.value, description: projectDescriptionEn.value },
+      fr: { name: projectNameFr.value, description: projectDescriptionFr.value }
+    },
+    startDate: formatDate(startDate.value),
+    endDate: formatDate(endDate.value),
+    technologies: projectTechnologies.value,
+    languages: projectLanguages.value,
+    frameworks: projectFrameworks.value,
+    images: projectImages.value,
+    link: link.value
+  };
+
+  const response = await updateProject(props.project.slug, updatedProject);
+  emit('refreshProjects', response);
+  emit('close');
+  await router.push('/projects');
+  router.push(`/projects/${response.slug}`);
+
+};
+
+onMounted(() => {
+  fetchAllData();
+});
+</script>
+
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-md z-50">
     <div class="bg-[var(--bg-color)] p-6 rounded-xl shadow-2xl border border-gray-700 text-[var(--text-color)] w-full max-w-4xl m-4 overflow-y-auto max-h-[80vh]">
@@ -126,133 +253,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { fetchLanguages } from "@/api/languageApi";
-import { fetchFrameworks } from "@/api/frameworkApi";
-import { fetchTechnologies } from "@/api/technologyApi";
-import { updateProject } from "@/api/projectApi";
-import type { Language } from "@/types/Language";
-import type { Framework } from "@/types/Framework";
-import type { Technology } from "@/types/Technology";
-import type { Project } from "@/types/Project";
-
-const props = defineProps<{ project: Project }>();
-const emit = defineEmits(['close', 'refreshProjects', 'showMobileButtons', 'updateProject']);
-const router = useRouter();
-
-const projectNameEn = ref(props.project.translations.en.name);
-const projectDescriptionEn = ref(props.project.translations.en.description);
-const projectNameFr = ref(props.project.translations.fr.name);
-const projectDescriptionFr = ref(props.project.translations.fr.description);
-
-const formatDateForInput = (date: string) => {
-  const [month, year] = date.split("/");
-  return `${year}-${month}`;
-};
-
-const startDate = ref(formatDateForInput(props.project.startDate));
-const endDate = ref(formatDateForInput(props.project.endDate));
-const link = ref(props.project.link);
-
-const languages = ref<Language[]>([]);
-const frameworks = ref<Framework[]>([]);
-const technologies = ref<Technology[]>([]);
-
-const selectedLanguage = ref<string>("");
-const selectedFramework = ref<string>("");
-const selectedTechnology = ref<string>("");
-
-const projectLanguages = ref<string[]>(props.project.languages);
-const projectFrameworks = ref<string[]>(props.project.frameworks);
-const projectTechnologies = ref<string[]>(props.project.technologies);
-const projectImages = ref<string[]>(props.project.images);
-const imageUrl = ref<string>("");
-
-const fetchAllData = async () => {
-  languages.value = await fetchLanguages();
-  frameworks.value = await fetchFrameworks();
-  technologies.value = await fetchTechnologies();
-};
-
-const addLanguage = () => {
-  if (selectedLanguage.value && !projectLanguages.value.includes(selectedLanguage.value)) {
-    projectLanguages.value.push(selectedLanguage.value);
-    selectedLanguage.value = "";
-  }
-};
-
-const addFramework = () => {
-  if (selectedFramework.value && !projectFrameworks.value.includes(selectedFramework.value)) {
-    projectFrameworks.value.push(selectedFramework.value);
-    selectedFramework.value = "";
-  }
-};
-
-const addTechnology = () => {
-  if (selectedTechnology.value && !projectTechnologies.value.includes(selectedTechnology.value)) {
-    projectTechnologies.value.push(selectedTechnology.value);
-    selectedTechnology.value = "";
-  }
-};
-
-const addImage = () => {
-  if (imageUrl.value && !projectImages.value.includes(imageUrl.value)) {
-    projectImages.value.push(imageUrl.value);
-    imageUrl.value = "";
-  }
-};
-
-const removeLanguage = (language: string) => {
-  projectLanguages.value = projectLanguages.value.filter(l => l !== language);
-};
-
-const removeFramework = (framework: string) => {
-  projectFrameworks.value = projectFrameworks.value.filter(f => f !== framework);
-};
-
-const removeTechnology = (technology: string) => {
-  projectTechnologies.value = projectTechnologies.value.filter(t => t !== technology);
-};
-
-const removeImage = (image: string) => {
-  projectImages.value = projectImages.value.filter(i => i !== image);
-};
-
-const modifyProject = async () => {
-  const formatDate = (date: string) => {
-    const [year, month] = date.split("-");
-    return `${month}/${year}`;
-  };
-
-  const updatedProject = {
-    translations: {
-      en: { name: projectNameEn.value, description: projectDescriptionEn.value },
-      fr: { name: projectNameFr.value, description: projectDescriptionFr.value }
-    },
-    startDate: formatDate(startDate.value),
-    endDate: formatDate(endDate.value),
-    technologies: projectTechnologies.value,
-    languages: projectLanguages.value,
-    frameworks: projectFrameworks.value,
-    images: projectImages.value,
-    link: link.value
-  };
-
-  const response = await updateProject(props.project.slug, updatedProject);
-  emit('refreshProjects', response);
-  emit('close');
-  await router.push('/projects');
-  router.push(`/projects/${response.slug}`);
-
-};
-
-onMounted(() => {
-  fetchAllData();
-});
-</script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');

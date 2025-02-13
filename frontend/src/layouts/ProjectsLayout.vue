@@ -1,52 +1,3 @@
-<template>
-  <div class="flex h-dvh">
-
-    <!-- Sidebar -->
-    <ProjectsSidebar 
-      v-motion
-      :initial="sidebarInitial"
-      :enter="sidebarEnter"
-      :duration="sidebarDuration"
-      :class="{ 'hidden': !isProjectsMenuOpen, 'flex': isProjectsMenuOpen }"
-      class="h-dvh w-full bg-[var(--bg-color)] p-4 flex-col border-r border-gray-600 overflow-y-auto md:w-72 md:flex"
-      @showCreateProjectModal="showCreateProjectModal = true"
-      @refreshProjects="handleRefreshProjects"
-      @closeProjectsMenu="toggleProjectsMenu"
-      @showProjectsMenu="isProjectsMenuOpen = true"
-      @hideMenuButton="$emit('hideMenuButton')"
-    />
-
-    <!-- Page Content -->
-    <div class="flex-1 overflow-y-auto">
-      <router-view 
-        :key="$route.fullPath" 
-        @showModifyProjectModal="handleShowModifyProjectModal" 
-        @refreshProjects="handleRefreshProjects"
-        @closeProjectsMenu="isProjectsMenuOpen = false"
-        @hideMobileButtons="$emit('hideMobileButtons')"
-        @showMobileButtons="$emit('showMobileButtons')"
-      />
-    </div>
-
-    <!-- Create Project Modal Form -->
-    <CreateProject
-      v-if="showCreateProjectModal" 
-      @close="handleCreateProjectModalClose" 
-      @refreshProjects="handleRefreshProjects"
-      @showMenuButton="$emit('showMenuButton')"
-    />
-
-    <!-- Modify Project Modal -->
-    <ModifyProject
-      v-if="showModifyProjectModal && selectedProject" :project="selectedProject" 
-      @close="handleModifyProjectModalClose"
-      @refreshProjects="handleRefreshProjects"
-      @showMobileButtons="$emit('showMobileButtons')"
-    />
-
-  </div>
-</template>
-  
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
@@ -114,3 +65,52 @@ watch(route, () => {
   handleCreateProjectModalClose();
 });
 </script>
+
+<template>
+  <div class="flex h-dvh">
+
+    <!-- Sidebar -->
+    <ProjectsSidebar 
+      v-motion
+      :initial="sidebarInitial"
+      :enter="sidebarEnter"
+      :duration="sidebarDuration"
+      :class="{ 'hidden': !isProjectsMenuOpen, 'flex': isProjectsMenuOpen }"
+      class="h-dvh w-full bg-[var(--bg-color)] p-4 flex-col border-r border-gray-600 overflow-y-auto md:w-72 md:flex"
+      @showCreateProjectModal="showCreateProjectModal = true"
+      @refreshProjects="handleRefreshProjects"
+      @closeProjectsMenu="toggleProjectsMenu"
+      @showProjectsMenu="isProjectsMenuOpen = true"
+      @hideMenuButton="$emit('hideMenuButton')"
+    />
+
+    <!-- Page Content -->
+    <div class="flex-1 overflow-y-auto">
+      <router-view 
+        :key="$route.fullPath" 
+        @showModifyProjectModal="handleShowModifyProjectModal" 
+        @refreshProjects="handleRefreshProjects"
+        @closeProjectsMenu="isProjectsMenuOpen = false"
+        @hideMobileButtons="$emit('hideMobileButtons')"
+        @showMobileButtons="$emit('showMobileButtons')"
+      />
+    </div>
+
+    <!-- Create Project Modal Form -->
+    <CreateProject
+      v-if="showCreateProjectModal" 
+      @close="handleCreateProjectModalClose" 
+      @refreshProjects="handleRefreshProjects"
+      @showMenuButton="$emit('showMenuButton')"
+    />
+
+    <!-- Modify Project Modal -->
+    <ModifyProject
+      v-if="showModifyProjectModal && selectedProject" :project="selectedProject" 
+      @close="handleModifyProjectModalClose"
+      @refreshProjects="handleRefreshProjects"
+      @showMobileButtons="$emit('showMobileButtons')"
+    />
+
+  </div>
+</template>

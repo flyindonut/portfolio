@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+</script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+</style>
+
 <template>
   <div class="flex h-dvh">
     <div
@@ -13,17 +27,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-
-const { t } = useI18n();
-</script>
-
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
-
-* {
-  font-family: 'Nunito', sans-serif;
-}
-</style>

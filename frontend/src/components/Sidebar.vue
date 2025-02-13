@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
 import { Home, FolderKanban, FileText, Mail, Github, Linkedin, FileDown, Layers, Sun, Moon, Globe } from "lucide-vue-next";

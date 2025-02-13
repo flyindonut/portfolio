@@ -1,43 +1,3 @@
-<template>
-  <aside>
-    <div class="flex justify-between items-center">
-      <h2 class="text-[var(--text-color)] text-2xl mt-6 md:text-lg md:mt-0 font-bold mb-4">{{ t("projects") }}</h2>
-      <!-- Create Project Button -->
-      <button v-if="isAdmin" @click="$emit('showCreateProjectModal'), $emit('hideMenuButton')" class="text-[var(--text-color)] hover:text-[var(--text-3-color)] transition mb-4 mt-6 mr-12 md:mt-0 md:mr-0">
-        <Plus class="w-6 h-6" />
-      </button>
-    </div>
-
-    <!-- Error Message -->
-    <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
-
-    <!-- Project List -->
-    <nav v-else class="flex flex-col space-y-4 mt-6 lg:mt-0">
-      <router-link
-        v-for="project in projects"
-        :key="project.slug"
-        :to="`/projects/${project.slug}`"
-        @click="$emit('closeProjectsMenu')"
-        class="flex items-center px-5 py-3 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101"
-        active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-4"
-      >
-        <div class="flex flex-col justify-center w-full">
-          <h3 class="text-[var(--text-color)] font-medium truncate">
-            {{ trimName(project.translations[locale as "en" | "fr"]?.name) }}
-          </h3>
-          <p class="text-[var(--text-2-color)] text-sm">
-            {{ formatDate(project.startDate) }} – {{ formatDate(project.endDate) }}
-          </p>
-        </div>
-        <ChevronRight class="text-[var(--text-2-color)] ml-auto w-6 h-6" />
-      </router-link>
-    </nav>
-    <p class="mt-6 text-sm text-[var(--text-2-color)] text-center lg:hidden">
-      {{ t('projectPage.description') }}
-    </p>
-  </aside>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -110,6 +70,46 @@ watch(
   { immediate: true }
 );
 </script>
+
+<template>
+  <aside>
+    <div class="flex justify-between items-center">
+      <h2 class="text-[var(--text-color)] text-2xl mt-6 md:text-lg md:mt-0 font-bold mb-4">{{ t("projects") }}</h2>
+      <!-- Create Project Button -->
+      <button v-if="isAdmin" @click="$emit('showCreateProjectModal'), $emit('hideMenuButton')" class="text-[var(--text-color)] hover:text-[var(--text-3-color)] transition mb-4 mt-6 mr-12 md:mt-0 md:mr-0">
+        <Plus class="w-6 h-6" />
+      </button>
+    </div>
+
+    <!-- Error Message -->
+    <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+
+    <!-- Project List -->
+    <nav v-else class="flex flex-col space-y-4 mt-6 lg:mt-0">
+      <router-link
+        v-for="project in projects"
+        :key="project.slug"
+        :to="`/projects/${project.slug}`"
+        @click="$emit('closeProjectsMenu')"
+        class="flex items-center px-5 py-3 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101"
+        active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-4"
+      >
+        <div class="flex flex-col justify-center w-full">
+          <h3 class="text-[var(--text-color)] font-medium truncate">
+            {{ trimName(project.translations[locale as "en" | "fr"]?.name) }}
+          </h3>
+          <p class="text-[var(--text-2-color)] text-sm">
+            {{ formatDate(project.startDate) }} – {{ formatDate(project.endDate) }}
+          </p>
+        </div>
+        <ChevronRight class="text-[var(--text-2-color)] ml-auto w-6 h-6" />
+      </router-link>
+    </nav>
+    <p class="mt-6 text-sm text-[var(--text-2-color)] text-center lg:hidden">
+      {{ t('projectPage.description') }}
+    </p>
+  </aside>
+</template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
