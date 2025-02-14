@@ -76,7 +76,7 @@ watch(route, () => {
       :enter="sidebarEnter"
       :duration="sidebarDuration"
       :class="{ 'hidden': !isProjectsMenuOpen, 'flex': isProjectsMenuOpen }"
-      class="h-dvh w-full bg-[var(--bg-color)] p-4 flex-col border-r border-gray-600 overflow-y-auto md:w-72 md:flex"
+      class="h-dvh w-full bg-[var(--bg-color)] p-4 flex-col border-r border-gray-600 overflow-y-auto lg:w-60 lg:flex xl:w-72"
       @showCreateProjectModal="showCreateProjectModal = true"
       @refreshProjects="handleRefreshProjects"
       @closeProjectsMenu="toggleProjectsMenu"

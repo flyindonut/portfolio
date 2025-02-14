@@ -74,9 +74,9 @@ watch(
 <template>
   <aside>
     <div class="flex justify-between items-center">
-      <h2 class="text-[var(--text-color)] text-2xl mt-6 md:text-lg md:mt-0 font-bold mb-4">{{ t("projects") }}</h2>
+      <h2 class="text-[var(--text-color)] text-2xl mt-6 lg:text-lg md:mt-4 lg:mt-0 font-bold mb-4">{{ t("projects") }}</h2>
       <!-- Create Project Button -->
-      <button v-if="isAdmin" @click="$emit('showCreateProjectModal'), $emit('hideMenuButton')" class="text-[var(--text-color)] hover:text-[var(--text-3-color)] transition mb-4 mt-6 mr-12 md:mt-0 md:mr-0">
+      <button v-if="isAdmin" @click="$emit('showCreateProjectModal'), $emit('hideMenuButton')" class="text-[var(--text-color)] hover:text-[var(--text-3-color)] transition mb-4 mt-6 mr-12 md:mt-6 md:mr-14 lg:mt-0 lg:mr-0">
         <Plus class="w-6 h-6" />
       </button>
     </div>

@@ -32,10 +32,10 @@ watch(
 
 <template>
   <aside>
-    <h2 class="text-[var(--text-color)] text-2xl mt-6 md:mt-0 md:text-lg font-bold mb-4">{{ t('commentsSidebar.title') }}</h2>
+    <h2 class="text-[var(--text-color)] text-2xl mt-6 md:mt-4 lg:mt-0 lg:text-lg font-bold mb-4">{{ t('commentsSidebar.title') }}</h2>
 
     <!-- Comments List -->
-    <nav class="flex flex-col space-y-4 mt-6 md:mt-0">
+    <nav class="flex flex-col space-y-4 mt-6 lg:mt-0">
       <router-link
         to="/comments/show"
         @click="$emit('closeCommentsMenu')"

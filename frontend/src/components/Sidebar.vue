@@ -66,11 +66,11 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
   <aside>
     <!-- Profile Info -->
     <div class="flex items-center justify-between flex-row-reverse md:flex-row">
-      <div>
+      <div class="md:mt-2 lg:mt-0">
         <h1 class="hidden text-lg font-bold text-[var(--text-color)] md:flex">{{ t("name") }}</h1>
         <p class="hidden text-[var(--text-2-color)] text-sm md:flex">{{ t("title") }}</p>
       </div>
-      <div class="flex items-center justify-center space-x-2 mt-6 mb-6 w-dvw md:mt-0 md:mb-0 md:w-auto">
+      <div class="flex items-center justify-center space-x-2 mt-6 mb-6 w-dvw md:mt-4 md:mr-14 lg:mr-0 lg:mt-0 md:mb-0 md:w-auto">
         <div class="flex items-center space-x-1 cursor-pointer hover:bg-[var(--item-hover)] rounded-md p-1" @click="toggleLanguage">
           <span class="text-[var(--text-color)]">{{ currentLanguage }}</span>
           <Globe class="w-5 h-5 text-[var(--text-color)]" />
@@ -80,7 +80,7 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
     </div>
 
     <!-- Public Navigation Links -->
-    <nav class="flex flex-col space-y-3 lg:mt-6">
+    <nav class="flex flex-col space-y-3 md:mt-6 lg:mt-6">
       <router-link 
         to="/"
         @click="$emit('closeMobileMenu')"

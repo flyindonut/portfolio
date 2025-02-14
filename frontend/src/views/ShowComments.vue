@@ -128,7 +128,7 @@ onMounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-4xl text-[var(--text-color)] mt-14 md:mt-0"
+      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-dvw lg:max-w-4xl text-[var(--text-color)] mt-14 md:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->
@@ -137,7 +137,7 @@ onMounted(() => {
       />
 
       <div class="mb-6 flex flex-col sm:flex-row justify-between items-center">
-        <h1 class="font-bold text-3xl md:text-5xl">{{ t('showCommentsPage.title') }}</h1>
+        <h1 class="font-bold text-3xl xl:text-5xl">{{ t('showCommentsPage.title') }}</h1>
         <div class="flex space-x-4 mt-4 md:mt-0">
           <div class="relative">
             <select v-model="filterUserComments" class="bg-[var(--item)] text-[var(--text-color)] p-2 rounded-md appearance-none pr-10">

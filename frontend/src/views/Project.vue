@@ -139,7 +139,7 @@ onUnmounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="500"
       :duration="500"
-      class="p-10 md:p-20 mt-14 md:mt-0 mx-auto max-w-4xl text-[var(--text-color)]"
+      class="p-10 md:p-20 mt-14 md:mt-0 mx-auto mx-w-dvw xl:max-w-4xl text-[var(--text-color)]"
     >
       <div v-if="isLoading" class="flex justify-center items-center h-dvh">
         <div class="border-6 border-[var(--border-color)]/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
@@ -154,7 +154,7 @@ onUnmounted(() => {
         <div v-if="errorMessage" class="text-red-500 bg-red-800 p-3 rounded-md">{{ errorMessage }}</div>
         <div v-else-if="project" class="space-y-6">
           <div class="flex justify-between items-center">
-            <h1 class="text-4xl md:text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
+            <h1 class="text-4xl xl:text-5xl font-bold capitalize">{{ project.translations[locale as Locale].name }}</h1>
             <button v-if="isAdmin" @click="$emit('showModifyProjectModal', project), $emit('hideMobileButtons')" class="text-[var(--text-color)] hover:text-[var(--text-3-color)] transition">
               <Edit class="w-6 h-6" />
             </button>
@@ -180,7 +180,7 @@ onUnmounted(() => {
                 <img
                   :src="image"
                   :alt="project.translations[locale as Locale].name"
-                  class="w-full h-[200px] lg:h-[400px] object-cover rounded-lg"
+                  class="w-full h-[200px] sm:h-[400px] md:h-[500px] lg:h-[300px] xl:h-[400px] object-cover rounded-lg"
                   @click="openImageModal(image)"
                 />
               </swiper-slide>
@@ -190,7 +190,7 @@ onUnmounted(() => {
           <!-- Languages -->
           <div v-if="project.languages.length" class="mt-10">
             <h3 class="text-2xl font-bold">{{ t('projectPage.languages') }}</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
               <div
                 v-for="language in project.languages"
                 :key="language"
@@ -205,7 +205,7 @@ onUnmounted(() => {
           <!-- Frameworks -->
           <div v-if="project.frameworks.length" class="mt-10">
             <h3 class="text-2xl font-bold">Frameworks</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
               <div
                 v-for="framework in project.frameworks"
                 :key="framework"
@@ -220,7 +220,7 @@ onUnmounted(() => {
           <!-- Technologies -->
           <div v-if="project.technologies.length" class="mt-10">
             <h3 class="text-2xl font-bold">Technologies</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
               <div
                 v-for="technology in project.technologies"
                 :key="technology"
