@@ -108,7 +108,7 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
       <router-link
         to="/contact"
         @click="$emit('closeMobileMenu')"
-        class="flex items-center px-4 py-4 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101 lg:py-2"
+        class="flex items-center px-4 py-4 mb-4 rounded-lg text-[var(--text-color)] transition-all duration-200 bg-[var(--item)] hover:bg-[var(--item-hover)] hover:scale-101 lg:py-2"
         active-class="bg-[var(--item-active)] border-l-4 border-[var(--border-color)] pl-3"
       >
         <Mail class="w-5 h-5 mr-2" /> {{ t("contact") }}
@@ -122,7 +122,7 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
         :initial="{ opacity: 0, y: 0 }"
         :enter="{ opacity: 1, y: 0 }"
         :duration="500" 
-        class="border-gray-600 my-6" 
+        class="border-gray-600 mb-4" 
       />
 
       <!-- Admin Navigation Links -->
