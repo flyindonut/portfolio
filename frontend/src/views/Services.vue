@@ -124,7 +124,7 @@ const handleIconUpload = (event: Event) => {
       <transition-group
         tag="div"
         name="fade"
-        class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 mt-6"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6 mt-6"
       >
         <div
           v-for="service in services"

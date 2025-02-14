@@ -33,10 +33,10 @@ watch(
 
 <template>
   <aside>
-    <h2 class="text-[var(--text-color)] text-2xl mt-6 md:mt-0 md:text-lg font-bold mb-4">{{ t('iconsSidebar.title') }}</h2>
+    <h2 class="text-[var(--text-color)] text-2xl mt-6 md:mt-4 lg:mt-0 lg:text-lg font-bold mb-4">{{ t('iconsSidebar.title') }}</h2>
 
     <!-- Icons List -->
-    <div class="flex flex-col space-y-4 mt-6 md:mt-0">
+    <div class="flex flex-col space-y-4 mt-6 lg:mt-0">
       <router-link
         v-for="item in iconsItems"
         :key="item.slug"
