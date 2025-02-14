@@ -276,7 +276,7 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
       <div class="mt-12 text-center">
         <router-link 
           to="/projects" 
-          class="inline-flex items-center bg-blue-600 px-6 py-3 text-white text-lg font-medium rounded-lg hover:bg-blue-700 transition shadow-md"
+          class="inline-flex items-center px-6 py-3 text-white text-lg font-medium rounded-lg transition bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 shadow-md"
         >
           {{ t("homePage.exploreProjects") }}
           <ChevronRight class="ml-2 w-5 h-5" />

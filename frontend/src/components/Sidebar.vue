@@ -174,7 +174,7 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
       <button 
         v-else-if="isAuthenticated" 
         @click="logout({ logoutParams: { returnTo: returnToUrl } })" 
-        class="flex-1 px-4 py-2 rounded-lg bg-red-600 text-white transition-all duration-200 hover:bg-red-700"
+        class="flex-1 px-4 py-2 rounded-lg text-white transition-all duration-200 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800"
       >
         {{ t("logout") }}
       </button>
@@ -182,7 +182,7 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
       <button 
         v-else 
         @click="() => loginWithRedirect()" 
-        class="flex-1 px-4 py-2 rounded-lg bg-blue-600 text-white transition-all duration-200 hover:bg-blue-700"
+        class="flex-1 px-4 py-2 rounded-lg text-white transition-all duration-200 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
       >
         {{ t("login") }}
       </button>
