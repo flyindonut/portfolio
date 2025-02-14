@@ -89,16 +89,16 @@ onMounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="100"
       :duration="500"
-      class="flex-1 flex flex-col p-10 md:p-20 mx-auto max-w-dvw lg:max-w-4xl text-[var(--text-color)] mt-14 md:mt-0"
+      class="flex-1 flex flex-col p-10 lg:p-20 mx-auto max-w-dvw xl:max-w-4xl text-[var(--text-color)] mt-14 lg:mt-0"
     >
 
       <!-- Breadcrumb Navigation -->
       <Breadcrumb />
 
       <!-- Title -->
-      <div class="mb-6 flex flex-col sm:flex-row justify-between items-center">
-        <h1 class="text-3xl md:text-5xl font-bold">Manage Comments</h1>
-        <div class="flex space-x-4 mt-4 md:mt-0">
+      <div class="mb-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 justify-between items-left sm:items-center">
+        <h1 class="text-3xl xl:text-4xl 2xl:text-5xl font-bold">Manage Comments</h1>
+        <div class="flex space-x-4">
           <div class="relative">
             <select v-model="filterStatus" class="bg-[var(--item)] text-[var(--text-color)] p-2 rounded-md appearance-none pr-10">
               <option value="ALL">All</option>

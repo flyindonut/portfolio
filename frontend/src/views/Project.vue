@@ -139,7 +139,7 @@ onUnmounted(() => {
       :enter="{ opacity: 1, y: 0 }"
       :delay="500"
       :duration="500"
-      class="p-10 md:p-20 mt-14 md:mt-0 mx-auto mx-w-dvw xl:max-w-4xl text-[var(--text-color)]"
+      class="p-10 lg:p-20 mt-14 lg:mt-0 mx-auto mx-w-dvw xl:max-w-4xl text-[var(--text-color)]"
     >
       <div v-if="isLoading" class="flex justify-center items-center h-dvh">
         <div class="border-6 border-[var(--border-color)]/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>

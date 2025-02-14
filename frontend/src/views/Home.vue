@@ -202,7 +202,7 @@ const emit = defineEmits(['showMobileButtons', 'hideMobileButtons', 'hideMenuBut
     :enter="{ opacity: 1, y: 0 }"
     :delay="250"
     :duration="500"
-    class="p-10 md:p-20 mx-auto max-w-5xl text-[var(--text-color)]"
+    class="p-10 lg:p-20 mx-auto max-w-5xl text-[var(--text-color)]"
   >
     <div v-if="isLoading" class="flex justify-center items-center h-dvh">
       <div class="border-6 border-[var(--border-color)]/30 border-t-white rounded-full w-8 h-8 animate-spin"></div>
