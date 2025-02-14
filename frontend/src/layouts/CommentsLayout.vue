@@ -42,7 +42,7 @@ onUnmounted(() => {
       :enter="sidebarEnter"
       :duration="sidebarDuration"
       :class="{ 'hidden': !isCommentsMenuOpen, 'flex': isCommentsMenuOpen }"
-      class="w-full h-dvh bg-[var(--bg-color)] p-4 flex flex-col border-r border-gray-600 lg:w-60 lg:flex xl:w-72"
+      class="w-full h-dvh bg-[var(--bg-color)] p-4 flex flex-col border-r border-gray-600 overflow-y-auto lg:w-60 lg:flex xl:w-72"
       @closeCommentsMenu="toggleCommentsMenu"
       @showCommentsMenu="isCommentsMenuOpen = true"
     />

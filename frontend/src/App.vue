@@ -93,7 +93,7 @@ watch([isMobileMenuOpen, () => route.path], ([newIsMobileMenuOpen, newPath]) => 
     <Sidebar
       @closeMobileMenu="isMobileMenuOpen = false"
       :class="{ 'hidden': !isMobileMenuOpen, 'flex': isMobileMenuOpen }"
-      class="relative z-10 w-full h-dvh bg-[var(--bg-color)] p-4 flex-col border-r border-gray-600 lg:flex lg:w-60 xl:w-72 xl:flex xl:w-72" 
+      class="relative z-10 w-full h-dvh bg-[var(--bg-color)] p-4 flex-col border-r border-gray-600 overflow-y-auto lg:flex lg:w-60 xl:w-72 xl:flex xl:w-72" 
     />
 
     <!-- Loading Indicator -->

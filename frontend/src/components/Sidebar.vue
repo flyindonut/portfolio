@@ -132,7 +132,7 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
         :enter="{ opacity: 1, y: 0 }"
         :delay="500"
         :duration="500" 
-      class="flex flex-col space-y-3"
+      class="flex flex-col space-y-3 mb-4"
       >
         <router-link 
           to="/icons"
@@ -159,7 +159,7 @@ const currentLanguage = computed(() => (locale.value === 'en' ? 'EN' : 'FR'));
     </div>
 
     <!-- Separator -->
-    <hr class="border-gray-600 mt-6" />
+    <hr class="border-gray-600 mt-4" />
 
     <!-- Auth Buttons -->
     <div class="flex flex-row space-x-2 mt-4">
