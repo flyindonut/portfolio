@@ -241,7 +241,7 @@ onUnmounted(() => {
           <!-- Project Link -->
           <div class="my-10">
             <h3 class="text-2xl font-bold">Project Link</h3>
-            <a :href="project.link" target="_blank" class="text-blue-500 hover:underline">{{ project.link }}</a>
+            <a :href="project.link" target="_blank" class="text-blue-500 hover:underline break-words">{{ project.link }}</a>
           </div>
 
           <!-- Delete Project Button -->
