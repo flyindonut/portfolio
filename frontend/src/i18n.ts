@@ -38,7 +38,12 @@ const messages = {
     projectPage: {
       title: "Projects",
       description: "Please select a project to view",
+      images: "Images",
       languages: "Languages",
+      frameworks: "Frameworks",
+      technologies: "Technologies",
+      timeline: "Project Timeline",
+      link: "Project Link"
     },
     contactPage: {
       heading: "Contact Me",
@@ -142,7 +147,12 @@ const messages = {
     projectPage: {
       title: "Projets",
       description: "Veuillez sélectionner un projet à voir",
+      images: "Images",
       languages: "Langages",
+      frameworks: "Frameworks",
+      technologies: "Technologies",
+      timeline: "Chronologie du projet",
+      link: "Lien du projet"
     },
     contactPage: {
       heading: "Me Contacter",

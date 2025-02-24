@@ -164,7 +164,7 @@ onUnmounted(() => {
 
           <!-- Image Carousel Section -->
           <div v-if="project.images.length" class="mt-10">
-            <h3 class="text-2xl font-bold mb-4">Images</h3>
+            <h3 class="text-2xl font-bold mb-4">{{ t('projectPage.images') }}</h3>
             
             <swiper
               :style="{'--swiper-navigation-size': swiperNavigationSize}"
@@ -204,7 +204,7 @@ onUnmounted(() => {
 
           <!-- Frameworks -->
           <div v-if="project.frameworks.length" class="mt-10">
-            <h3 class="text-2xl font-bold">Frameworks</h3>
+            <h3 class="text-2xl font-bold">{{ t('projectPage.frameworks')}}</h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
               <div
                 v-for="framework in project.frameworks"
@@ -219,7 +219,7 @@ onUnmounted(() => {
 
           <!-- Technologies -->
           <div v-if="project.technologies.length" class="mt-10">
-            <h3 class="text-2xl font-bold">Technologies</h3>
+            <h3 class="text-2xl font-bold">{{ t('projectPage.technologies') }}</h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
               <div
                 v-for="technology in project.technologies"
@@ -234,13 +234,13 @@ onUnmounted(() => {
 
           <!-- Project Timeline -->
           <div class="mt-10">
-            <h3 class="text-2xl font-bold">Project Timeline</h3>
+            <h3 class="text-2xl font-bold">{{ t('projectPage.timeline') }}</h3>
             <p class="text-[var(--text-3-color)] mt-2">{{ project.startDate }} - {{ project.endDate }}</p>
           </div>
 
           <!-- Project Link -->
           <div class="my-10">
-            <h3 class="text-2xl font-bold">Project Link</h3>
+            <h3 class="text-2xl font-bold">{{ t('projectPage.link') }}</h3>
             <a :href="project.link" target="_blank" class="text-blue-500 hover:underline break-words">{{ project.link }}</a>
           </div>
 
